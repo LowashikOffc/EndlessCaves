@@ -1,0 +1,1 @@
+{"b1":true,"b2":false,"b3":false,"b4":false,"maxFps":2.0,"Brightness":5.0,"Smoothing":3.0,"Sens":50.0,"Volume":90.0,"Language":"Русский"}
