@@ -4,104 +4,114 @@ using UnityEngine;
 
 public class Graple : MonoBehaviour
 {
-    public GameObject hook;
-    public GameObject pl;
-    public Rigidbody rb;
-    public SphereCollider coll;
-    public AudioSource connect;
-    public AudioSource throw_;
-    public GameObject rope;
-    private GameObject coll1;
-    byte force = 17;
-    public bool Hooked = false;
-    bool en = false;
-    public bool canThrow = true;
-    public bool selected = true;
-    float speed = 2;
+    [SerializeField] private GameObject _hook;
+    [SerializeField] private GameObject _player;
+    [SerializeField] private Rigidbody _rigitbody;
+    [SerializeField] private SphereCollider _collision;
+    [SerializeField] private AudioSource _connect;
+    [SerializeField] private AudioSource _throw;
+    [SerializeField] private GameObject _rope;
+    private GameObject _collision2;
+    [SerializeField] private byte _throwForce = 12;
+    [SerializeField] private bool _hooked = false;
+    private bool en = false;
+    public bool _canThrow = true;
+    [SerializeField] private bool _selected = true;
+    private float _speed = 500;
 
     void Update()
     {
-        if (selected == true)
+        if (_selected == true)
         {
+            //Debug.Log(1);
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
-                if (canThrow == true)
+                //Debug.Log(2);
+                if (_canThrow == true)
                 {
+                    //Debug.Log(3);
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
                     RaycastHit hit;
 
                     if (Physics.Raycast(ray, out hit, Mathf.Infinity))
                     {
-                        hook.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 0.2f;
-                        rb.isKinematic = false;
-                        rb.velocity = Camera.main.transform.forward * force;
-                        coll.enabled = true;
-                        Hooked = false;
-                        pl.GetComponent<Rigidbody>().useGravity = true;
-                        pl.GetComponent<CharacterController>().canMove = true;
-                        speed = 0.9f;
-                        rope.transform.position = new Vector3(0, 100, 0);
-                        rope.transform.localScale = new Vector3(0, 0, 0);
-                        throw_.Play();
+                        //Debug.Log(4);
+                        _hook.transform.position = Camera.main.transform.position + Camera.main.transform.forward * Time.deltaTime;
+                        _rigitbody.isKinematic = false;
+                        _rigitbody.velocity = Camera.main.transform.forward * _throwForce;
+                        _collision.enabled = true;
+                        _hooked = false;
+                        _player.GetComponent<Rigidbody>().useGravity = true;
+                        _player.GetComponent<CharacterController>().canMove = true;
+                        _speed = 0.9f;
+                        _rope.transform.position = new Vector3(0, 100, 0);
+                        _rope.transform.localScale = new Vector3(0, 0, 0);
+                        _throw.Play();
                         en = true;
+                        //Debug.Log(5);
                     }
                 }
             }
             if (Input.GetKey(KeyCode.Mouse1))
             {
-                rb.isKinematic = true;
-                hook.transform.position = new Vector3(0, 100, 0);
-                pl.GetComponent<Rigidbody>().useGravity = true;
-                pl.GetComponent<CharacterController>().canMove = true;
-                Hooked = false;
-                rope.transform.position = new Vector3(0, 100, 0);
-                rope.transform.localScale = new Vector3(0, 0, 0);
+                _rigitbody.isKinematic = true;
+                _hook.transform.position = new Vector3(0, 100, 0);
+                _player.GetComponent<Rigidbody>().useGravity = true;
+                _player.GetComponent<CharacterController>().canMove = true;
+                _hooked = false;
+                _rope.transform.position = new Vector3(0, 100, 0);
+                _rope.transform.localScale = new Vector3(0, 0, 0);
                 en = false;
+                //Debug.Log(6);
             }
             if (Input.GetAxis("Mouse ScrollWheel") > 0f)
             {
-                if (speed < 2.7f)
+                if (_speed < 3f)
                 {
-                    speed += 0.3f;
+                    _speed += 0.5f;
                 }
             }
             else if (Input.GetAxis("Mouse ScrollWheel") < 0)
             {
-                if (speed > 0.9f)
+                if (_speed > 0.5f)
                 {
-                    speed -= 0.3f;
+                    _speed -= 0.5f;
                 }
-            }
-            if (Hooked == true)
-            {
-                hook.transform.forward = coll1.gameObject.transform.position;
-                pl.GetComponent<Rigidbody>().AddForce((hook.transform.position - pl.transform.position).normalized * speed * Time.deltaTime * 4500f + Vector3.down * 60);
-                pl.GetComponent<Rigidbody>().AddForce(pl.gameObject.transform.up * (-2));
             }
             if (en == true)
             {
-                Vector3 startPos = hook.transform.position;
-                Vector3 endPos = pl.transform.position;
-                rope.transform.position = new Vector3(startPos.x + endPos.x, startPos.y + endPos.y, startPos.z + endPos.z) / 2f;
-                rope.transform.up = startPos - endPos;
-                rope.transform.localScale = new Vector3(0.01f, (hook.transform.position - pl.transform.position).magnitude / 2, 0.01f);
-                rope.GetComponent<Renderer>().sharedMaterial.mainTextureScale = new Vector2(0.05f, startPos.y - endPos.y) * 4;
+                Vector3 startPos = _hook.transform.position;
+                Vector3 endPos = _player.transform.position;
+                _rope.transform.position = new Vector3(startPos.x + endPos.x, startPos.y + endPos.y, startPos.z + endPos.z) / 2f;
+                _rope.transform.up = startPos - endPos;
+                _rope.transform.localScale = new Vector3(0.01f, (_hook.transform.position - _player.transform.position).magnitude / 2, 0.01f);
+                _rope.GetComponent<Renderer>().sharedMaterial.mainTextureScale = new Vector2(0.05f, startPos.y - endPos.y) * 4;
             }
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (_hooked == true)
+        {
+            _hook.transform.forward = _collision2.gameObject.transform.position;
+            _player.GetComponent<Rigidbody>().AddForce((_hook.transform.position - _player.transform.position).normalized * _speed * Time.deltaTime * 4500f + Vector3.down * 60);
+            _player.GetComponent<Rigidbody>().AddForce(_player.gameObject.transform.up * -9.8f);
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        connect.Play();
+        _connect.Play();
         if (collision.gameObject.tag == "Hookable")
         {
-            rb.isKinematic = true;
-            coll.enabled = false;
-            coll1 = collision.collider.gameObject;
-            Hooked = true;
-            pl.GetComponent<Rigidbody>().useGravity = false;
-            pl.GetComponent<CharacterController>().canMove = false;
+            _rigitbody.isKinematic = true;
+            _collision.enabled = false;
+            _collision2 = collision.collider.gameObject;
+            _hooked = true;
+            _player.GetComponent<Rigidbody>().useGravity = false;
+            _player.GetComponent<CharacterController>().canMove = false;
         }
     }
 }

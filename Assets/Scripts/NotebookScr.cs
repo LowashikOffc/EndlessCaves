@@ -118,7 +118,7 @@ public class NotebookScr : MonoBehaviour
             pl.GetComponent<CharacterController>().canMove = false;
             pl.GetComponent<CharacterController>().canCrouch = false;
             Camera.main.GetComponent<CameraControl>().canMove = false;
-            hook.GetComponent<Graple>().canThrow = false;
+            hook.GetComponent<Graple>()._canThrow = false;
             Cursor.lockState = CursorLockMode.Confined;
             Cursor.visible = true;
         }
@@ -128,7 +128,7 @@ public class NotebookScr : MonoBehaviour
             pl.GetComponent<CharacterController>().canMove = true;
             pl.GetComponent<CharacterController>().canCrouch = true;
             Camera.main.GetComponent<CameraControl>().canMove = true;
-            hook.GetComponent<Graple>().canThrow = true;
+            hook.GetComponent<Graple>()._canThrow = true;
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }

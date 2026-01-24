@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
     public UnityEngine.CharacterController cc;
     public Rigidbody rb;
     [SerializeField] private GameObject player;
-    [SerializeField] private Camera cam;
+    [SerializeField] private Camera _cam;
     [SerializeField] private float Sensitivity;
 
     [SerializeField] private float speed, walk, run, crouch;
@@ -14,8 +14,6 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 crouchScale, normalScale;
 
     public bool isMoving, isCrouching, isRunning;
-
-    private float X, Y;
 
     private void Start()
     {
@@ -29,21 +27,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Update()
     {
-        #region Camera Limitation Calculator
-        //Camera limitation variables
-        const float MIN_Y = -80.0f;
-        const float MAX_Y = 80.0f;
-
-        X += Input.GetAxis("Mouse X") * (Sensitivity * 0.01f);
-        Y -= Input.GetAxis("Mouse Y") * (Sensitivity * 0.01f);
-
-        if (Y < MIN_Y)
-            Y = MIN_Y;
-        else if (Y > MAX_Y)
-            Y = MAX_Y;
-        #endregion
-        transform.rotation = Quaternion.Euler(0.0f, X, 0.0f);
-        cam.transform.rotation = Quaternion.Euler(Y, X, 0.0f);
+        transform.rotation = Quaternion.Euler(0.0f, _cam.transform.rotation.eulerAngles.y, 0.0f);
 
 
         float horizontal = Input.GetAxis("Horizontal");
@@ -51,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 forward = transform.forward * vertical;
         Vector3 right = transform.right * horizontal;
         cc.SimpleMove((forward + right) * speed);
-        // Determines if the speed = run or walk
+
         if (Input.GetKey(KeyCode.LeftShift) && isCrouching == false)
         {
             speed = run;
@@ -79,8 +63,6 @@ public class PlayerMovement : MonoBehaviour
 
         }
 
-        // Detects if the player is moving.
-        // Useful if you want footstep sounds and or other features in your game.
         isMoving = cc.velocity.sqrMagnitude > 0.0f ? true : false;
     }
 }

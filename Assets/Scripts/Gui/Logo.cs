@@ -6,111 +6,117 @@ using UnityEngine.SceneManagement;
 
 public class Logo : MonoBehaviour
 {
-    public TMP_Text text;
-    public AudioSource snd;
-    public AudioSource del;
+    [SerializeField] private TMP_Text _text;
+    [SerializeField] private AudioSource _snd;
+    [SerializeField] private AudioSource _del;
+    [SerializeField] private SceneLoader _sceneLoader;
     void Start()
     {
         StartCoroutine(logo());
     }
 
+    private void LoadScene()
+    {
+        _sceneLoader.LoadSceneByIndex(1);
+    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            SceneManager.LoadScene("MainMenu");
+            LoadScene();
         }
     }
 
     IEnumerator logo()
     {
         yield return new WaitForSeconds(1);
-        AudioSource.PlayClipAtPoint(snd.clip, Camera.main.transform.position);
-        text.text = "L";
+        AudioSource.PlayClipAtPoint(_snd.clip, Camera.main.transform.position);
+        _text.text = "L";
         yield return new WaitForSeconds(0.4f);
-        AudioSource.PlayClipAtPoint(snd.clip, Camera.main.transform.position);
-        text.text = "Lo";
+        AudioSource.PlayClipAtPoint(_snd.clip, Camera.main.transform.position);
+        _text.text = "Lo";
         yield return new WaitForSeconds(0.1f);
-        AudioSource.PlayClipAtPoint(snd.clip, Camera.main.transform.position);
-        text.text = "Low";
+        AudioSource.PlayClipAtPoint(_snd.clip, Camera.main.transform.position);
+        _text.text = "Low";
         yield return new WaitForSeconds(0.1f);
-        AudioSource.PlayClipAtPoint(snd.clip, Camera.main.transform.position);
-        text.text = "Lowa";
+        AudioSource.PlayClipAtPoint(_snd.clip, Camera.main.transform.position);
+        _text.text = "Lowa";
         yield return new WaitForSeconds(0.1f);
-        AudioSource.PlayClipAtPoint(snd.clip, Camera.main.transform.position);
-        text.text = "Lowas";
+        AudioSource.PlayClipAtPoint(_snd.clip, Camera.main.transform.position);
+        _text.text = "Lowas";
         yield return new WaitForSeconds(0.05f);
-        AudioSource.PlayClipAtPoint(snd.clip, Camera.main.transform.position);
-        text.text = "Lowash";
+        AudioSource.PlayClipAtPoint(_snd.clip, Camera.main.transform.position);
+        _text.text = "Lowash";
         yield return new WaitForSeconds(0.1f);
-        AudioSource.PlayClipAtPoint(snd.clip, Camera.main.transform.position);
-        text.text = "Lowashi";
+        AudioSource.PlayClipAtPoint(_snd.clip, Camera.main.transform.position);
+        _text.text = "Lowashi";
         yield return new WaitForSeconds(0.15f);
-        AudioSource.PlayClipAtPoint(snd.clip, Camera.main.transform.position);
-        text.text = "Lowashik";
+        AudioSource.PlayClipAtPoint(_snd.clip, Camera.main.transform.position);
+        _text.text = "Lowashik";
         yield return new WaitForSeconds(0.05f);
-        AudioSource.PlayClipAtPoint(snd.clip, Camera.main.transform.position);
-        text.text = "Lowashik ";
+        AudioSource.PlayClipAtPoint(_snd.clip, Camera.main.transform.position);
+        _text.text = "Lowashik ";
         yield return new WaitForSeconds(0.1f);
-        AudioSource.PlayClipAtPoint(snd.clip, Camera.main.transform.position);
-        text.text = "Lowashik p";
+        AudioSource.PlayClipAtPoint(_snd.clip, Camera.main.transform.position);
+        _text.text = "Lowashik p";
         yield return new WaitForSeconds(0.1f);
-        AudioSource.PlayClipAtPoint(snd.clip, Camera.main.transform.position);
-        text.text = "Lowashik pr";
+        AudioSource.PlayClipAtPoint(_snd.clip, Camera.main.transform.position);
+        _text.text = "Lowashik pr";
         yield return new WaitForSeconds(0.05f);
-        AudioSource.PlayClipAtPoint(snd.clip, Camera.main.transform.position);
-        text.text = "Lowashik pre";
+        AudioSource.PlayClipAtPoint(_snd.clip, Camera.main.transform.position);
+        _text.text = "Lowashik pre";
         yield return new WaitForSeconds(0.1f);
-        AudioSource.PlayClipAtPoint(snd.clip, Camera.main.transform.position);
-        text.text = "Lowashik pres";
+        AudioSource.PlayClipAtPoint(_snd.clip, Camera.main.transform.position);
+        _text.text = "Lowashik pres";
         yield return new WaitForSeconds(0.1f);
-        AudioSource.PlayClipAtPoint(snd.clip, Camera.main.transform.position);
-        text.text = "Lowashik prese";
+        AudioSource.PlayClipAtPoint(_snd.clip, Camera.main.transform.position);
+        _text.text = "Lowashik prese";
         yield return new WaitForSeconds(0.2f);
-        AudioSource.PlayClipAtPoint(snd.clip, Camera.main.transform.position);
-        text.text = "Lowashik presen";
+        AudioSource.PlayClipAtPoint(_snd.clip, Camera.main.transform.position);
+        _text.text = "Lowashik presen";
         yield return new WaitForSeconds(0.1f);
-        AudioSource.PlayClipAtPoint(snd.clip, Camera.main.transform.position);
-        text.text = "Lowashik present";
+        AudioSource.PlayClipAtPoint(_snd.clip, Camera.main.transform.position);
+        _text.text = "Lowashik present";
         yield return new WaitForSeconds(0.2f);
-        AudioSource.PlayClipAtPoint(snd.clip, Camera.main.transform.position);
-        text.text = "Lowashik presents";
+        AudioSource.PlayClipAtPoint(_snd.clip, Camera.main.transform.position);
+        _text.text = "Lowashik presents";
         yield return new WaitForSeconds(1f);
-        AudioSource.PlayClipAtPoint(del.clip, Camera.main.transform.position);
+        AudioSource.PlayClipAtPoint(_del.clip, Camera.main.transform.position);
         yield return new WaitForSeconds(0.4f);
-        text.text = "Lowashik present";
+        _text.text = "Lowashik present";
         yield return new WaitForSeconds(0.04f);
-        text.text = "Lowashik presen";
+        _text.text = "Lowashik presen";
         yield return new WaitForSeconds(0.04f);
-        text.text = "Lowashik prese";
+        _text.text = "Lowashik prese";
         yield return new WaitForSeconds(0.04f);
-        text.text = "Lowashik pres";
+        _text.text = "Lowashik pres";
         yield return new WaitForSeconds(0.04f);
-        text.text = "Lowashik pre";
+        _text.text = "Lowashik pre";
         yield return new WaitForSeconds(0.04f);
-        text.text = "Lowashik pr";
+        _text.text = "Lowashik pr";
         yield return new WaitForSeconds(0.04f);
-        text.text = "Lowashik p";
+        _text.text = "Lowashik p";
         yield return new WaitForSeconds(0.04f);
-        text.text = "Lowashik ";
+        _text.text = "Lowashik ";
         yield return new WaitForSeconds(0.04f);
-        text.text = "Lowashik";
+        _text.text = "Lowashik";
         yield return new WaitForSeconds(0.04f);
-        text.text = "Lowashi";
+        _text.text = "Lowashi";
         yield return new WaitForSeconds(0.04f);
-        text.text = "Lowash";
+        _text.text = "Lowash";
         yield return new WaitForSeconds(0.04f);
-        text.text = "Lowas";
+        _text.text = "Lowas";
         yield return new WaitForSeconds(0.04f);
-        text.text = "Lowa";
+        _text.text = "Lowa";
         yield return new WaitForSeconds(0.04f);
-        text.text = "Low";
+        _text.text = "Low";
         yield return new WaitForSeconds(0.04f);
-        text.text = "Lo";
+        _text.text = "Lo";
         yield return new WaitForSeconds(0.04f);
-        text.text = "L";
+        _text.text = "L";
         yield return new WaitForSeconds(0.04f);
-        text.text = "";
-        SceneManager.LoadScene("MainMenu");
+        _text.text = "";
+        yield return new WaitForSeconds(0.5f);
+        LoadScene();
     }
 }

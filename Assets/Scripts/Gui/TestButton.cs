@@ -10,7 +10,7 @@ public class TestButton : MonoBehaviour
     {
 
         snd.Play();
-        //StartCoroutine(GameStart());
+        StartCoroutine(GameStart());
     }
 
     IEnumerator GameStart()
