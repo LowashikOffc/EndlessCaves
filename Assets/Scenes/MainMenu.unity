@@ -6871,8 +6871,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cfuStatus: PSXEffects v1.18 - update available (click to update).
   sections: 01010100
-  customRes: {x: 960, y: 540}
-  resolutionFactor: 2
+  customRes: {x: 1231, y: 666}
+  resolutionFactor: 1
   limitFramerate: 60
   skipFrames: 0
   affineMapping: 0
@@ -11089,8 +11089,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 387756905}
   m_HandleRect: {fileID: 387756904}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 0.9998696
+  m_Value: 1
+  m_Size: 0.9999105
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -12233,7 +12233,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.016735235}
+  m_AnchoredPosition: {x: 0, y: -0.0029125232}
   m_SizeDelta: {x: 0, y: 28}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &1615470168
