@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class AutoScale : MonoBehaviour
 {
-    public bool XY, XZ, YZ;
-    public bool reverse;
-    public float multiply;
+    public float _textureScale;
     void Start()
     {
         float x = gameObject.transform.localScale.x;
@@ -15,39 +13,22 @@ public class AutoScale : MonoBehaviour
 
         gameObject.GetComponent<Renderer>().material.mainTextureScale = new Vector2(x, y);
 
-        if (reverse == false)
+        if (XY == true)
         {
-            if (XY == true)
-            {
-                gameObject.GetComponent<Renderer>().material.mainTextureScale = new Vector2(x,y);
-            }
-            else if (XZ == true)
-            {
-                gameObject.GetComponent<Renderer>().material.mainTextureScale = new Vector2(x,z);
-            }
-            else if (YZ == true)
-            {
-                gameObject.GetComponent<Renderer>().material.mainTextureScale = new Vector2(y,z);
-            }
+            gameObject.GetComponent<Renderer>().material.mainTextureScale = new Vector2(x,y);
         }
-        else
+        else if (XZ == true)
         {
-            if (XY == true)
-            {
-                gameObject.GetComponent<Renderer>().material.mainTextureScale = new Vector2(y, x);
-            }
-            else if (XZ == true)
-            {
-                gameObject.GetComponent<Renderer>().material.mainTextureScale = new Vector2(z, x);
-            }
-            else if (YZ == true)
-            {
-                gameObject.GetComponent<Renderer>().material.mainTextureScale = new Vector2(z, y);
-            }
+            gameObject.GetComponent<Renderer>().material.mainTextureScale = new Vector2(x,z);
         }
-        if (multiply != 0)
+        else if (YZ == true)
         {
-            gameObject.GetComponent<Renderer>().material.mainTextureScale *= multiply;
+            gameObject.GetComponent<Renderer>().material.mainTextureScale = new Vector2(y,z);
+        }
+
+        if (_textureScale != 0)
+        {
+            gameObject.GetComponent<Renderer>().material.mainTextureScale *= _textureScale;
         }
     }
 }

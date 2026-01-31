@@ -126,10 +126,10 @@ Material:
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 0
     - _GlossMapScale: 1
-    - _Glossiness: 0.401
+    - _Glossiness: 1
     - _GlossyReflections: 0
     - _LODAmt: 0
-    - _Metallic: 0.648
+    - _Metallic: 1
     - _Mode: 0
     - _NormalMapDepth: 1
     - _OcclusionStrength: 1

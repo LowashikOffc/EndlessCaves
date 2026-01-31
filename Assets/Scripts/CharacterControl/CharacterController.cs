@@ -4,6 +4,7 @@ using UnityEngine.Audio;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine.Rendering.PostProcessing;
+using UnityEditor.TerrainTools;
 
 public class CharacterController : MonoBehaviour
 {
@@ -12,26 +13,33 @@ public class CharacterController : MonoBehaviour
     public MoveState Moving;
     public IdleState Standing;
 
-    [SerializeField] private float MovementSpeed;
-    [SerializeField] private float SprintMultiplier;
-    [SerializeField] private float CrouchSpeed;
-    [SerializeField] private float JumpForce;
-    [SerializeField] private float GroundCheckDistance = 0.5f;
+    private float _currentSpeed;
+    private float _speedMultiply = 0.25f;
+    [SerializeField] private float _walkingSpeed;
+    [SerializeField] private float _sprintSpeed;
+    [SerializeField] private float _crouchSpeed;
+    [SerializeField] private float _jumpForce;
+    [SerializeField] private float _groundCheckDistance;
+
+    [SerializeField] private float _standScaleY;
+    [SerializeField] private float _crouchScaleY;
+    [SerializeField] private float _scaleXZ;
 
     public bool canMove = true;
     public bool canJump = true;
     public bool canCrouch = true;
-    [SerializeField] private bool canMoveOverride = true;
+    [SerializeField] private bool _canMoveOverride = true;
 
-    [SerializeField] private bool isCrouch, isSprint;
+    [SerializeField] private bool _isCrouch, _isSprint;
 
-    private Rigidbody rb;
+    private Rigidbody _rigidbody;
     [SerializeField] private LayerMask Target;
     #endregion
+
     private void Start()
     {
+        _rigidbody = GetComponent<Rigidbody>();
 
-        rb = GetComponent<Rigidbody>();
         StateMachine = new StateMachine();
         Moving = new MoveState(StateMachine, this);
         Standing = new IdleState(StateMachine, this);
@@ -39,18 +47,57 @@ public class CharacterController : MonoBehaviour
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+
+        CalculateGroundDistance();
     }
+    private void CalculateGroundDistance()
+    {
+        _groundCheckDistance = transform.localScale.y;
+    }
+
     private void Update()
     {
-
         HandleJump();
         HandleCrouch();
         HandleSprint();
 
+        CheckGroundDistance();
+
         StateMachine.CurrentState.HandleInput();
         StateMachine.CurrentState.OnLogicUpdate();
+    }
 
-        if (!Physics.SphereCast(transform.position, 0.2f, Vector3.down, out _, GroundCheckDistance, Target))
+    private void FixedUpdate()
+    {
+        StateMachine.CurrentState.OnPhysicsUpdate();
+    }
+
+    public void Move(float forwardSpeed, float strafeSpeed)
+    {
+        if (!_canMoveOverride || !canMove || _rigidbody.isKinematic) return;
+
+        float forwardFactor = (forwardSpeed != 0 && strafeSpeed != 0) ? 0.7071f : 1f;
+        float strafeFactor = (forwardSpeed != 0 && strafeSpeed != 0) ? 0.7071f : 1f;
+
+        forwardSpeed *= forwardFactor;
+        strafeSpeed *= strafeFactor;
+
+        Vector3 moveForce = (forwardSpeed * transform.forward + strafeSpeed * transform.right) * _currentSpeed * _speedMultiply;
+        moveForce.y = 0;
+
+        _rigidbody.AddForce(moveForce * 7, ForceMode.Impulse);
+
+        Vector3 flatVel = new Vector3(_rigidbody.velocity.x, 0, _rigidbody.velocity.z);
+        if (flatVel.magnitude > _currentSpeed)
+        {
+            flatVel = flatVel.normalized * _currentSpeed;
+            _rigidbody.velocity = new Vector3(flatVel.x, _rigidbody.velocity.y, flatVel.z);
+        }
+    }
+
+    private void CheckGroundDistance()
+    {
+        if (!Physics.SphereCast(transform.position, 0.2f, Vector3.down, out _, _groundCheckDistance, Target))
         {
             canMove = false;
         }
@@ -60,49 +107,13 @@ public class CharacterController : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
-    {
-
-        StateMachine.CurrentState.OnPhysicsUpdate();
-    }
-
-    // ===== Движение =====
-    public void Move(float forwardSpeed, float strafeSpeed)
-    {
-        if (!canMoveOverride || !canMove || rb.isKinematic) return;
-
-        // Рассчитываем коэффициенты для выравнивания скорости
-        float forwardFactor = (forwardSpeed != 0 && strafeSpeed != 0) ? 0.7071f : 1f; // 1/sqrt(2) для диагонального движения
-        float strafeFactor = (forwardSpeed != 0 && strafeSpeed != 0) ? 0.7071f : 1f;
-
-        // Применяем коэффициенты к скоростям
-        forwardSpeed *= forwardFactor;
-        strafeSpeed *= strafeFactor;
-
-        // Рассчитываем силу движения
-        Vector3 moveForce = (forwardSpeed * transform.forward + strafeSpeed * transform.right) * MovementSpeed * 0.3f;
-        moveForce.y = 0;
-
-        // Добавляем силу
-        rb.AddForce(moveForce * 7, ForceMode.Impulse);
-
-        // Ограничиваем максимальную скорость по XZ
-        Vector3 flatVel = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-        if (flatVel.magnitude > MovementSpeed)
-        {
-            flatVel = flatVel.normalized * MovementSpeed;
-            rb.velocity = new Vector3(flatVel.x, rb.velocity.y, flatVel.z);
-        }
-    }
-
-    // ===== Прыжок =====
     private void HandleJump()
     {
         if (Input.GetKey(KeyCode.Space) && canJump && canMove)
         {
-            if (Physics.SphereCast(transform.position, 0.2f, Vector3.down, out _, GroundCheckDistance, Target))
+            if (Physics.SphereCast(transform.position, 0.2f, Vector3.down, out _, _groundCheckDistance, Target))
             {
-                rb.AddForce(Vector3.up * JumpForce);
+                _rigidbody.AddForce(Vector3.up * _jumpForce);
                 canJump = false;
                 StartCoroutine(ResetJump());
             }
@@ -115,36 +126,34 @@ public class CharacterController : MonoBehaviour
         canJump = true;
     }
 
-    // ===== Приседание =====
     private void HandleCrouch()
     {
         if (!canCrouch) return;
 
-        if (Input.GetKeyDown(KeyCode.LeftControl) && !isCrouch)
+        if (Input.GetKeyDown(KeyCode.LeftControl) && !_isCrouch)
         {
-            GroundCheckDistance = 0.12f;
-            transform.position -= new Vector3(0, 0.2f, 0);
-            isCrouch = true;
-            MovementSpeed = CrouchSpeed;
-            transform.localScale = new Vector3(0.5f, 0.3f, 0.5f);
+            transform.position -= new Vector3(0, _groundCheckDistance/2, 0);
+            _isCrouch = true;
+            _currentSpeed = _crouchSpeed;
+            transform.localScale = new Vector3(_scaleXZ, _crouchScaleY, _scaleXZ);
+            CalculateGroundDistance();
         }
         else if (Input.GetKeyUp(KeyCode.LeftControl))
         {
             if (!Physics.Raycast(transform.position, Vector3.up, 0.75f, Target))
             {
-                GroundCheckDistance = 0.4f;
-                isCrouch = false;
-                transform.position += new Vector3(0, 0.2f, 0);
-                transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-                MovementSpeed = isSprint ? SprintMultiplier : 0.4f;
+                _isCrouch = false;
+                transform.position += new Vector3(0, _groundCheckDistance/2, 0);
+                transform.localScale = new Vector3(_scaleXZ, _standScaleY, _scaleXZ);
+                _currentSpeed = _isSprint ? _sprintSpeed : _walkingSpeed;
+                CalculateGroundDistance();
             }
         }
     }
 
-    // ===== Бег =====
     private void HandleSprint()
     {
-        if (isCrouch) return;
+        if (_isCrouch) return;
         //if (gameObject.GetComponent<PlayerStats>().Stamina < 1)
         //{
         //    isSprint = false;
@@ -154,13 +163,13 @@ public class CharacterController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            isSprint = true;
-            MovementSpeed = SprintMultiplier;
+            _isSprint = true;
+            _currentSpeed = _sprintSpeed;
         }
         else if (Input.GetKeyUp(KeyCode.LeftShift))
         {
-            isSprint = false;
-            MovementSpeed = 0.2f;
+            _isSprint = false;
+            _currentSpeed = _walkingSpeed;
         }
     }
 }

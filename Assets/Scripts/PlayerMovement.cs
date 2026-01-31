@@ -41,7 +41,6 @@ public class PlayerMovement : MonoBehaviour
             speed = run;
             isRunning = true;
         }
-        //Crouch
         else if (Input.GetKey(KeyCode.LeftControl))
         {
             isCrouching = true;
