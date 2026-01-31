@@ -12,25 +12,22 @@ public class CharacterController : MonoBehaviour
     public MoveState Moving;
     public IdleState Standing;
 
-    public float MovementSpeed = 2f;
-    public float SprintMultiplier = 1.4f;
-    public float CrouchSpeed = 0.4f;
-    public float JumpForce = 3000f;
-    public float GroundCheckDistance = 0.5f;
+    [SerializeField] private float MovementSpeed;
+    [SerializeField] private float SprintMultiplier;
+    [SerializeField] private float CrouchSpeed;
+    [SerializeField] private float JumpForce;
+    [SerializeField] private float GroundCheckDistance = 0.5f;
 
     public bool canMove = true;
     public bool canJump = true;
     public bool canCrouch = true;
-    public bool canMoveOverride = true;
+    [SerializeField] private bool canMoveOverride = true;
 
-    public bool isCrouch, isSprint;
+    [SerializeField] private bool isCrouch, isSprint;
 
     private Rigidbody rb;
-    public LayerMask Target;
+    [SerializeField] private LayerMask Target;
     #endregion
-
-    Vignette vignette;
-    public PostProcessVolume PPV;
     private void Start()
     {
 
@@ -139,7 +136,7 @@ public class CharacterController : MonoBehaviour
                 isCrouch = false;
                 transform.position += new Vector3(0, 0.2f, 0);
                 transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-                MovementSpeed = isSprint ? SprintMultiplier : 0.2f;
+                MovementSpeed = isSprint ? SprintMultiplier : 0.4f;
             }
         }
     }
