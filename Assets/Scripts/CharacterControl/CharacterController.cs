@@ -1,10 +1,6 @@
 using UnityEngine;
 using Assets;
-using UnityEngine.Audio;
 using System.Collections;
-using Unity.VisualScripting;
-using UnityEngine.Rendering.PostProcessing;
-using UnityEditor.TerrainTools;
 
 public class CharacterController : MonoBehaviour
 {

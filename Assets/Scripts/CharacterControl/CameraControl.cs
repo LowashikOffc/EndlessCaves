@@ -7,6 +7,7 @@ public class CameraControl : MonoBehaviour
     public float sensX;
     public float sensY;
     public float cameraSmoothing;
+    private float _smoothMultiply = 100f;
 
     public Transform Orient;
     public GameObject plr;
@@ -34,7 +35,7 @@ public class CameraControl : MonoBehaviour
 
             _xRotation = Mathf.Clamp(_xRotation, -80f, 80f);
 
-            Camera.main.transform.rotation = Quaternion.Lerp(savedRot, Quaternion.Euler(_xRotation, _yRotation, 0), 1f / cameraSmoothing);
+            Camera.main.transform.rotation = Quaternion.Lerp(savedRot, Quaternion.Euler(_xRotation, _yRotation, 0), Time.deltaTime / cameraSmoothing * _smoothMultiply);
             savedRot = Camera.main.transform.rotation;
             Orient.rotation = Quaternion.Euler(0, _yRotation, 0);
             plr.transform.rotation = Quaternion.Euler(0, _yRotation, 0);
