@@ -12,12 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffbc23efd0675014b8964ade23cbed7d, type: 3}
   m_Name: Data
   m_EditorClassIdentifier: 
-  _currentCaveSize: 0
-  _currentStalagmiteFrequency: 0
-  _currentStalactiteFrequency: 0
   _biomes:
-  - _caveSize: 0
-    _stalagmiteFrequency: 0
-    _stalactiteFrequency: 0
-    _stoneMaterial: {fileID: 0}
+  - _caveSize: 5
+    _stalagmiteFrequency: 0.5
+    _stalactiteFrequency: 0.7
+    _stoneMaterial: {fileID: 7555185752953191562, guid: 77d8edfc255c08540a0d2a526840bcc3, type: 3}
     _material: 0

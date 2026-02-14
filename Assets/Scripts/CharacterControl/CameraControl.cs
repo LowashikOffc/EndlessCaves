@@ -32,7 +32,7 @@ public class CameraControl : MonoBehaviour
 
             _yRotation += mouseX;
             _xRotation -= mouseY;
-
+            
             _xRotation = Mathf.Clamp(_xRotation, -80f, 80f);
 
             Camera.main.transform.rotation = Quaternion.Lerp(savedRot, Quaternion.Euler(_xRotation, _yRotation, 0), Time.deltaTime / cameraSmoothing * _smoothMultiply);

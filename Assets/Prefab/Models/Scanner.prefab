@@ -118,7 +118,6 @@ GameObject:
   - component: {fileID: 5085332105311055886}
   - component: {fileID: 9004039714561989670}
   - component: {fileID: 7705447721116452531}
-  - component: {fileID: 6260010904806632214}
   m_Layer: 8
   m_Name: Scanner
   m_TagString: Collectable
@@ -202,27 +201,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.2, y: 0.11, z: 0.02}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6260010904806632214
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 488622817776889564}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59bcedfb7e4354545840955da3e1f38d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inHand: 0
-  inInv: 0
-  ItemPos: {fileID: 0}
-  cam: {fileID: 0}
-  snd: {fileID: 0}
-  rb: {fileID: 9004039714561989670}
-  addXRotation: 0
-  addYRotation: 0
-  addZRotation: 0
 --- !u!1 &1117819787364222135
 GameObject:
   m_ObjectHideFlags: 0

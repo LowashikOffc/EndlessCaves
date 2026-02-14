@@ -1857,8 +1857,8 @@ GameObject:
   - component: {fileID: 5016799002439231218}
   - component: {fileID: 4323816744144572376}
   - component: {fileID: 3116388649429654100}
-  - component: {fileID: 3000536195713052774}
   - component: {fileID: 1680857158227128554}
+  - component: {fileID: -4498753712745903732}
   m_Layer: 10
   m_Name: Dosimeter
   m_TagString: Collectable
@@ -2001,27 +2001,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &3000536195713052774
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6853232796812228422}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59bcedfb7e4354545840955da3e1f38d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inHand: 0
-  inInv: 0
-  ItemPos: {fileID: 0}
-  cam: {fileID: 0}
-  snd: {fileID: 0}
-  rb: {fileID: 3116388649429654100}
-  addXRotation: 0
-  addYRotation: 90
-  addZRotation: 0
 --- !u!82 &1680857158227128554
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2118,6 +2097,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-4498753712745903732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6853232796812228422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a684aba972b22734c802ebf536566373, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Item: {fileID: 11400000, guid: ccab66936264d304a8ed98817e916a89, type: 2}
 --- !u!1 &7074197002345750073
 GameObject:
   m_ObjectHideFlags: 0

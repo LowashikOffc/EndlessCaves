@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class MoveCamera : MonoBehaviour
 {
-    public Transform cameraPos;
-
-    // Update is called once per frame
+    [SerializeField] private Transform _cameraPos;
+    private Vector3 _lastCameraPos;
+    private float _speed;
     void Update()
     {
-        transform.position = Vector3.Lerp(transform.position, cameraPos.position, Time.deltaTime * 20);
+        float _sin = 0;
+        _sin = Mathf.Sin(Time.time*2.5f) * 0.005f;
+        //Debug.Log(_sin);
+        transform.position = Vector3.Lerp(transform.position, _cameraPos.position + new Vector3(0, _sin, 0), Time.deltaTime * 20);
+        _lastCameraPos = transform.position;
     }
 }
