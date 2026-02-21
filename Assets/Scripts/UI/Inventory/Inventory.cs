@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 public class Inventory : MonoBehaviour
 {
@@ -31,36 +30,15 @@ public class Inventory : MonoBehaviour
     public delegate void OnItemChanged();
     public OnItemChanged onItemChangedCallback;
 
-    private void Update()
+    private void Start()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            SlotSelect(0);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            SlotSelect(1);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            SlotSelect(2);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            SlotSelect(3);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            SlotSelect(4);
-        }
+        InputReceiver.Instance.SlotSelect += SlotSelect;
     }
-
     private void SlotSelect(int slotNumber)
     {
-        _currentSlot = slotNumber;
-        UISlotChange?.Invoke(slotNumber);
+        _currentSlot = slotNumber - 1;
+        UISlotChange?.Invoke(_currentSlot);
     }
-
     // Метод для добавления предмета
     public bool Add(Item item)
     {
@@ -88,6 +66,6 @@ public class Inventory : MonoBehaviour
         UIModelRemove?.Invoke(slotToRemove);
         _items.Remove(itemToRemove);
         onItemChangedCallback?.Invoke(); // Уведомляем об изменениях
-
+        
     }
 }

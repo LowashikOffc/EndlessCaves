@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class InventoryUI : MonoBehaviour
 {
-    [SerializeField] private Inventory _inventory;
     [SerializeField] private ItemPickUp _itemPickUp;
     [SerializeField] private GameObject _inventoryBar;
     [SerializeField] private GameObject _selectFrame;
@@ -16,10 +15,9 @@ public class InventoryUI : MonoBehaviour
 
     private void Start()
     {
-        _inventory = GameObject.FindWithTag("Inventory").GetComponent<Inventory>();
-        _inventory.UISlotChange += ChangeSelectedSlot;
-        _inventory.UIModelAdd += AddModel;
-        _inventory.UIModelRemove += RemoveModel;
+        Inventory.Instance.UISlotChange += ChangeSelectedSlot;
+        Inventory.Instance.UIModelAdd += AddModel;
+        Inventory.Instance.UIModelRemove += RemoveModel;
         _itemPickUp.UIChangeText += ChangeText;
     }
 
@@ -43,9 +41,8 @@ public class InventoryUI : MonoBehaviour
     private void AddModel(GameObject model, int slot)
     {
         Debug.Log("Add "+model+"in slot "+slot);
-        GameObject newModel = GameObject.Instantiate(model);
-        newModel.transform.parent = _inventoryBar.transform;
-        newModel.transform.position = _slots[slot].transform.position;
+        GameObject newModel = Instantiate(model);
+        Debug.Log(model.name);
         _items[slot] = newModel;
     }
     private void RemoveModel(int slot)

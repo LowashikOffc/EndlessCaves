@@ -59,7 +59,7 @@ public class PropertyModifier : MonoBehaviour {
 		effects.dithering = input.isOn;
 	}
 
-	public void SetSF(Slider input) {
+	public void SetSF(UnityEngine.UI.Slider input) {
 		effects.subtractFade = (int)(input.value * 100);
 	}
 	public void SetDR(InputField input) {

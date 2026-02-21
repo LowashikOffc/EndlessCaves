@@ -5,10 +5,10 @@ public class InputReceiver : MonoBehaviour
 {
     public static InputReceiver Instance { get; private set; }
 
-    public event Action<bool> _w;
-    public event Action<bool> _a;
-    public event Action<bool> _s;
-    public event Action<bool> _d;
+    public event Action<float> HorizontalAxis;
+    public event Action<float> VerticalAxis;
+    public event Action Jump;
+    public event Action<int> SlotSelect;
 
     private void Awake()
     {
@@ -21,20 +21,35 @@ public class InputReceiver : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        
     }
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.W)) _w?.Invoke(true);
-        else _w?.Invoke(false);
+        HorizontalAxis?.Invoke(Input.GetAxis("Horizontal"));
+        VerticalAxis?.Invoke(Input.GetAxis("Vertical"));
 
-        if (Input.GetKey(KeyCode.A)) _a?.Invoke(true);
-        else _a?.Invoke(false);
-
-        if (Input.GetKey(KeyCode.S)) _s?.Invoke(true);
-        else _s?.Invoke(false);
-
-        if (Input.GetKey(KeyCode.D)) _d?.Invoke(true);
-        else _d?.Invoke(false);
+        if (Input.anyKey)
+        {
+            foreach (char c in Input.inputString)
+            {
+                if (char.IsLetterOrDigit(c))
+                {
+                    string s = c.ToString();
+                    for (int i = 1; i <= 9; i++)
+                    {
+                        if (s == i.ToString())
+                        { 
+                            SlotSelect?.Invoke(i);
+                        } 
+                    }
+                }
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Jump?.Invoke();
+        }
     }
 }

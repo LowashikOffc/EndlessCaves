@@ -20,21 +20,21 @@ public class ValueInput : MonoBehaviour
     public void onEdited()
     {
         string val = gameObject.GetComponent<TMP_InputField>().text;
-        slider.GetComponent<Slider>().value = float.Parse(val);
+        slider.GetComponent<UnityEngine.UI.Slider>().value = float.Parse(val);
         print(val);
         if (slider.name == "SliderFPS")
         {
-            Application.targetFrameRate = (int)slider.GetComponent<Slider>().value;
+            Application.targetFrameRate = (int)slider.GetComponent<UnityEngine.UI.Slider>().value;
         }
         if (slider.name == "Brightness")
         {
             volume.profile.TryGetSettings(out colGr);
-            colGr.colorFilter.value = new Color32((byte)slider.GetComponent<Slider>().value, (byte)slider.GetComponent<Slider>().value, (byte)slider.GetComponent<Slider>().value, 255);
+            colGr.colorFilter.value = new Color32((byte)slider.GetComponent<UnityEngine.UI.Slider>().value, (byte)slider.GetComponent<UnityEngine.UI.Slider>().value, (byte)slider.GetComponent<UnityEngine.UI.Slider>().value, 255);
         }
         if (slider.name == "Smoothing")
         {
             volume.profile.TryGetSettings(out colGr);
-            colGr.colorFilter.value = new Color32((byte)slider.GetComponent<Slider>().value, (byte)slider.GetComponent<Slider>().value, (byte)slider.GetComponent<Slider>().value, 255);
+            colGr.colorFilter.value = new Color32((byte)slider.GetComponent<UnityEngine.UI.Slider>().value, (byte)slider.GetComponent<UnityEngine.UI.Slider>().value, (byte)slider.GetComponent<UnityEngine.UI.Slider>().value, 255);
         }
     }
 }

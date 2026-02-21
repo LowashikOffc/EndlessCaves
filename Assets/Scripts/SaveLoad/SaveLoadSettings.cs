@@ -73,6 +73,7 @@ public class SaveLoadSettings : MonoBehaviour
 
     private void Start()
     {
+        
         set = JsonUtility.FromJson<Settings>(File.ReadAllText(file));
         b1 = set.b1;
         b2 = set.b2;

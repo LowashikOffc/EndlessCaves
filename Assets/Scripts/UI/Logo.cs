@@ -13,6 +13,9 @@ public class Logo : MonoBehaviour
     void Start()
     {
         StartCoroutine(logo());
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
     private void LoadScene()

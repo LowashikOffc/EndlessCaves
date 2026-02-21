@@ -5,12 +5,12 @@ using UnityEngine;
 public class Prams : MonoBehaviour
 {
     [SerializeField] private SceneLoader _sceneLoader;
-    [SerializeField] private float hp = 100f;
-    [SerializeField] private TMP_Text txt;
-    [SerializeField] private AudioSource lowHp;
-    [SerializeField] private GameObject Hook;
-    [SerializeField] private GameObject dieScreen;
-    [SerializeField] private AudioSource dieSound;
+    [SerializeField] private float _hp = 100f;
+    [SerializeField] private TMP_Text _txt;
+    [SerializeField] private AudioSource _lowHp;
+    [SerializeField] private GameObject _hook;
+    [SerializeField] private GameObject _dieScreen;
+    [SerializeField] private AudioSource _dieSound;
     private Rigidbody _rigidbody;
     private CharacterController _characterController;
     private void Start()
@@ -24,10 +24,10 @@ public class Prams : MonoBehaviour
     {
         while (true)
         {
-            if (hp < 100 && hp > 0)
+            if (_hp < 100 && _hp > 0)
             {
-                hp += 1;
-                txt.text = "Hp: " + hp.ToString();
+                _hp += 1;
+                _txt.text = "Hp: " + _hp.ToString();
             }
             yield return new WaitForSeconds(1.213456f);
         }
@@ -35,25 +35,23 @@ public class Prams : MonoBehaviour
     }
     void Update()
     {
-        if (hp > 0f)
+        if (_hp > 0f)
         {
-            txt.text = "Hp: " + hp.ToString();
-            lowHp.volume = (0.005f - hp / 20000);
+            //_txt.text = "Hp: " + _hp.ToString();
+            //_lowHp.volume = (0.005f - _hp / 20000);
         }
-        if (hp == 0f)
+        if (_hp <= 0f)
         {
-            hp = -100;
+            _hp = -100;
             _rigidbody.constraints = RigidbodyConstraints.None;
             _rigidbody.useGravity = true;
             _characterController.canMove = false;
             _characterController.canCrouch = false;
             gameObject.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
-            Destroy(Hook);
-            dieSound.Play();
-            dieScreen.SetActive(true);
-        }
-        else if (hp <= 0f)
-        {
+            Destroy(_hook);
+            _dieSound.Play();
+            _dieScreen.SetActive(true);
+
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
                 Cursor.lockState = CursorLockMode.None;

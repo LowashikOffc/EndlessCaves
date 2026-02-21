@@ -12,7 +12,7 @@ public class ItemName : MonoBehaviour
 
     private void Start()
     {
-        
+
     }
     void LateUpdate()
     {
