@@ -16,6 +16,7 @@ public class Graple : MonoBehaviour
     [SerializeField] private AudioSource _throw;
     [SerializeField] private GameObject _rope;
     [SerializeField] private byte _throwForce = 12;
+    [SerializeField] private float _speedMultiply = 200;
     [SerializeField] private bool _hooked = false;
     [SerializeField] private bool _selected = true;
     private MeshRenderer _ropeRenderer;
@@ -55,7 +56,7 @@ public class Graple : MonoBehaviour
                         _rigitbody.velocity = Camera.main.transform.forward * _throwForce;
                         _collision.enabled = true;
                         _hooked = false;
-                        _playerRigitbody.useGravity = true;
+                        //_playerRigitbody.useGravity = true;
                         _characterController.canMove = true;
                         _speed = 0.9f;
                         _hookVisual.SetActive(true);
@@ -68,15 +69,7 @@ public class Graple : MonoBehaviour
             }
             if (Input.GetKey(KeyCode.Mouse1))
             {
-                _rigitbody.isKinematic = true;
-                _hookVisual.SetActive(false);
-                _rope.SetActive(false);
-                _playerRigitbody.useGravity = true;
-                _characterController.canMove = true;
-                _hooked = false;
-                _rope.transform.localScale = new Vector3(0, 0, 0);
-                en = false;
-                //Debug.Log(6);
+                HookFire();
             }
             if (Input.GetAxis("Mouse ScrollWheel") > 0f)
             {
@@ -97,13 +90,21 @@ public class Graple : MonoBehaviour
             _rope.transform.up = startPos - endPos;
             _rope.transform.localScale = new Vector3(0.01f, (_hook.transform.position - Camera.main.transform.position).magnitude / 2, 0.01f);
             _rope.transform.position = Vector3.Lerp(_rope.transform.position, new Vector3(startPos.x + endPos.x, startPos.y + endPos.y, startPos.z + endPos.z) / 2f, Time.deltaTime * 1000);
-            if (en == true)
-            {
-                Profiler.BeginSample("My Sample");
-                _ropeRenderer.sharedMaterial.mainTextureScale = new Vector2(0.05f, startPos.y - endPos.y) * 4;
-                Profiler.EndSample();
-            }
+
         }
+    }
+
+    private void HookFire()
+    {
+        _rigitbody.isKinematic = true;
+        _hookVisual.SetActive(false);
+        _rope.SetActive(false);
+        //_playerRigitbody.useGravity = true;
+        _characterController.canMove = true;
+        _hooked = false;
+        _rope.transform.localScale = new Vector3(0, 0, 0);
+        en = false;
+        //Debug.Log(6);
     }
 
     private void FixedUpdate()
@@ -111,8 +112,8 @@ public class Graple : MonoBehaviour
         if (_hooked == true)
         {
             _hook.transform.forward = _collision2.gameObject.transform.position;
-            _playerRigitbody.AddForce((_hook.transform.position - _player.transform.position).normalized * _speed * Time.deltaTime * 4500f + Vector3.down * 60);
-            _playerRigitbody.AddForce(_player.gameObject.transform.up * -9.8f);
+            _playerRigitbody.AddForce((_hook.transform.position - _player.transform.position).normalized * _speed * _speedMultiply);
+            //_playerRigitbody.AddForce(_player.gameObject.transform.up * -9.8f);
         }
     }
 
@@ -125,7 +126,7 @@ public class Graple : MonoBehaviour
             _collision.enabled = false;
             _collision2 = collision.collider.gameObject;
             _hooked = true;
-            _playerRigitbody.useGravity = false;
+            //_playerRigitbody.useGravity = false;
             _characterController.canMove = false;
         }
     }

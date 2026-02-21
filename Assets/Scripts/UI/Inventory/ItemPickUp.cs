@@ -7,10 +7,10 @@ public class ItemPickUp : MonoBehaviour
 {
     [SerializeField] private Inventory _inventory;
     [SerializeField] private Camera _camera;
-    private Vector3 _direction;
-    private RaycastHit _hit;
     [SerializeField] private float _maxRayDistance;
     [SerializeField] private LayerMask _targetMask;
+    private Vector3 _direction;
+    private RaycastHit _hit;
     private GameObject _targetObject;
     private Item _targetItem;
 
