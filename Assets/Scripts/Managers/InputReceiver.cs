@@ -20,9 +20,7 @@ public class InputReceiver : MonoBehaviour
         else
         {
             Destroy(gameObject);
-        }
-
-        
+        }   
     }
 
     private void Update()

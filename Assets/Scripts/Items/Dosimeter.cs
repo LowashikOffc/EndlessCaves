@@ -53,35 +53,6 @@ public class Dosimeter : MonoBehaviour
         {
             txt.text = "0 Çâ/÷";
         }
-        dosimeter.transform.Find("Screen").GetComponent<Renderer>().material.color = new Color(Mathf.Clamp(0 + totalRadiation / 2,0,0.5f),0.5f - totalRadiation / 2, 0)/15;
-    }
-
-    private void Start()
-    {
-        StartCoroutine(wait());
-        StartCoroutine(wait2());
-    }
-    IEnumerator wait()
-    {
-        while (true)
-        {
-            if (totalRadiation > 0.1f && pl.GetComponent<InventoryScript>().currentItem == dosimeter)
-            {
-                AudioSource.PlayClipAtPoint(snd.clip, dosimeter.transform.position,0.1f);
-            }
-            yield return new WaitForSeconds(distance / Random.Range(0.2f, 1.5f)/ 60);
-        }
-    }
-
-    IEnumerator wait2()
-    {
-        while (true)
-        {
-            if (totalRadiation > 5f && pl.GetComponent<InventoryScript>().currentItem == dosimeter)
-            {
-                snd2.Play();
-            }
-            yield return new WaitForSeconds(0.2f);
-        }
+        dosimeter.transform.Find("Screen").GetComponent<Renderer>().material.color = new Color(Mathf.Clamp(0 + totalRadiation / 2, 0, 0.5f), 0.5f - totalRadiation / 2, 0) / 15;
     }
 }

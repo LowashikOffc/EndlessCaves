@@ -68,15 +68,15 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 90, y: 90}
+        m_Scale: {x: 60, y: 60}
         m_Offset: {x: 0, y: 0}
     - _LODTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 0bd79f5a34f7dfc41957ff2c934f825b, type: 3}
-        m_Scale: {x: 90, y: 90}
+        m_Texture: {fileID: 2800000, guid: cc2b76a726f8c26439f489bfee7a31fd, type: 3}
+        m_Scale: {x: 60, y: 60}
         m_Offset: {x: 0, y: 0}
     - _MetalMap:
         m_Texture: {fileID: 0}
@@ -130,7 +130,7 @@ Material:
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BlendOp: 0
-    - _BumpScale: 0.3
+    - _BumpScale: 0
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cul: 2
@@ -146,10 +146,10 @@ Material:
     - _EnableExternalAlpha: 0
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0.498
-    - _Glossiness: 0.6
+    - _Glossiness: 0.794
     - _GlossyReflections: 1
     - _LODAmt: 0
-    - _Metallic: 0.5
+    - _Metallic: 0.551
     - _Mode: 0
     - _NormalMapDepth: 1
     - _OcclusionStrength: 1

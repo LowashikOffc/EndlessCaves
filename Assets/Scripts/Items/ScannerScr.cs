@@ -34,7 +34,6 @@ public class ScannerScr : MonoBehaviour
     public GameObject targetObject;
 
     Settings set;
-    SaveLoadSettings sett;
     public GameObject settObj;
     private string file = "Json.txt";
 
@@ -43,17 +42,17 @@ public class ScannerScr : MonoBehaviour
     {
 
         discSpaceTxt.text = discSpace + "/" + maxSpace + "kb";
-        set = new Settings();
-        sett = settObj.GetComponent<SaveLoadSettings>();
-        set = JsonUtility.FromJson<Settings>(File.ReadAllText(file));
-        if (set.Language == "English")
-        {
-            language = "En";
-        }
-        else if (set.Language == "Русский")
-        {
-            language = "Ru";
-        }
+        //set = new Settings();
+        //sett = settObj.GetComponent<SaveLoadSettings>();
+        //set = JsonUtility.FromJson<Settings>(File.ReadAllText(file));
+        //if (set.Language == "English")
+        //{
+        //    language = "En";
+        //}
+        //else if (set.Language == "Русский")
+        //{
+        //    language = "Ru";
+        //}
     }
     void Update()
     {

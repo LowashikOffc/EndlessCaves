@@ -1,22 +1,38 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System.IO;
-using UnityEngine.UI;
 using System;
 
 [Serializable]
 public class Settings
 {
-    public bool b1;
-    public bool b2;
-    public bool b3;
-    public bool b4;
-    public float maxFps;
-    public float Brightness;
-    public float Smoothing;
-    public float Sens;
-    public float Volume;
-    public string Language;
+    #region Input
+    public byte _mouseSensitivity;
+    public bool _invertMouseX;
+    public bool _invertMouseY;
+    #endregion
+
+    #region Graphics
+    public bool _vignette;
+    public bool _grain;
+    public bool _ambientOcclusion;
+    public byte _gamma;
+    public bool _vSync;
+    public byte _maxFps;
+    public byte _viewDistance;
+    public byte _shadowsQuality;
+    public byte _particleQuality;
+    public byte _TextureQuality;
+    public byte _antiAliasing;
+    #endregion
+
+    #region Audio
+    public byte _masterVolume;
+    public byte _ambient;
+    public byte _music;
+    public byte _guiSounds;
+    #endregion
+
+    #region UI
+    public byte _scale;
+    public string _language;
+    #endregion
 
 }
