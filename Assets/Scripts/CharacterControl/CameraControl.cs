@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.UI.Image;
 
 public class CameraControl : MonoBehaviour
 {
@@ -40,6 +41,7 @@ public class CameraControl : MonoBehaviour
             Orient.rotation = Quaternion.Euler(0, _yRotation, 0);
             plr.transform.rotation = Quaternion.Euler(0, _yRotation, 0);
         }
+        Debug.DrawRay(Orient.position, transform.forward, Color.yellow);
 
     }
 }

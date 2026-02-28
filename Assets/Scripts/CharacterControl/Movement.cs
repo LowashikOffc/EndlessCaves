@@ -6,13 +6,13 @@ public class Movement : MonoBehaviour
 
     private float _hAxis; 
     private float _vAxis;
+    private bool _ray1, _ray2, _ray3, _ray4;
     private bool _isGrounded;
+    [SerializeField] private Transform _groundChecker;
 
     [SerializeField] private float _speed;
     [SerializeField] private float _jumpForce;
-    private float _accelerationFactor = 2f;
-    private float _airAccelerationFactor = 0.2f;
-    private float _speedMultiply = 0.7f;
+    private float _speedMultiply = 0.05f;
 
     private RaycastHit _hit;
 
@@ -35,22 +35,31 @@ public class Movement : MonoBehaviour
 
     private void GroundCheck()
     {
-        Vector3 origin = transform.position - transform.up/2f;
-        Vector3 direction = -transform.up / 5;
+        Vector3 origin = _groundChecker.position;
+        Vector3 direction = Vector3.down;
 
-        Debug.DrawRay(origin, direction, Color.red);
+        float groundCheckDistance = 0.1f;
+        Debug.DrawRay(origin + Vector3.forward * gameObject.transform.localScale.x / 4, direction * groundCheckDistance, Color.red);
+        Debug.DrawRay(origin - Vector3.forward * gameObject.transform.localScale.x / 4, direction * groundCheckDistance, Color.red);
+        Debug.DrawRay(origin + Vector3.right * gameObject.transform.localScale.x / 4, direction * groundCheckDistance, Color.red);
+        Debug.DrawRay(origin - Vector3.right * gameObject.transform.localScale.x / 4, direction * groundCheckDistance, Color.red);
 
-        float groundCheckDistance = 0.05f;
-        if (Physics.Raycast(origin, direction, out _hit, groundCheckDistance))
+        _ray1 = Physics.Raycast(origin + Vector3.forward * gameObject.transform.localScale.x/4, direction, out _hit, groundCheckDistance);
+        _ray2 = Physics.Raycast(origin - Vector3.forward * gameObject.transform.localScale.x/4, direction, out _hit, groundCheckDistance);
+        _ray3 = Physics.Raycast(origin + Vector3.right * gameObject.transform.localScale.x/4, direction, out _hit, groundCheckDistance);
+        _ray4 = Physics.Raycast(origin - Vector3.right * gameObject.transform.localScale.x/4, direction, out _hit, groundCheckDistance);
+
+        if (_ray1 == true || _ray2 == true || _ray3 == true || _ray4 == true)
         {
-            _isGrounded = true; // Нашел землю в пределах дистанции
+            _isGrounded = true;
         }
         else
         {
-            _isGrounded = false; // Не нашел
+            _isGrounded = false;
         }
-        Debug.Log(_isGrounded); 
+        Debug.Log(_isGrounded);
     }
+
     private void Jump()
     {
         if (_isGrounded)
@@ -69,17 +78,11 @@ public class Movement : MonoBehaviour
 
     void FixedUpdate()
     {
-        Vector3 direction = (transform.right * _hAxis + transform.forward * _vAxis).normalized;
-        float currentSpeed = Vector3.Dot(_rigidbody.velocity, direction);
-        float targetSpeed = _speed * _speedMultiply;
-        float speedDifference = targetSpeed - currentSpeed;
-
-        // Разные коэффициенты ускорения на земле и в воздухе
-        float currentAcceleration = _isGrounded ? _accelerationFactor : _airAccelerationFactor;
-        Vector3 acceleration = direction * speedDifference * currentAcceleration;
-
-
-        _rigidbody.AddForce(acceleration, ForceMode.Acceleration);
+        Vector3 moveDirection = (transform.right * _hAxis + transform.forward * _vAxis).normalized * _speedMultiply * _speed + transform.up * _rigidbody.velocity.y;
+        if (_isGrounded)
+        {
+            _rigidbody.velocity =  moveDirection;
+        }
 
     }
 }

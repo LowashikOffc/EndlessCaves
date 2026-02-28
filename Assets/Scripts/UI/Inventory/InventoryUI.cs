@@ -35,7 +35,7 @@ public class InventoryUI : MonoBehaviour
 
     private void LateUpdate()
     {   
-        _selectFrame.transform.position = Vector2.Lerp(_selectFrame.transform.position, _selectedSlot.transform.position, Time.deltaTime * 30);
+        //_selectFrame.transform.position = Vector2.Lerp(_selectFrame.transform.position, _selectedSlot.transform.position, Time.deltaTime * 30);
     }
 
     private void AddModel(GameObject model, int slot)
