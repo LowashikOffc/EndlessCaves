@@ -9,8 +9,6 @@ public class PlayBtn : MonoBehaviour
     public AudioSource snd;
     public void PlayButton()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
         snd.Play();
         StartCoroutine(GameStart());
     }

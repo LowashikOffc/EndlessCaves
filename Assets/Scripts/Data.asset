@@ -13,8 +13,21 @@ MonoBehaviour:
   m_Name: Data
   m_EditorClassIdentifier: 
   _biomes:
-  - _caveSize: 5
-    _stalagmiteFrequency: 0.5
-    _stalactiteFrequency: 0.7
-    _stoneMaterial: {fileID: 7555185752953191562, guid: 77d8edfc255c08540a0d2a526840bcc3, type: 3}
-    _material: 0
+  - _BiomeName: Upper shafts
+    _caveSize: 4
+    _stalagmiteFrequency: 0.2
+    _stalactiteFrequency: 0.4
+    _stoneMaterials: []
+    _materials: 03000000
+  - _BiomeName: Middle shafts
+    _caveSize: 6
+    _stalagmiteFrequency: 0.4
+    _stalactiteFrequency: 0.5
+    _stoneMaterials: []
+    _materials: 030000000000000004000000
+  - _BiomeName: Deep mines
+    _caveSize: 9
+    _stalagmiteFrequency: 0.8
+    _stalactiteFrequency: 0.6
+    _stoneMaterials: []
+    _materials: 0000000001000000020000000500000006000000

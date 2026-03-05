@@ -1,16 +1,16 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
-
-
 
 [Serializable]
 class BiomeData
 {
+    [SerializeField] private string _BiomeName;
     [SerializeField] private float _caveSize;
     [SerializeField] private float _stalagmiteFrequency;
     [SerializeField] private float _stalactiteFrequency;
-    [SerializeField] private Material _stoneMaterial;
-    [SerializeField] private Minerals _material;
+    [SerializeField] private List<Material> _stoneMaterials;
+    [SerializeField] private List<Minerals> _materials;
 }
 
 [CreateAssetMenu(fileName = "Data", menuName = "Config/Generation Config", order = 1)]
@@ -25,10 +25,10 @@ public class GenerationConfig : ScriptableObject
 
 public enum Minerals
 {
-    Iron,
+    Silver,
     Gold,
+    Lead,
     Copper,
-    Coal,
     Amethyst,
     Quartz,
     Torbernite, //Радиоактивный

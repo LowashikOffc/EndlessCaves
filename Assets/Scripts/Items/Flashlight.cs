@@ -1,53 +1,63 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Flashlight : MonoBehaviour
 {
-    public Light l1;
-    public TMP_Text text;
-    public AudioSource snd;
-    public float energy = 1000;
-    public bool CanEn = true;
+    [SerializeField] private Light _lightSource;
+    [SerializeField] private TMP_Text _text;
+    [SerializeField] private Vector3 _offset;
+    private Camera _camera;
+    private float _energy = 1000;
+    private bool _canEnable = true;
 
     void Start()
     {
+        _camera = Camera.main;
         StartCoroutine(FlEnergyDown());
     }
     void Update()
     {
-        text.text = "Fl: " + energy / 10;
-        if (Input.GetKeyDown(KeyCode.F)&&l1.enabled == false && energy > 0)
+        _text.text = "Fl: " + _energy / 10;
+        if (Input.GetKeyDown(KeyCode.F)&&_lightSource.enabled == false && _energy > 0)
         {
-            if (CanEn == true)
+            if (_canEnable == true)
             {
-                l1.enabled = true;
-                snd.Play();
+                _lightSource.enabled = true;
+                SoundService.Instance.PlaySound(SoundID.flashlight, transform.position, 0.2f);
             }
         }
-        else if (Input.GetKeyDown(KeyCode.F) && l1.enabled == true)
+        else if (Input.GetKeyDown(KeyCode.F) && _lightSource.enabled == true)
         {
-            l1.enabled = false;
-            snd.Play();
+            _lightSource.enabled = false;
+            SoundService.Instance.PlaySound(SoundID.flashlight, transform.position, 0.2f);
         }
     }
 
+    private void LateUpdate()
+    {
+        transform.position = Vector3.Lerp(transform.position, _camera.transform.position
+            + _camera.transform.right * _offset.x
+            + _camera.transform.up * _offset.y
+            + _camera.transform.forward * _offset.z,
+            Time.deltaTime * 10);
+
+        transform.rotation = Quaternion.Lerp(transform.rotation, _camera.transform.rotation, Time.deltaTime * 10);
+    }
     IEnumerator FlEnergyDown()
     {
         while (true)
         {
-            if (l1.enabled == true && energy > 0)
+            if (_lightSource.enabled == true && _energy > 0)
             {
-                energy -= 1f;
+                _energy -= 1f;
             }
-            else if (l1.enabled == true && energy == 0)
+            else if (_lightSource.enabled == true && _energy == 0)
             {
-                if (CanEn == true)
+                if (_canEnable == true)
                 {
-                    CanEn = false;
+                    _canEnable = false;
                     Off();
                 }
             }
@@ -57,7 +67,7 @@ public class Flashlight : MonoBehaviour
 
     void Off()
     {
-        l1.enabled = false;
-        snd.Play();
+        _lightSource.enabled = false;
+        SoundService.Instance.PlaySound(SoundID.flashlight, transform.position, 0.2f);
     }
 }

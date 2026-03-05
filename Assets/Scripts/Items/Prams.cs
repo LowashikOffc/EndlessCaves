@@ -45,8 +45,6 @@ public class Prams : MonoBehaviour
             _hp = -100;
             _rigidbody.constraints = RigidbodyConstraints.None;
             _rigidbody.useGravity = true;
-            _characterController.canMove = false;
-            _characterController.canCrouch = false;
             gameObject.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
             Destroy(_hook);
             _dieSound.Play();
@@ -54,8 +52,6 @@ public class Prams : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
                 _sceneLoader.LoadSceneByIndex(1);
             }
         }

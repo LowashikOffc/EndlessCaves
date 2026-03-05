@@ -1,26 +1,22 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Logo : MonoBehaviour
 {
     [SerializeField] private TMP_Text _text;
     [SerializeField] private AudioSource _snd;
     [SerializeField] private AudioSource _del;
-    [SerializeField] private SceneLoader _sceneLoader;
     void Start()
     {
         StartCoroutine(logo());
 
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.Confined;
     }
 
     private void LoadScene()
     {
-        _sceneLoader.LoadSceneByIndex(1);
+        MouseController.Instance.UpdateState(false, true);
+        SceneLoader.Instance.LoadSceneByIndex(1);
     }
     private void Update()
     {

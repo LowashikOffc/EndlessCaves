@@ -127,7 +127,7 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _LODAmt: 0
-    - _Metallic: 0
+    - _Metallic: 0.879
     - _Mode: 0
     - _NormalMapDepth: 1
     - _OcclusionStrength: 1

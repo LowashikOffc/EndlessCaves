@@ -24,8 +24,6 @@ public class Moving : MonoBehaviour
     private void Start()
     {
         csp = crouchSpeed;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
         controller = gameObject.AddComponent<UnityEngine.CharacterController>();
         StartCoroutine(speedCount());
     }

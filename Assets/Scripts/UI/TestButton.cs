@@ -15,8 +15,6 @@ public class TestButton : MonoBehaviour
 
     IEnumerator GameStart()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
         yield return new WaitForSeconds(1);
         SceneManager.LoadScene("Testing");
     }
