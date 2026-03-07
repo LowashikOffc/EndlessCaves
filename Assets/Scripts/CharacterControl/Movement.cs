@@ -1,7 +1,4 @@
-using System;
-using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Movement : MonoBehaviour
 {
@@ -13,7 +10,7 @@ public class Movement : MonoBehaviour
     private float _speedMultiply = 0.05f;
     private float _speed;
     private float _currentSpeed;
-    private float _distance—overed;
+    private float _distanceCovered;
     private float _hAxis; 
     private float _vAxis;
 
@@ -61,21 +58,21 @@ public class Movement : MonoBehaviour
     {
         if (!_isGrounded) return;
         _currentSpeed = Mathf.Floor((transform.position - _savedPosition).magnitude*100)/100;
-        _distance—overed += _currentSpeed;
+        _distanceCovered += _currentSpeed;
         //Debug.Log(_distance—overed);
-        if (_distance—overed >= _distanceToStep && _distance—overed < _distanceToLanding) 
+        if (_distanceCovered >= _distanceToStep && _distanceCovered < _distanceToLanding) 
         {
             //Debug.Log("try to play sound");
-            _distance—overed = 0;
+            _distanceCovered = 0;
             if (UnityEngine.Random.Range(1,3) == 1) SoundService.Instance.PlaySound3D(SoundID.step1, _groundChecker.position, 0.5f);
             else SoundService.Instance.PlaySound3D(SoundID.step2, _groundChecker.position, 0.5f);
 
 
         }
-        else if (_distance—overed >= _distanceToLanding) 
+        else if (_distanceCovered >= _distanceToLanding) 
         {
             //Debug.Log("try to play sound");
-            _distance—overed = 0;
+            _distanceCovered = 0;
             SoundService.Instance.PlaySound3D(SoundID.grounded, _groundChecker.position, 0.5f);
         }
         _savedPosition = transform.position;

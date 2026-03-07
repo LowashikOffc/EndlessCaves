@@ -45,7 +45,7 @@ public class MouseController : MonoBehaviour
         CursorLockMode locked;
         if (lockState) locked = CursorLockMode.Locked;
         else locked = CursorLockMode.Confined;
-        Debug.Log("LockMode: "+locked+"; Visible: "+visible);
+        //Debug.Log("LockMode: "+locked+"; Visible: "+visible);
         Cursor.lockState = locked;
         Cursor.visible = visible;
     }

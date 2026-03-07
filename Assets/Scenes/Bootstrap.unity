@@ -151,9 +151,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0453450347aefd64eafdfb3115595846, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAchievements:
-    Welcome_to_depth: 0
-    Point_of_no_return: 0
+  _currentAchievements:
+    Welcome_to_depth: 1
+    Point_of_no_return: 1
     Hooked: 0
     Amateur_speleologist: 0
     Thrifty: 0

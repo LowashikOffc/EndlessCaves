@@ -21,7 +21,7 @@ public class MenuRandEffect : MonoBehaviour
         fade.color = new Color(0, 0, 0, 1);
         StartCoroutine(wait());
         int rand = Random.Range(0, 50);
-        Debug.Log(rand);
+        //Debug.Log(rand);
         if (rand == 0)
         {
             l1.color = Color.red;

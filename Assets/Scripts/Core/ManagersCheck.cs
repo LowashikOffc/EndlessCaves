@@ -7,7 +7,7 @@ public class ManagersCheck : MonoBehaviour
     {
         if (GameObject.Find("SceneLoader"))
         {
-            Debug.Log("SceneLoader обнаружен.");
+            //Debug.Log("SceneLoader обнаружен.");
         }
         else
         {

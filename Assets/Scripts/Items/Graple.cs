@@ -3,6 +3,7 @@ using UnityEngine;
 public class Graple : MonoBehaviour
 {
     [SerializeField] private GameObject _hook;
+    [SerializeField] private Transform _ropeStartPosition;
     [SerializeField] private GameObject _hookVisual;
     [SerializeField] private GameObject _player;
     [SerializeField] private Rigidbody _rigitbody;
@@ -95,10 +96,10 @@ public class Graple : MonoBehaviour
 
     private void RopeVisuals()
     {
-        Vector3 startPos = _hook.transform.position;
+        Vector3 startPos = _ropeStartPosition.position;
         Vector3 endPos = Camera.main.transform.position - Camera.main.transform.up * 0.2f + Camera.main.transform.right * -0.1f;
         _rope.transform.up = startPos - endPos;
-        _rope.transform.localScale = new Vector3(0.01f, (_hook.transform.position - Camera.main.transform.position).magnitude / 2, 0.01f);
+        _rope.transform.localScale = new Vector3(0.007f, (_hook.transform.position - Camera.main.transform.position).magnitude / 2, 0.007f);
         _rope.transform.position = Vector3.Lerp(_rope.transform.position, new Vector3(startPos.x + endPos.x, startPos.y + endPos.y, startPos.z + endPos.z) / 2f, Time.deltaTime * 1000);
     }
 

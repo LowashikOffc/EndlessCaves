@@ -27,7 +27,7 @@ public class SettingsManager : MonoBehaviour
         string json = JsonUtility.ToJson(currentSettings, true);
 
         File.WriteAllText(saveFilePath, json);
-        Debug.Log("Settings saved to: " + saveFilePath);
+        //Debug.Log("Settings saved to: " + saveFilePath);
     }
 
     public void LoadSettings()
@@ -37,12 +37,12 @@ public class SettingsManager : MonoBehaviour
             string json = File.ReadAllText(saveFilePath);
 
             currentSettings = JsonUtility.FromJson<Settings>(json);
-            Debug.Log("Settings loaded.");
+            //Debug.Log("Settings loaded.");
 
         }
         else
         {
-            Debug.LogWarning("Settings file not found. Creating default settings.");
+            //Debug.LogWarning("Settings file not found. Creating default settings.");
             currentSettings = new Settings();
             SaveSettings();
         }
