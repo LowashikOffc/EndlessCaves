@@ -67,8 +67,8 @@ public class Movement : MonoBehaviour
         {
             //Debug.Log("try to play sound");
             _distance—overed = 0;
-            if (UnityEngine.Random.Range(1,3) == 1) SoundService.Instance.PlaySound(SoundID.step1, _groundChecker.position, 0.5f);
-            else SoundService.Instance.PlaySound(SoundID.step2, _groundChecker.position, 0.5f);
+            if (UnityEngine.Random.Range(1,3) == 1) SoundService.Instance.PlaySound3D(SoundID.step1, _groundChecker.position, 0.5f);
+            else SoundService.Instance.PlaySound3D(SoundID.step2, _groundChecker.position, 0.5f);
 
 
         }
@@ -76,7 +76,7 @@ public class Movement : MonoBehaviour
         {
             //Debug.Log("try to play sound");
             _distance—overed = 0;
-            SoundService.Instance.PlaySound(SoundID.grounded, _groundChecker.position, 0.5f);
+            SoundService.Instance.PlaySound3D(SoundID.grounded, _groundChecker.position, 0.5f);
         }
         _savedPosition = transform.position;
     }
@@ -124,7 +124,7 @@ public class Movement : MonoBehaviour
             _rigidbody.velocity = Vector3.zero;
             _rigidbody.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
             //Debug.Log("try to play sound");
-            SoundService.Instance.PlaySound(SoundID.jump, _groundChecker.position, 0.5f);
+            SoundService.Instance.PlaySound3D(SoundID.jump, _groundChecker.position, 0.5f);
         }
     }
     private void Sprint(bool state)

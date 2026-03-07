@@ -14,24 +14,24 @@ public class Flashlight : MonoBehaviour
 
     void Start()
     {
+        InputReceiver.Instance.Flashlight += StateChange;
         _camera = Camera.main;
         StartCoroutine(FlEnergyDown());
     }
-    void Update()
+    private void StateChange()
     {
-        _text.text = "Fl: " + _energy / 10;
-        if (Input.GetKeyDown(KeyCode.F)&&_lightSource.enabled == false && _energy > 0)
+        if (!_lightSource.enabled && _energy > 0)
         {
             if (_canEnable == true)
             {
                 _lightSource.enabled = true;
-                SoundService.Instance.PlaySound(SoundID.flashlight, transform.position, 0.2f);
+                SoundService.Instance.PlaySound3D(SoundID.flashlight, transform.position, 0.2f);
             }
         }
-        else if (Input.GetKeyDown(KeyCode.F) && _lightSource.enabled == true)
+        else if (_lightSource.enabled)
         {
             _lightSource.enabled = false;
-            SoundService.Instance.PlaySound(SoundID.flashlight, transform.position, 0.2f);
+            SoundService.Instance.PlaySound3D(SoundID.flashlight, transform.position, 0.2f);
         }
     }
 
@@ -44,6 +44,8 @@ public class Flashlight : MonoBehaviour
             Time.deltaTime * 10);
 
         transform.rotation = Quaternion.Lerp(transform.rotation, _camera.transform.rotation, Time.deltaTime * 10);
+
+        _text.text = "Fl: " + _energy / 10;
     }
     IEnumerator FlEnergyDown()
     {
@@ -68,6 +70,6 @@ public class Flashlight : MonoBehaviour
     void Off()
     {
         _lightSource.enabled = false;
-        SoundService.Instance.PlaySound(SoundID.flashlight, transform.position, 0.2f);
+        SoundService.Instance.PlaySound3D(SoundID.flashlight, transform.position, 0.2f);
     }
 }

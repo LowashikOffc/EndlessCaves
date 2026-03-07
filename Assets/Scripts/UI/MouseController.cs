@@ -37,7 +37,7 @@ public class MouseController : MonoBehaviour
 
     private void UpdateTexture(Texture2D texture)
     {
-        Cursor.SetCursor(texture, Vector3.zero + Vector3.up * 8, CursorMode.Auto);
+        Cursor.SetCursor(texture, Vector3.zero + Vector3.up * 2, CursorMode.Auto);
     }
 
     public void UpdateState(bool lockState, bool visible)

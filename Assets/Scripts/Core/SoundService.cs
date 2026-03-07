@@ -25,7 +25,39 @@ public class SoundService : MonoBehaviour
         }
     }
 
-    public void PlaySound(SoundID id, Vector3 position)
+    public void PlaySound(SoundID id)
+    {
+        foreach (var sound in _sounds)
+        {
+            if (sound._id == ((int)id))
+            {
+                GameObject newSoundObj = new GameObject($"Sound_{sound._audioClip.name}");
+                AudioSource newSound = newSoundObj.AddComponent<AudioSource>();
+                newSound.clip = sound._audioClip;
+                newSound.spread = 360;
+                newSound.Play();
+                Destroy(newSoundObj, newSound.clip.length + 1f);
+            }
+        }
+    }
+    public void PlaySound(SoundID id, float volume)
+    {
+        foreach (var sound in _sounds)
+        {
+            if (sound._id == ((int)id))
+            {
+                GameObject newSoundObj = new GameObject($"Sound_{sound._audioClip.name}");
+                AudioSource newSound = newSoundObj.AddComponent<AudioSource>();
+                newSound.clip = sound._audioClip;
+                newSound.spread = 360;
+                newSound.volume = volume;
+                newSound.Play();
+                Destroy(newSoundObj, newSound.clip.length + 1f);
+            }
+        }
+    }
+
+    public void PlaySound3D(SoundID id, Vector3 position)
     {
         foreach (var sound in _sounds)
         {
@@ -34,9 +66,9 @@ public class SoundService : MonoBehaviour
                 AudioSource.PlayClipAtPoint(sound._audioClip, position, 1);
             }
         }
-        
+
     }
-    public void PlaySound(SoundID id, Vector3 position, float volume)
+    public void PlaySound3D(SoundID id, Vector3 position, float volume)
     {
         foreach (var sound in _sounds)
         {

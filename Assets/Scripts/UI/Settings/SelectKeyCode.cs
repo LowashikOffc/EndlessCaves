@@ -17,7 +17,6 @@ public class SelectKeyCode : MonoBehaviour
     [SerializeField] private ButtonLibrary[] _buttons;
     [SerializeField] private GameObject _screenBlock;
 
-    //private Button _selectedButton;
     private TMP_Text _selectedText;
     private KeyCode _selectedkeyCode;
     private string _selectedKeyWord;
@@ -69,7 +68,6 @@ public class SelectKeyCode : MonoBehaviour
     void OnAnyButtonClick(ButtonLibrary lib)
     {
         _screenBlock.SetActive(true);
-        //_selectedButton = lib._button;
         _selectedKeyWord = lib._keyWord;
         _selectedText = lib._keyCodeText;
         _selectedkeyCode = lib._keyCode;

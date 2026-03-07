@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 
 public class InputReceiver : MonoBehaviour
@@ -46,7 +47,9 @@ public class InputReceiver : MonoBehaviour
         else
         {
             Destroy(gameObject);
-        }   
+        }
+        SettingsManager.instance.LoadSettings();
+        Load();
     }
 
     private void Update()
@@ -86,7 +89,7 @@ public class InputReceiver : MonoBehaviour
         }
         if (Input.anyKeyDown)
         {
-            foreach (KeyCode keyCode in System.Enum.GetValues(typeof(KeyCode)))
+            foreach (KeyCode keyCode in Enum.GetValues(typeof(KeyCode)))
             {
                 if (Input.GetKeyDown(keyCode))
                 {
@@ -141,6 +144,38 @@ public class InputReceiver : MonoBehaviour
         else if (keyword == "zoom") _zoomButton = keycode;
         else if (keyword == "interact") _interactButton = keycode;
         else if (keyword == "drop") _dropButton = keycode;
+        Save();
+    }
+
+    private void Save()
+    {
+        Settings.Instance._front = _upButton;
+        Settings.Instance._left = _leftButton;
+        Settings.Instance._back = _downButton;
+        Settings.Instance._right = _rightButton;
+        Settings.Instance._jump = _jumpButton;
+        Settings.Instance._sprint = _sprintButton;
+        Settings.Instance._crouch = _crouchButton;
+        Settings.Instance._flashlight = _flashlightButton;
+        Settings.Instance._zoom = _zoomButton;
+        Settings.Instance._interact = _interactButton;
+        Settings.Instance._drop = _dropButton;
+        SettingsManager.instance.SaveSettings();
+    }
+
+    private void Load()
+    {
+        _upButton = Settings.Instance._front;
+        _leftButton = Settings.Instance._left;
+        _downButton = Settings.Instance._back;
+        _rightButton = Settings.Instance._right;
+        _jumpButton = Settings.Instance._jump;
+        _sprintButton = Settings.Instance._sprint;
+        _crouchButton = Settings.Instance._crouch;
+        _flashlightButton = Settings.Instance._flashlight;
+        _zoomButton = Settings.Instance._zoom;
+        _interactButton = Settings.Instance._interact;
+        _dropButton = Settings.Instance._drop;
     }
 
     public KeyCode GetKey(string keyword)

@@ -1,12 +1,25 @@
-using System;
+using UnityEngine;
 
-[Serializable]
+[System.Serializable]
 public class Settings
 {
+    public static Settings Instance { get; private set; }
     #region Input
     public byte _mouseSensitivity;
     public bool _invertMouseX;
     public bool _invertMouseY;
+
+    public KeyCode _front;
+    public KeyCode _left;
+    public KeyCode _back;
+    public KeyCode _right;
+    public KeyCode _jump;
+    public KeyCode _sprint;
+    public KeyCode _crouch;
+    public KeyCode _flashlight;
+    public KeyCode _zoom;
+    public KeyCode _interact;
+    public KeyCode _drop;
     #endregion
 
     #region Graphics
@@ -34,5 +47,8 @@ public class Settings
     public byte _scale;
     public string _language;
     #endregion
-
+    public Settings()
+    {
+        Instance = this;
+    }
 }

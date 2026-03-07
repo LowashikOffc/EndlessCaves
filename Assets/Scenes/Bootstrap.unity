@@ -122,6 +122,58 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &136091343
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 136091345}
+  - component: {fileID: 136091344}
+  m_Layer: 0
+  m_Name: AchievementManager
+  m_TagString: Inventory
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &136091344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 136091343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0453450347aefd64eafdfb3115595846, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentAchievements:
+    Welcome_to_depth: 0
+    Point_of_no_return: 0
+    Hooked: 0
+    Amateur_speleologist: 0
+    Thrifty: 0
+    Rock_bottom: 0
+    Dust_collector: 0
+--- !u!4 &136091345
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 136091343}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.0884838, y: 1.7167974, z: -3.2970698}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &219431300
 GameObject:
   m_ObjectHideFlags: 0
@@ -256,6 +308,82 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 219431300}
   m_CullTransparentMesh: 1
+--- !u!1 &359306691
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 359306693}
+  - component: {fileID: 359306692}
+  m_Layer: 0
+  m_Name: SettingsManager
+  m_TagString: Inventory
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &359306692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 359306691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0750dac919fe2414493477c0aad6e3e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentSettings:
+    _mouseSensitivity: 0
+    _invertMouseX: 0
+    _invertMouseY: 0
+    _front: 119
+    _left: 0
+    _back: 0
+    _right: 0
+    _jump: 0
+    _sprint: 0
+    _crouch: 0
+    _flashlight: 0
+    _zoom: 0
+    _interact: 0
+    _drop: 0
+    _vignette: 0
+    _grain: 0
+    _ambientOcclusion: 0
+    _gamma: 0
+    _vSync: 0
+    _maxFps: 0
+    _viewDistance: 0
+    _shadowsQuality: 0
+    _particleQuality: 0
+    _TextureQuality: 0
+    _antiAliasing: 0
+    _masterVolume: 0
+    _ambient: 0
+    _music: 0
+    _guiSounds: 0
+    _scale: 0
+    _language: 
+--- !u!4 &359306693
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 359306691}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.0884838, y: 1.7167974, z: -3.2970698}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &427208979
 GameObject:
   m_ObjectHideFlags: 0
@@ -860,7 +988,6 @@ MonoBehaviour:
   _text: {fileID: 219431303}
   _snd: {fileID: 1861092631}
   _del: {fileID: 1132609188}
-  _sceneLoader: {fileID: 733261160}
 --- !u!4 &1187564051
 Transform:
   m_ObjectHideFlags: 0
@@ -1278,3 +1405,5 @@ SceneRoots:
   - {fileID: 1740318855}
   - {fileID: 1521623401}
   - {fileID: 824056634}
+  - {fileID: 359306693}
+  - {fileID: 136091345}
