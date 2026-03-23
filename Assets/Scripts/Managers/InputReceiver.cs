@@ -15,7 +15,7 @@ public class InputReceiver : MonoBehaviour
     [SerializeField] KeyCode _crouchButton = KeyCode.LeftControl;
     [SerializeField] KeyCode _flashlightButton = KeyCode.F;
     [SerializeField] KeyCode _zoomButton = KeyCode.Z;
-    [SerializeField] KeyCode _interactButton = KeyCode.E;
+    [SerializeField] KeyCode _actionButton = KeyCode.E;
     [SerializeField] KeyCode _dropButton = KeyCode.Q;
 
     public event Action<float> HorizontalAxis;
@@ -100,7 +100,7 @@ public class InputReceiver : MonoBehaviour
         }
         if (Input.GetKeyDown(_jumpButton))Jump?.Invoke();
         if (Input.GetKeyDown(_flashlightButton)) Flashlight?.Invoke();
-        if (Input.GetKeyDown(_interactButton)) Interact?.Invoke();
+        if (Input.GetKeyDown(_actionButton)) Interact?.Invoke();
         if (Input.GetKeyDown(_dropButton)) Drop?.Invoke();
 
         if (Input.GetKeyDown(KeyCode.Mouse0)) HookThrow?.Invoke();
@@ -131,24 +131,60 @@ public class InputReceiver : MonoBehaviour
         }
     }
 
-    public void Rebind(string keyword, KeyCode keycode)
+    public void Rebind(settingsEnum keyEnum, KeyCode keycode)
     {
-        if (keyword == "forward") _upButton = keycode;
-        else if (keyword == "left") _leftButton = keycode;
-        else if (keyword == "back") _downButton = keycode;
-        else if (keyword == "right") _rightButton = keycode;
-        else if (keyword == "jump") _jumpButton = keycode;
-        else if (keyword == "sprint") _sprintButton = keycode;
-        else if (keyword == "crouch") _crouchButton = keycode;
-        else if (keyword == "flashlight") _flashlightButton = keycode;
-        else if (keyword == "zoom") _zoomButton = keycode;
-        else if (keyword == "interact") _interactButton = keycode;
-        else if (keyword == "drop") _dropButton = keycode;
+        switch (keyEnum)
+        {
+            case settingsEnum.frontKey:
+                _upButton = keycode;
+                break;
+
+            case settingsEnum.leftKey:
+                _leftButton = keycode;
+                break;
+
+            case settingsEnum.backKey:
+                _downButton = keycode;
+                break;
+
+            case settingsEnum.rightKey:
+                _rightButton = keycode;
+                break;
+
+            case settingsEnum.jumpKey:
+                _jumpButton = keycode;
+                break;
+
+            case settingsEnum.sprintKey:
+                _sprintButton = keycode;
+                break;
+
+            case settingsEnum.crouchKey:
+                _crouchButton = keycode;
+                break;
+
+            case settingsEnum.flashlightKey:
+                _flashlightButton = keycode;
+                break;
+
+            case settingsEnum.zoomKey:
+                _zoomButton = keycode;
+                break;
+
+            case settingsEnum.actionKey:
+                _actionButton = keycode;
+                break;
+
+            case settingsEnum.dropKey:
+                _dropButton = keycode;
+                break;
+        }
         Save();
     }
 
     private void Save()
     {
+        Debug.Log("Input Save");
         Settings.Instance._front = _upButton;
         Settings.Instance._left = _leftButton;
         Settings.Instance._back = _downButton;
@@ -158,7 +194,7 @@ public class InputReceiver : MonoBehaviour
         Settings.Instance._crouch = _crouchButton;
         Settings.Instance._flashlight = _flashlightButton;
         Settings.Instance._zoom = _zoomButton;
-        Settings.Instance._interact = _interactButton;
+        Settings.Instance._action = _actionButton;
         Settings.Instance._drop = _dropButton;
         SettingsManager.instance.SaveSettings();
     }
@@ -174,23 +210,47 @@ public class InputReceiver : MonoBehaviour
         _crouchButton = Settings.Instance._crouch;
         _flashlightButton = Settings.Instance._flashlight;
         _zoomButton = Settings.Instance._zoom;
-        _interactButton = Settings.Instance._interact;
+        _actionButton = Settings.Instance._action;
         _dropButton = Settings.Instance._drop;
     }
 
-    public KeyCode GetKey(string keyword)
+    public KeyCode GetKey(settingsEnum keyEnum)
     {
-        if (keyword == "forward") return _upButton;
-        else if (keyword == "left") return _leftButton;
-        else if (keyword == "back") return _downButton;
-        else if (keyword == "right") return _rightButton;
-        else if (keyword == "jump") return _jumpButton;
-        else if (keyword == "sprint") return _sprintButton;
-        else if (keyword == "crouch") return _crouchButton;
-        else if (keyword == "flashlight") return _flashlightButton;
-        else if (keyword == "zoom") return _zoomButton;
-        else if (keyword == "interact") return _interactButton;
-        else if (keyword == "drop") return _dropButton;
+        switch (keyEnum)
+        {
+            case settingsEnum.frontKey:
+                return _upButton;
+
+            case settingsEnum.leftKey:
+                return _leftButton;
+
+            case settingsEnum.backKey:
+                return _downButton;
+
+            case settingsEnum.rightKey:
+                return _rightButton;
+
+            case settingsEnum.jumpKey:
+                return _jumpButton;
+
+            case settingsEnum.sprintKey:
+                return _sprintButton;
+
+            case settingsEnum.crouchKey:
+                return _crouchButton;
+
+            case settingsEnum.flashlightKey:
+                return _flashlightButton;
+
+            case settingsEnum.zoomKey:
+                return _zoomButton;
+
+            case settingsEnum.actionKey:
+                return _actionButton;
+
+            case settingsEnum.dropKey:
+                return _dropButton;
+        }
         return KeyCode.None;
     }
 }

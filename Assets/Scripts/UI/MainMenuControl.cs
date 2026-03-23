@@ -11,6 +11,8 @@ public class MainMenuControl : MonoBehaviour
 
     [SerializeField] private Button _graphicsButton;
     [SerializeField] private Button _controlsButton;
+    [SerializeField] private Button _mouseButton;
+    [SerializeField] private Button _specialButton;
     [SerializeField] private Button _audioButton;
     [SerializeField] private Button _guiButton;
 
@@ -19,6 +21,8 @@ public class MainMenuControl : MonoBehaviour
 
     [SerializeField] private GameObject _graphics;
     [SerializeField] private GameObject _controls;
+    [SerializeField] private GameObject _mouse;
+    [SerializeField] private GameObject _special;
     [SerializeField] private GameObject _audio;
     [SerializeField] private GameObject _gui;
 
@@ -33,6 +37,9 @@ public class MainMenuControl : MonoBehaviour
         _graphicsButton.onClick.AddListener(Graphics);
         _controlsButton.onClick.AddListener(Controls);
         _audioButton.onClick.AddListener(Audio);
+        _guiButton.onClick.AddListener(Interface);
+        _mouseButton.onClick.AddListener(Mouse);
+        _specialButton.onClick.AddListener(Special);
     }
 
     private void Play()
@@ -59,11 +66,8 @@ public class MainMenuControl : MonoBehaviour
     private void Graphics()
     {
         SoundService.Instance.PlaySound(SoundID.buttonPress);
+        CloseAll();
         _graphics.SetActive(true);
-        _controls.SetActive(false);
-        _audio.SetActive(false);
-        return;
-        _gui.SetActive(false);
     }
 
     private void Achievements()
@@ -75,20 +79,42 @@ public class MainMenuControl : MonoBehaviour
     private void Controls()
     {
         SoundService.Instance.PlaySound(SoundID.buttonPress);
-        _graphics.SetActive(false);
+        CloseAll();
         _controls.SetActive(true);
-        _audio.SetActive(false);
-        return;
-        _gui.SetActive(false);
     }
 
     private void Audio()
     {
         SoundService.Instance.PlaySound(SoundID.buttonPress);
+        CloseAll();
+        _audio.SetActive(true);
+    }
+    private void Interface()
+    {
+        SoundService.Instance.PlaySound(SoundID.buttonPress);
+        CloseAll();
+        _gui.SetActive(true);
+    }
+    private void Mouse()
+    {
+        SoundService.Instance.PlaySound(SoundID.buttonPress);
+        CloseAll();
+        _mouse.SetActive(true);
+    }
+    private void Special()
+    {
+        SoundService.Instance.PlaySound(SoundID.buttonPress);
+        CloseAll();
+        _special.SetActive(true);
+    }
+
+    private void CloseAll()
+    {
         _graphics.SetActive(false);
         _controls.SetActive(false);
-        _audio.SetActive(true);
-        return;
+        _audio.SetActive(false);
         _gui.SetActive(false);
+        _mouse.SetActive(false);
+        _special.SetActive(false);
     }
 }

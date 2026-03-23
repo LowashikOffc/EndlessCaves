@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,7 +7,7 @@ public class ButtonLibrary
 {
     public Button _button;
     public TMP_Text _keyCodeText;
-    public string _keyWord;
+    public settingsEnum _settingsEnum;
     public KeyCode _keyCode;
 }
 
@@ -19,7 +18,7 @@ public class SelectKeyCode : MonoBehaviour
 
     private TMP_Text _selectedText;
     private KeyCode _selectedkeyCode;
-    private string _selectedKeyWord;
+    private settingsEnum _selectedSettingsEnum;
     private bool _isSelected = false;
 
     void Start()
@@ -29,7 +28,7 @@ public class SelectKeyCode : MonoBehaviour
         foreach (ButtonLibrary lib in _buttons)
         {
             lib._button.onClick.AddListener(() => OnAnyButtonClick(lib));
-            lib._keyCode = InputReceiver.Instance.GetKey(lib._keyWord);
+            lib._keyCode = InputReceiver.Instance.GetKey(lib._settingsEnum);
             lib._keyCodeText.text = "[" + lib._keyCode.ToString() + "]";
         }
     }
@@ -42,7 +41,7 @@ public class SelectKeyCode : MonoBehaviour
             string displayText = RenameKeyCode(keycode);
             _selectedText.text = "[" + displayText + "]";
             _selectedkeyCode = keycode;
-            InputReceiver.Instance.Rebind(_selectedKeyWord, _selectedkeyCode);
+            SettingsManager.instance.KeyCodeChange(_selectedSettingsEnum, keycode);
         }
 
         _isSelected = false;
@@ -68,7 +67,7 @@ public class SelectKeyCode : MonoBehaviour
     void OnAnyButtonClick(ButtonLibrary lib)
     {
         _screenBlock.SetActive(true);
-        _selectedKeyWord = lib._keyWord;
+        _selectedSettingsEnum = lib._settingsEnum;
         _selectedText = lib._keyCodeText;
         _selectedkeyCode = lib._keyCode;
 

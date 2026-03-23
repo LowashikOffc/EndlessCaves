@@ -18,7 +18,7 @@ public class Settings
     public KeyCode _crouch = KeyCode.LeftControl;
     public KeyCode _flashlight = KeyCode.F;
     public KeyCode _zoom = KeyCode.Z;
-    public KeyCode _interact = KeyCode.E;
+    public KeyCode _action = KeyCode.E;
     public KeyCode _drop = KeyCode.Q;
     #endregion
 
@@ -33,7 +33,7 @@ public class Settings
     public byte _shadowsQuality;
     public byte _particleQuality;
     public byte _TextureQuality;
-    public byte _antiAliasing;
+    public string _antiAliasing;
     #endregion
 
     #region Audio
