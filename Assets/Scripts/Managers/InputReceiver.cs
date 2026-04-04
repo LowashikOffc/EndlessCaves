@@ -112,11 +112,11 @@ public class InputReceiver : MonoBehaviour
         if (Input.GetKeyDown(_crouchButton)) Crouch?.Invoke(true);
         else if (Input.GetKeyUp(_crouchButton)) Crouch?.Invoke(false);
 
-        if (Input.GetKeyDown(KeyCode.Mouse0)) MouseR?.Invoke(true);
-        else if (Input.GetKeyUp(KeyCode.Mouse0)) MouseR?.Invoke(false);
+        if (Input.GetKeyDown(KeyCode.Mouse0)) MouseL?.Invoke(true);
+        else if (Input.GetKeyUp(KeyCode.Mouse0)) MouseL?.Invoke(false);
 
-        if (Input.GetKeyDown(KeyCode.Mouse1)) MouseL?.Invoke(true);
-        else if (Input.GetKeyUp(KeyCode.Mouse1)) MouseL?.Invoke(false);
+        if (Input.GetKeyDown(KeyCode.Mouse1)) MouseR?.Invoke(true);
+        else if (Input.GetKeyUp(KeyCode.Mouse1)) MouseR?.Invoke(false);
 
         if (Input.GetKeyDown(_zoomButton)) Zoom?.Invoke(true);
         else if (Input.GetKeyUp(_zoomButton)) Zoom?.Invoke(false);

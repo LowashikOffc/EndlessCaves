@@ -12,21 +12,21 @@ public class Graple : MonoBehaviour
     [SerializeField] private AudioSource _connect;
     [SerializeField] private AudioSource _throw;
     [SerializeField] private GameObject _rope;
+    private Camera _camera;
     private byte _throwForce = 12;
     private float _speedMultiply = 200;
     private bool _hooked = false;
     private MeshRenderer _ropeRenderer;
     private MeshRenderer _hookRenderer;
-    private GameObject _collision2;
     private Vector3 _hookLookPoint;
     private float _speed = 0.5f;
     private float _scrollAmount = 0.2f;
     private float _maxSpeed = 1f, _minSpeed = 0.3f;
-    private bool en = false;
     public bool _canThrow = true;
     
     private void Start()
     {
+        _camera = Camera.main;
         _playerRigitbody = _player.GetComponent<Rigidbody>();
         _ropeRenderer = _rope.GetComponent<MeshRenderer>();
         _hookRenderer = _hookVisual.GetComponent<MeshRenderer>();
@@ -34,6 +34,13 @@ public class Graple : MonoBehaviour
         InputReceiver.Instance.HookThrow += HookThrow;
         InputReceiver.Instance.HookReturn += HookReturn;
         InputReceiver.Instance.HooksScroll += Scroll;
+    }
+
+    private void OnDestroy()
+    {
+        InputReceiver.Instance.HookThrow -= HookThrow;
+        InputReceiver.Instance.HookReturn -= HookReturn;
+        InputReceiver.Instance.HooksScroll -= Scroll;
     }
 
     void LateUpdate()
@@ -54,20 +61,19 @@ public class Graple : MonoBehaviour
     {
         if (_canThrow == true)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
 
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
-                _hook.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 1;
+                _hook.transform.position = _camera.transform.position + _camera.transform.forward * 1;
                 _rigitbody.isKinematic = false;
-                _rigitbody.velocity = Camera.main.transform.forward * _throwForce;
+                _rigitbody.velocity = _camera.transform.forward * _throwForce;
                 _collision.enabled = true;
                 _hooked = false;
                 _hookVisual.SetActive(true);
                 _rope.SetActive(true);
-                en = true;
 
                 SoundService.Instance.PlaySound3D(SoundID.hookThrow, transform.position, 0.5f);
             }
@@ -81,7 +87,6 @@ public class Graple : MonoBehaviour
         _rope.SetActive(false);
         _hooked = false;
         _rope.transform.localScale = new Vector3(0, 0, 0);
-        en = false;
 
         SoundService.Instance.PlaySound3D(SoundID.hookReturn, transform.position, 0.5f);
     }
@@ -97,9 +102,9 @@ public class Graple : MonoBehaviour
     private void RopeVisuals()
     {
         Vector3 startPos = _ropeStartPosition.position;
-        Vector3 endPos = Camera.main.transform.position - Camera.main.transform.up * 0.2f + Camera.main.transform.right * -0.1f;
+        Vector3 endPos = _camera.transform.position - _camera.transform.up * 0.2f + _camera.transform.right * -0.1f;
         _rope.transform.up = startPos - endPos;
-        _rope.transform.localScale = new Vector3(0.007f, (_hook.transform.position - Camera.main.transform.position).magnitude / 2, 0.007f);
+        _rope.transform.localScale = new Vector3(0.007f, (_hook.transform.position - _camera.transform.position).magnitude / 2, 0.007f);
         _rope.transform.position = Vector3.Lerp(_rope.transform.position, new Vector3(startPos.x + endPos.x, startPos.y + endPos.y, startPos.z + endPos.z) / 2f, Time.deltaTime * 1000);
     }
 
@@ -112,7 +117,6 @@ public class Graple : MonoBehaviour
             _collision.enabled = false;
             ContactPoint contact = collision.contacts[0];
             _hookLookPoint = contact.point;
-            _collision2 = collision.collider.gameObject;
             _hooked = true;
         }
     }

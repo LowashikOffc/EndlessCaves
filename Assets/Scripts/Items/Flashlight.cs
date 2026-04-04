@@ -18,6 +18,11 @@ public class Flashlight : MonoBehaviour
         _camera = Camera.main;
         StartCoroutine(FlEnergyDown());
     }
+
+    private void OnDestroy()
+    {
+        InputReceiver.Instance.Flashlight -= StateChange;
+    }
     private void StateChange()
     {
         if (!_lightSource.enabled && _energy > 0)

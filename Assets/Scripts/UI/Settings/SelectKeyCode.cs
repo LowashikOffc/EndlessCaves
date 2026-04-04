@@ -32,6 +32,10 @@ public class SelectKeyCode : MonoBehaviour
             lib._keyCodeText.text = "[" + lib._keyCode.ToString() + "]";
         }
     }
+    private void OnDestroy()
+    {
+        InputReceiver.Instance.InputChange -= RepaintButton;
+    }
 
     private void RepaintButton(KeyCode keycode)
     {

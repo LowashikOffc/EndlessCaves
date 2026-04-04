@@ -34,6 +34,11 @@ public class Inventory : MonoBehaviour
     {
         InputReceiver.Instance.SlotSelect += SlotSelect;
     }
+
+    private void OnDestroy()
+    {
+        InputReceiver.Instance.SlotSelect -= SlotSelect;
+    }
     private void SlotSelect(int slotNumber)
     {
         _currentSlot = slotNumber - 1;

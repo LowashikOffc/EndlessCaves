@@ -29,6 +29,11 @@ public class MouseController : MonoBehaviour
         InputReceiver.Instance.MouseR += ClickR;
     }
 
+    private void OnDestroy()
+    {
+        InputReceiver.Instance.MouseR -= ClickR;
+    }
+
     private void ClickR(bool pressed)
     {
         if (pressed) UpdateTexture(_click);

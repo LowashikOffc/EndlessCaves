@@ -18,6 +18,7 @@ public class Movement : MonoBehaviour
     public bool _isGrounded, _isSprint, _isCrouch, _canUp;
 
     [SerializeField] private Transform _groundChecker;
+    [SerializeField] private Collider _collider;
     [SerializeField] private float _distanceToStep;
     [SerializeField] private float _distanceToLanding;
     [SerializeField] private float _walkSpeed;
@@ -31,6 +32,7 @@ public class Movement : MonoBehaviour
 
     void Start()
     {
+        _collider = gameObject.GetComponent<Collider>();
         _startSize = transform.localScale;
         _crouchSize = new Vector3(transform.localScale.x, transform.localScale.y/2, transform.localScale.z);
         _speed = _walkSpeed;
@@ -42,7 +44,15 @@ public class Movement : MonoBehaviour
         InputReceiver.Instance.Crouch += Crouch;
         InputReceiver.Instance.Sprint += Sprint;
     }
-    
+
+    private void OnDestroy()
+    {
+        InputReceiver.Instance.HorizontalAxis -= HAxisUpdate;
+        InputReceiver.Instance.VerticalAxis -= VAxisUpdate;
+        InputReceiver.Instance.Jump -= Jump;
+        InputReceiver.Instance.Crouch -= Crouch;
+        InputReceiver.Instance.Sprint -= Sprint;
+    }
     private void Update()
     {
         GroundCheck();
@@ -138,11 +148,11 @@ public class Movement : MonoBehaviour
 
         if (_isCrouch == true)
         {
-            transform.localScale = _crouchSize;
+            _collider.transform.localScale = _crouchSize;
         }
         else if (_isCrouch == false && _canUp == true)
         {
-            transform.localScale = _startSize;
+            _collider.transform.localScale = _startSize;
         }
     }
 

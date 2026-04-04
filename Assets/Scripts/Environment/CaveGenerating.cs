@@ -3,29 +3,27 @@ using UnityEngine;
 
 public class CaveGenerating : MonoBehaviour
 {
-    public GameObject root;
-    public GameObject pl;
+    public static CaveGenerating Instance { get; private set; }
 
-    public List<GameObject> rooms;
-    public GameObject currentRoom;
+    public List<GameObject> _rooms;
 
-    private void Start()
+    private void Awake()
     {
-    }
-    private void Generate()
-    {
-        int rand = UnityEngine.Random.Range(0, rooms.Count);
-        GameObject newRoom = rooms[rand];
-        GameObject newRoomInst = Instantiate(rooms[rand]);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
+        if (Instance == null)
         {
-            
-            Generate();
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+    public void Generate()
+    {
+        int rand = Random.Range(0, _rooms.Count);
+        GameObject newRoom = _rooms[rand];
+        GameObject newRoomInst = Instantiate(newRoom);
     }
 
 }

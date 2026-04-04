@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class State : MonoBehaviour
@@ -8,7 +6,6 @@ public class State : MonoBehaviour
     public bool inInv;
     public GameObject ItemPos;
     public GameObject cam;
-    public AudioSource snd;
     public Rigidbody rb;
     public int addXRotation = 0, addYRotation = 0, addZRotation = 0;
     private void Start()
@@ -48,6 +45,6 @@ public class State : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        AudioSource.PlayClipAtPoint(snd.clip, transform.position);
+        SoundService.Instance.PlaySound3D(SoundID.hookCollide,transform.position, 0.5f);
     }
 }

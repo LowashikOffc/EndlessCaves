@@ -21,6 +21,13 @@ public class InventoryUI : MonoBehaviour
         _itemPickUp.UIChangeText += ChangeText;
     }
 
+    private void OnDestroy()
+    {
+        Inventory.Instance.UISlotChange -= ChangeSelectedSlot;
+        Inventory.Instance.UIModelAdd -= AddModel;
+        Inventory.Instance.UIModelRemove -= RemoveModel;
+        _itemPickUp.UIChangeText -= ChangeText;
+    }
     private void ChangeText(string text, string subText)
     {
         _mainText.text = text;

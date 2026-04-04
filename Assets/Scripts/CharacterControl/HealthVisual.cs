@@ -9,6 +9,10 @@ public class HealthVisual : MonoBehaviour
         _healthManager.Add += Visuals;
     }
 
+    private void OnDestroy()
+    {
+        _healthManager.Add -= Visuals;
+    }
     private void Visuals(float health)
     {
         _currentHealth = health;

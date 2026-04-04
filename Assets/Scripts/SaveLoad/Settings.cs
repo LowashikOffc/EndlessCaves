@@ -47,6 +47,10 @@ public class Settings
     public byte _scale;
     public string _language;
     #endregion
+
+    #region Other
+    public int _fov;
+    #endregion
     public Settings()
     {
         Instance = this;
