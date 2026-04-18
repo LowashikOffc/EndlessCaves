@@ -175,7 +175,8 @@ public class SettingsManager : MonoBehaviour
                 break;
         }
 
-        SaveSettings();  // ✅ Не забудьте сохранить в файл!
+        SaveSettings();
+        InputReceiver.Instance.Rebind(_enum, value);
     }
     public void DropBoxChange(settingsEnum _enum, string value)
     {

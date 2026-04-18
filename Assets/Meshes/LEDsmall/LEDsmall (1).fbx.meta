@@ -1,34 +1,9 @@
 fileFormatVersion: 2
-guid: 9abd9a1e1ae486d41bb72a763eabac5c
+guid: 1f6910d2588d14441aa3dbf84378fc53
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: LEDsmall_ body
-    second: {fileID: 2100000, guid: 729fce6c64e4efe4e903c503f30ab033, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: LEDsmall_light
-    second: {fileID: 2100000, guid: 9eb2c3e0025f8b744b838dff333c7654, type: 2}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: LEDsmall_ body_BaseColor
-    second: {fileID: 2800000, guid: 9b7190d289654ba4dbb2efc6591f1ea6, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: LEDsmall_ body_Metallic
-    second: {fileID: 2800000, guid: a1777d3c7c1fa61439c1aed4195d4486, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: LEDsmall_ body_Roughness
-    second: {fileID: 2800000, guid: b2f40929afeecda458d775660f3ab054, type: 3}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -115,7 +90,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.04
+    globalScale: 0.0004
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
