@@ -68,7 +68,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 20, y: 10}
+        m_Scale: {x: 20, y: 15}
         m_Offset: {x: 0, y: 0}
     - _LODTex:
         m_Texture: {fileID: 0}
@@ -76,7 +76,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 8fda1978d2462924f85f1c28555511ae, type: 3}
-        m_Scale: {x: 20, y: 10}
+        m_Scale: {x: 20, y: 15}
         m_Offset: {x: 0, y: 0}
     - _MetalMap:
         m_Texture: {fileID: 0}

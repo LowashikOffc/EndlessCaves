@@ -1,16 +1,15 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
-class BiomeData
+[System.Serializable]
+public class BiomeData
 {
-    [SerializeField] private string _BiomeName;
-    [SerializeField] private float _caveSize;
-    [SerializeField] private float _stalagmiteFrequency;
-    [SerializeField] private float _stalactiteFrequency;
-    [SerializeField] private List<Material> _stoneMaterials;
-    [SerializeField] private List<Minerals> _materials;
+    public string _BiomeName;
+    public float _caveSize;
+    public float _stalagmiteAndStalactiteFrequency;
+    public float _startDepth;
+    public List<Material> _stoneMaterials;
+    public List<Minerals> _materials;
 }
 
 [CreateAssetMenu(fileName = "Data", menuName = "Config/Generation Config", order = 1)]
@@ -20,7 +19,15 @@ public class GenerationConfig : ScriptableObject
     private float _currentStalagmiteFrequency;
     private float _currentStalactiteFrequency;
 
-    [SerializeField] private BiomeData[] _biomes;
+    public BiomeData[] _biomes;
+
+}
+public enum BiomeName
+{
+    UpperShafts = 0,
+    MiddleShafts =  1,
+    DeepMines = 2,
+    MagmaDepths = 3,
 }
 
 public enum Minerals

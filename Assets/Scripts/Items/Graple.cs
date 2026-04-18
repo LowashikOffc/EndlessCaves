@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Graple : MonoBehaviour
@@ -16,6 +17,7 @@ public class Graple : MonoBehaviour
     private byte _throwForce = 12;
     private float _speedMultiply = 200;
     private bool _hooked = false;
+    private bool _canScroll = true;
     private MeshRenderer _ropeRenderer;
     private MeshRenderer _hookRenderer;
     private Vector3 _hookLookPoint;
@@ -31,6 +33,7 @@ public class Graple : MonoBehaviour
         _ropeRenderer = _rope.GetComponent<MeshRenderer>();
         _hookRenderer = _hookVisual.GetComponent<MeshRenderer>();
 
+        if (InputReceiver.Instance == null) return;
         InputReceiver.Instance.HookThrow += HookThrow;
         InputReceiver.Instance.HookReturn += HookReturn;
         InputReceiver.Instance.HooksScroll += Scroll;
@@ -38,6 +41,7 @@ public class Graple : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (InputReceiver.Instance == null) return;
         InputReceiver.Instance.HookThrow -= HookThrow;
         InputReceiver.Instance.HookReturn -= HookReturn;
         InputReceiver.Instance.HooksScroll -= Scroll;
@@ -82,6 +86,7 @@ public class Graple : MonoBehaviour
 
     private void HookReturn()
     {
+        if (_hooked == false) return;
         _rigitbody.isKinematic = true;
         _hookVisual.SetActive(false);
         _rope.SetActive(false);
@@ -93,12 +98,22 @@ public class Graple : MonoBehaviour
 
     private void Scroll(int direction)
     {
-        _speed += direction * _scrollAmount;
-        _speed = Mathf.Clamp(_speed, _minSpeed, _maxSpeed);
-        Debug.Log(_speed);
-        SoundService.Instance.PlaySound3D(SoundID.hookScroll, transform.position, 0.01f);
+        if (_canScroll == true)
+        {
+            _canScroll = false;
+            _speed += direction * _scrollAmount;
+            _speed = Mathf.Clamp(_speed, _minSpeed, _maxSpeed);
+            Debug.Log(_speed);
+            SoundService.Instance.PlaySound3D(SoundID.ropePull, transform.position, 0.05f);
+            StartCoroutine(ScrollWait());
+        }
     }
 
+    IEnumerator ScrollWait()
+    {
+        yield return new WaitForSeconds(0.1f);
+        _canScroll = true;
+    }
     private void RopeVisuals()
     {
         Vector3 startPos = _ropeStartPosition.position;
@@ -108,9 +123,10 @@ public class Graple : MonoBehaviour
         _rope.transform.position = Vector3.Lerp(_rope.transform.position, new Vector3(startPos.x + endPos.x, startPos.y + endPos.y, startPos.z + endPos.z) / 2f, Time.deltaTime * 1000);
     }
 
+
     private void OnCollisionEnter(Collision collision)
     {
-        SoundService.Instance.PlaySound3D(SoundID.hookCollide, transform.position, 0.5f);
+        SoundService.Instance.PlaySound3D(SoundID.hookCollide, transform.position, 0.3f);
         if (collision.gameObject.tag == "Hookable")
         {
             _rigitbody.isKinematic = true;

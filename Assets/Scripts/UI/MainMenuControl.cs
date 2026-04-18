@@ -44,66 +44,66 @@ public class MainMenuControl : MonoBehaviour
 
     private void Play()
     {
-        SoundService.Instance.PlaySound(SoundID.buttonPress);
+        SoundService.Instance.PlaySound(SoundID.uiPress);
         MouseController.Instance.UpdateState(true, false);
         SceneLoader.Instance.LoadSceneByIndex(2);
     }
 
     private void Tutorial()
     {
-        SoundService.Instance.PlaySound(SoundID.buttonPress);
+        SoundService.Instance.PlaySound(SoundID.uiPress);
         MouseController.Instance.UpdateState(true, false);
         SceneLoader.Instance.LoadSceneByIndex(3);
     }
 
     private void Settings()
     {
-        SoundService.Instance.PlaySound(SoundID.buttonPress);
+        SoundService.Instance.PlaySound(SoundID.uiPress);
         _settingsMenu.SetActive(true);
         _achievementsMenu.SetActive(false);
     }
 
     private void Graphics()
     {
-        SoundService.Instance.PlaySound(SoundID.buttonPress);
+        SoundService.Instance.PlaySound(SoundID.uiPress);
         CloseAll();
         _graphics.SetActive(true);
     }
 
     private void Achievements()
     {
-        SoundService.Instance.PlaySound(SoundID.buttonPress);
+        SoundService.Instance.PlaySound(SoundID.uiPress);
         _settingsMenu.SetActive(false);
         _achievementsMenu.SetActive(true);
     }
     private void Controls()
     {
-        SoundService.Instance.PlaySound(SoundID.buttonPress);
+        SoundService.Instance.PlaySound(SoundID.uiPress);
         CloseAll();
         _controls.SetActive(true);
     }
 
     private void Audio()
     {
-        SoundService.Instance.PlaySound(SoundID.buttonPress);
+        SoundService.Instance.PlaySound(SoundID.uiPress);
         CloseAll();
         _audio.SetActive(true);
     }
     private void Interface()
     {
-        SoundService.Instance.PlaySound(SoundID.buttonPress);
+        SoundService.Instance.PlaySound(SoundID.uiPress);
         CloseAll();
         _gui.SetActive(true);
     }
     private void Mouse()
     {
-        SoundService.Instance.PlaySound(SoundID.buttonPress);
+        SoundService.Instance.PlaySound(SoundID.uiPress);
         CloseAll();
         _mouse.SetActive(true);
     }
     private void Special()
     {
-        SoundService.Instance.PlaySound(SoundID.buttonPress);
+        SoundService.Instance.PlaySound(SoundID.uiPress);
         CloseAll();
         _special.SetActive(true);
     }

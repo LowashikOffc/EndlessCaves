@@ -9,18 +9,21 @@ public class Flashlight : MonoBehaviour
     [SerializeField] private TMP_Text _text;
     [SerializeField] private Vector3 _offset;
     private Camera _camera;
-    private float _energy = 1000;
+    private float _energy = 10000;
     private bool _canEnable = true;
 
     void Start()
     {
-        InputReceiver.Instance.Flashlight += StateChange;
         _camera = Camera.main;
         StartCoroutine(FlEnergyDown());
+
+        if (InputReceiver.Instance == null) return;
+        InputReceiver.Instance.Flashlight += StateChange;
     }
 
     private void OnDestroy()
     {
+        if (InputReceiver.Instance == null) return;
         InputReceiver.Instance.Flashlight -= StateChange;
     }
     private void StateChange()
@@ -68,7 +71,7 @@ public class Flashlight : MonoBehaviour
                     Off();
                 }
             }
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.4f);
         }    
     }
 

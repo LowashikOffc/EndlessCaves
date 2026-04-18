@@ -45,6 +45,7 @@ public class State : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
+        if (SoundService.Instance == null) return;
         SoundService.Instance.PlaySound3D(SoundID.hookCollide,transform.position, 0.5f);
     }
 }

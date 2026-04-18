@@ -38,6 +38,7 @@ public class Movement : MonoBehaviour
         _speed = _walkSpeed;
         _rigidbody = GetComponent<Rigidbody>();
 
+        if (InputReceiver.Instance == null) return;
         InputReceiver.Instance.HorizontalAxis += HAxisUpdate;
         InputReceiver.Instance.VerticalAxis += VAxisUpdate;
         InputReceiver.Instance.Jump += Jump;
@@ -47,6 +48,7 @@ public class Movement : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (InputReceiver.Instance == null) return;
         InputReceiver.Instance.HorizontalAxis -= HAxisUpdate;
         InputReceiver.Instance.VerticalAxis -= VAxisUpdate;
         InputReceiver.Instance.Jump -= Jump;
@@ -74,8 +76,11 @@ public class Movement : MonoBehaviour
         {
             //Debug.Log("try to play sound");
             _distanceCovered = 0;
-            if (UnityEngine.Random.Range(1,3) == 1) SoundService.Instance.PlaySound3D(SoundID.step1, _groundChecker.position, 0.5f);
-            else SoundService.Instance.PlaySound3D(SoundID.step2, _groundChecker.position, 0.5f);
+            int rand = Random.Range(0, 4);
+            if (rand == 0) SoundService.Instance.PlaySound3D(SoundID.step1, _groundChecker.position, 0.5f);
+            else if (rand == 1) SoundService.Instance.PlaySound3D(SoundID.step2, _groundChecker.position, 0.5f);
+            else if (rand == 2) SoundService.Instance.PlaySound3D(SoundID.step3, _groundChecker.position, 0.5f);
+            else if (rand == 3) SoundService.Instance.PlaySound3D(SoundID.step4, _groundChecker.position, 0.5f);
 
 
         }
@@ -137,7 +142,6 @@ public class Movement : MonoBehaviour
     private void Sprint(bool state)
     {
         _isSprint = state;
-        Debug.Log(_speed);
     }
     private void Crouch(bool state)
     {

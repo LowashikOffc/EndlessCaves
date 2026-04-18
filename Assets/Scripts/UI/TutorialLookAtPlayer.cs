@@ -4,7 +4,7 @@ using UnityEngine;
 public class TutorialLookAtPlayer : MonoBehaviour
 {
     private GameObject _player;
-    private Quaternion _quaternion;
+    private Quaternion _quaternion = Quaternion.Euler(0,0,0);
     void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player");

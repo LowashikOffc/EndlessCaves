@@ -16,6 +16,7 @@ public class ItemPickUp : MonoBehaviour
 
     private void Start()
     {
+        if (!GameObject.FindWithTag("Inventory")) return;
         _inventory = GameObject.FindWithTag("Inventory").GetComponent<Inventory>();
     }
     void Update()

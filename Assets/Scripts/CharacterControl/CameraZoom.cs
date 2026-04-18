@@ -11,10 +11,12 @@ public class CameraZoom : MonoBehaviour
 
     private void Start()
     {
+        if (InputReceiver.Instance == null) return;
         InputReceiver.Instance.Zoom += Zoom;
     }
     private void OnDestroy()
     {
+        if (InputReceiver.Instance == null) return;
         InputReceiver.Instance.Zoom -= Zoom;
     }
     private void Zoom(bool state)

@@ -50,6 +50,7 @@ public class UISelectVisuals : MonoBehaviour
 
     private void HoverEnter(ButtonsLibrary lib)
     {
+        SoundService.Instance.PlaySound(SoundID.uiHover);
         if (lib._animate == true)
         {
             _selectedText = lib._text;
@@ -61,6 +62,7 @@ public class UISelectVisuals : MonoBehaviour
 
     private void HoverExit(ButtonsLibrary lib)
     {
+        SoundService.Instance.PlaySound(SoundID.uiHoverExit);
         _selectedText = null;
         _selectedStartText = null;
         lib._text.text = lib._startText;
