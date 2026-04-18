@@ -2694,6 +2694,7 @@ MonoBehaviour:
     _ends: []
   _generationConfig: {fileID: 11400000, guid: 4df3abacad3c55f4784ece04cb612576, type: 2}
   _folder: {fileID: 1629317006}
+  _stonePrefab: {fileID: 3192750099790579971, guid: 2702a272347a8c142ba8c688cdbd7efa, type: 3}
   _maxRooms: 150
   _branchRoomID: 0
   _branchGenerations: 3

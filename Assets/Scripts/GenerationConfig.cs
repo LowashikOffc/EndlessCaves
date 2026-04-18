@@ -12,6 +12,13 @@ public class BiomeData
     public List<Minerals> _materials;
 }
 
+[System.Serializable]
+public class PropData
+{
+    public GameObject _props;
+    public Minerals _mineral;
+}
+
 [CreateAssetMenu(fileName = "Data", menuName = "Config/Generation Config", order = 1)]
 public class GenerationConfig : ScriptableObject
 {
@@ -20,6 +27,7 @@ public class GenerationConfig : ScriptableObject
     private float _currentStalactiteFrequency;
 
     public BiomeData[] _biomes;
+    public PropData[] _props;
 
 }
 public enum BiomeName
@@ -40,5 +48,5 @@ public enum Minerals
     Quartz,
     Torbernite, //Радиоактивный
     Silicon, //Для чипов
-
+    Glowing_mushroom, //Для чипов
 }

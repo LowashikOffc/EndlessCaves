@@ -1,6 +1,8 @@
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.UIElements;
 
 [System.Serializable]
 public class Room
@@ -15,6 +17,7 @@ public class CaveGenerating : MonoBehaviour
     [SerializeField] private List<Room> _rooms;
     [SerializeField] private GenerationConfig _generationConfig;
     [SerializeField] private GameObject _folder;
+    [SerializeField] private GameObject _stonePrefab;
     [SerializeField] private float _maxRooms;
     [SerializeField] private int _branchRoomID;
     [SerializeField] private int _branchGenerations = 3;
@@ -51,11 +54,20 @@ public class CaveGenerating : MonoBehaviour
     private GameObject RoomSelect(int random, RoomTag tag)
     {
         if (tag == RoomTag.branch && random == _branchRoomID)
-            random = (random + 1) % _rooms.Count;
+        {
+             random = (random + 1) % _rooms.Count;
+        }
 
         GameObject newRoom = Instantiate(_rooms[random]._room);
         newRoom.transform.SetParent(_folder.transform);
         return newRoom;
+    }
+
+    private void GenerateStone(Vector3 position)
+    {
+        GameObject stone = Instantiate(_stonePrefab);
+        stone.transform.SetParent(_folder.transform);
+        stone.transform.position = _lastExitPosition;
     }
 
     private List<Transform> EndPointsFind(GameObject room)
@@ -153,6 +165,12 @@ public class CaveGenerating : MonoBehaviour
         _lastExitPosition = exitPoint.position;
         _lastExitRotation = exitPoint.rotation;
 
+        if (Random.Range(0, 3) == 0)
+        {
+            GenerateStone(_lastExitPosition);
+            //return;
+        }
+
         for (int i = 0; i < _branchGenerations; i++)
         {
             GenerateBranch();
@@ -166,7 +184,7 @@ public class CaveGenerating : MonoBehaviour
     {
         int rand = Random.Range(0, _rooms.Count);
         GameObject newRoom = RoomSelect(rand, RoomTag.branch);
-
+        if (newRoom == null) return;
         Transform newStart = newRoom.transform.Find("StartPoint");
         List<Transform> ends = EndPointsFind(newRoom);
 

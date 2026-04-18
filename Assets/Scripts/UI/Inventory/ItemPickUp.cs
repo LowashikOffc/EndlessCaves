@@ -18,7 +18,16 @@ public class ItemPickUp : MonoBehaviour
     {
         if (!GameObject.FindWithTag("Inventory")) return;
         _inventory = GameObject.FindWithTag("Inventory").GetComponent<Inventory>();
+        InputReceiver.Instance.Interact += UpdateInventory;
+        InputReceiver.Instance.Drop += Drop;
     }
+
+    private void OnDestroy()
+    {
+        InputReceiver.Instance.Interact -= UpdateInventory;
+        InputReceiver.Instance.Drop -= Drop;
+    }
+
     void Update()
     {
         _direction = _camera.transform.forward;
@@ -38,16 +47,18 @@ public class ItemPickUp : MonoBehaviour
             _targetObject = null;
         }
         //Debug.DrawRay(_camera.transform.position,_direction, new Color(0,1,0), _maxRayDistance);
+    }
 
-        if (Input.GetKeyDown(KeyCode.Tab)&& _targetObject != null)
+    private void Drop()
+    {
+        _inventory.Remove();
+    }
+    private void UpdateInventory()
+    {
+        if (_targetObject != null)
         {
             _targetItem = _targetObject.GetComponent<ItemConfig>().Item;
             _inventory.Add(_targetItem);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            _inventory.Remove();
         }
     }
 }

@@ -41,3 +41,13 @@ MonoBehaviour:
     _stoneMaterials:
     - {fileID: 2100000, guid: 6fb4d63f210b777498b3cf2e14fa2c82, type: 2}
     _materials: 0000000001000000020000000500000006000000
+  - _BiomeName: Mushroom Caves
+    _caveSize: 9
+    _stalagmiteAndStalactiteFrequency: 0.3
+    _startDepth: -500
+    _stoneMaterials:
+    - {fileID: 2100000, guid: 67bca2857de4efb4bb6183828c0bc635, type: 2}
+    _materials: 0000000001000000020000000500000004000000
+  _props:
+  - _props: {fileID: 0}
+    _mineral: 0

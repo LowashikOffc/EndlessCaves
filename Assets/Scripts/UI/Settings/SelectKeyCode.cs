@@ -29,7 +29,8 @@ public class SelectKeyCode : MonoBehaviour
         {
             lib._button.onClick.AddListener(() => OnAnyButtonClick(lib));
             lib._keyCode = InputReceiver.Instance.GetKey(lib._settingsEnum);
-            lib._keyCodeText.text = "[" + lib._keyCode.ToString() + "]";
+            string text = "[" + lib._keyCode.ToString() + "]";
+            lib._keyCodeText.text = text;
         }
     }
     private void OnDestroy()
@@ -42,8 +43,9 @@ public class SelectKeyCode : MonoBehaviour
         if (_isSelected == true)
         {
             _screenBlock.SetActive(false);
-            string displayText = RenameKeyCode(keycode);
-            _selectedText.text = "[" + displayText + "]";
+            string displayText = $"[{RenameKeyCode(keycode)}]";
+            Debug.Log(displayText);
+            _selectedText.text = displayText;
             _selectedkeyCode = keycode;
             SettingsManager.instance.KeyCodeChange(_selectedSettingsEnum, keycode);
         }
@@ -68,12 +70,13 @@ public class SelectKeyCode : MonoBehaviour
         return keycode.ToString();
     }
 
-    void OnAnyButtonClick(ButtonLibrary lib)
+    private void OnAnyButtonClick(ButtonLibrary lib)
     {
         _screenBlock.SetActive(true);
         _selectedSettingsEnum = lib._settingsEnum;
         _selectedText = lib._keyCodeText;
         _selectedkeyCode = lib._keyCode;
+        Debug.Log(lib._keyCode);
 
         _isSelected = true;
     }

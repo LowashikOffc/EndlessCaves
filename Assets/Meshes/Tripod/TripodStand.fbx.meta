@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f824b2bf6da0ecc4da31b3b8fcc1b633
+guid: a9fe7c6fecb91074eb3ac92500b150a9
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -14,16 +14,6 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: TripodStand_Light
     second: {fileID: 2100000, guid: 78e6e83d449b6714899e5d2bc0e43d8c, type: 2}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: TripodStand_Body_BaseColor
-    second: {fileID: 2800000, guid: 02a7a27ae7a44324ea5871223a1167fe, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: TripodStand_Body_Roughness
-    second: {fileID: 2800000, guid: c24f9ba0325d14c4bbd74cd0b39774b7, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -110,7 +100,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.05
+    globalScale: 0.0005
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

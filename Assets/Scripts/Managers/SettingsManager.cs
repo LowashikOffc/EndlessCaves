@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.IO;
 
 public class SettingsManager : MonoBehaviour
@@ -137,56 +137,45 @@ public class SettingsManager : MonoBehaviour
     }
     public void KeyCodeChange(settingsEnum _enum, KeyCode value)
     {
-        KeyCode currentValue;
 
         switch (_enum)
         {
             case settingsEnum.frontKey:
-                currentValue = Settings.Instance._front;
+                Settings.Instance._front = value;
                 break;
-
             case settingsEnum.leftKey:
-                currentValue = Settings.Instance._left;
+                Settings.Instance._left = value;
                 break;
-
             case settingsEnum.backKey:
-                currentValue = Settings.Instance._back;
+                Settings.Instance._back = value;
                 break;
-
             case settingsEnum.rightKey:
-                currentValue = Settings.Instance._right;
+                Settings.Instance._right = value;
                 break;
-
             case settingsEnum.jumpKey:
-                currentValue = Settings.Instance._jump;
+                Settings.Instance._jump = value;
                 break;
-
             case settingsEnum.crouchKey:
-                currentValue = Settings.Instance._crouch;
+                Settings.Instance._crouch = value;
                 break;
-
             case settingsEnum.sprintKey:
-                currentValue = Settings.Instance._sprint;
+                Settings.Instance._sprint = value;
                 break;
-
             case settingsEnum.flashlightKey:
-                currentValue = Settings.Instance._flashlight;
+                Settings.Instance._flashlight = value;
                 break;
-
             case settingsEnum.zoomKey:
-                currentValue = Settings.Instance._zoom;
+                Settings.Instance._zoom = value;
                 break;
-
             case settingsEnum.actionKey:
-                currentValue = Settings.Instance._action;
+                Settings.Instance._action = value;
                 break;
-
             case settingsEnum.dropKey:
-                currentValue = Settings.Instance._drop;
+                Settings.Instance._drop = value;
                 break;
         }
 
-        currentValue = value;
+        SaveSettings();  // ✅ Не забудьте сохранить в файл!
     }
     public void DropBoxChange(settingsEnum _enum, string value)
     {

@@ -10,20 +10,18 @@ public class Logo : MonoBehaviour
     void Start()
     {
         StartCoroutine(logo());
-
+        InputReceiver.Instance.MouseL += LoadScene;
     }
 
-    private void LoadScene()
+    private void OnDestroy()
+    {
+        InputReceiver.Instance.MouseL -= LoadScene;
+    }
+
+    private void LoadScene(bool notUse)
     {
         MouseController.Instance.UpdateState(false, true);
         SceneLoader.Instance.LoadSceneByIndex(1);
-    }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            LoadScene();
-        }
     }
 
     IEnumerator logo()
@@ -116,6 +114,6 @@ public class Logo : MonoBehaviour
         yield return new WaitForSeconds(0.04f);
         _text.text = "";
         yield return new WaitForSeconds(0.5f);
-        LoadScene();
+        LoadScene(true);
     }
 }

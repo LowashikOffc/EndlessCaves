@@ -7,6 +7,7 @@ public class MainMenuControl : MonoBehaviour
     [SerializeField] private Button _tutorialButton;
     [SerializeField] private Button _settingsButton;
     [SerializeField] private Button _achievementsButton;
+    [SerializeField] private Button _mineralsInfoButton;
     [SerializeField] private Button _exitButton;
 
     [SerializeField] private Button _graphicsButton;
@@ -18,6 +19,7 @@ public class MainMenuControl : MonoBehaviour
 
     [SerializeField] private GameObject _settingsMenu;
     [SerializeField] private GameObject _achievementsMenu;
+    [SerializeField] private GameObject _mineralsInfoMenu;
 
     [SerializeField] private GameObject _graphics;
     [SerializeField] private GameObject _controls;
@@ -28,10 +30,13 @@ public class MainMenuControl : MonoBehaviour
 
     void Start()
     {
+        CloseAll();
+        CloseAllMenu();
         _playButton.onClick.AddListener(Play);
         _tutorialButton.onClick.AddListener(Tutorial);
         _settingsButton.onClick.AddListener(Settings);
         _achievementsButton.onClick.AddListener(Achievements);
+        _mineralsInfoButton.onClick.AddListener(MineralsInfo);
         _exitButton.onClick.AddListener(Settings);
 
         _graphicsButton.onClick.AddListener(Graphics);
@@ -60,6 +65,7 @@ public class MainMenuControl : MonoBehaviour
     {
         SoundService.Instance.PlaySound(SoundID.uiPress);
         _settingsMenu.SetActive(true);
+        _mineralsInfoMenu.SetActive(false);
         _achievementsMenu.SetActive(false);
     }
 
@@ -74,7 +80,15 @@ public class MainMenuControl : MonoBehaviour
     {
         SoundService.Instance.PlaySound(SoundID.uiPress);
         _settingsMenu.SetActive(false);
+        _mineralsInfoMenu.SetActive(false);
         _achievementsMenu.SetActive(true);
+    }
+    private void MineralsInfo()
+    {
+        SoundService.Instance.PlaySound(SoundID.uiPress);
+        _settingsMenu.SetActive(false);
+        _mineralsInfoMenu.SetActive(true);
+        _achievementsMenu.SetActive(false);
     }
     private void Controls()
     {
@@ -116,5 +130,11 @@ public class MainMenuControl : MonoBehaviour
         _gui.SetActive(false);
         _mouse.SetActive(false);
         _special.SetActive(false);
+    }
+    private void CloseAllMenu()
+    {
+        _settingsMenu.SetActive(false);
+        _achievementsMenu.SetActive(false);
+        _mineralsInfoMenu.SetActive(false);
     }
 }
