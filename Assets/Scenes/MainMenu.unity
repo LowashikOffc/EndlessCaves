@@ -32399,7 +32399,7 @@ MonoBehaviour:
   _special: {fileID: 1766992672}
   _audio: {fileID: 633290011}
   _gui: {fileID: 1751680344}
-  _playScene: 3
+  _playScene: 2
 --- !u!4 &1538783049
 Transform:
   m_ObjectHideFlags: 0

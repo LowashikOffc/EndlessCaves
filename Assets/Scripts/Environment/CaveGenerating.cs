@@ -1,15 +1,14 @@
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 [System.Serializable]
 public class Room
 {
     public GameObject _room;
     public Transform _start;
+    public float _propScale;
     public List<Transform> _ends;
+    public bool isBlocked; // ‘лаг блокировки спавна комнаты
 }
 
 public class CaveGenerating : MonoBehaviour
@@ -19,6 +18,7 @@ public class CaveGenerating : MonoBehaviour
     [SerializeField] private GameObject _folder;
     [SerializeField] private GameObject _stonePrefab;
     [SerializeField] private GameObject _stalagmitePrefab;
+    [SerializeField] private GameObject _stalactitePrefab;
     [SerializeField] private float _maxRooms;
     [SerializeField] private int _branchRoomID;
     [SerializeField] private int _branchGenerations = 3;
@@ -54,14 +54,55 @@ public class CaveGenerating : MonoBehaviour
 
     private GameObject RoomSelect(int random, RoomTag tag)
     {
-        if (tag == RoomTag.branch && random == _branchRoomID)
+        // —оздаем список доступных (не заблокированных) комнат
+        List<Room> availableRooms = new List<Room>();
+        foreach (Room room in _rooms)
         {
-             random = (random + 1) % _rooms.Count;
+            if (!room.isBlocked)
+                availableRooms.Add(room);
         }
 
-        GameObject newRoom = Instantiate(_rooms[random]._room);
+        if (availableRooms.Count == 0)
+        {
+            Debug.LogError("Ќет доступных комнат дл€ спавна! ¬се комнаты заблокированы.");
+            return null;
+        }
+
+        // јдаптируем random индекс под доступные комнаты
+        int adjustedRandom = random % availableRooms.Count;
+
+        if (tag == RoomTag.branch && adjustedRandom == _branchRoomID % availableRooms.Count)
+        {
+            adjustedRandom = (adjustedRandom + 1) % availableRooms.Count;
+        }
+
+        GameObject newRoom = Instantiate(availableRooms[adjustedRandom]._room);
         newRoom.transform.SetParent(_folder.transform);
         return newRoom;
+    }
+
+    // ƒополнительный метод дл€ проверки, заблокирована ли комната по индексу
+    private bool IsRoomBlocked(int roomIndex)
+    {
+        if (roomIndex >= 0 && roomIndex < _rooms.Count)
+            return _rooms[roomIndex].isBlocked;
+        return false;
+    }
+
+    // ћетод дл€ получени€ случайной незаблокированной комнаты
+    private int GetRandomUnblockedRoomIndex()
+    {
+        List<int> unblockedIndices = new List<int>();
+        for (int i = 0; i < _rooms.Count; i++)
+        {
+            if (!_rooms[i].isBlocked)
+                unblockedIndices.Add(i);
+        }
+
+        if (unblockedIndices.Count == 0)
+            return -1;
+
+        return unblockedIndices[Random.Range(0, unblockedIndices.Count)];
     }
 
     private void GenerateStone(Vector3 position)
@@ -101,8 +142,16 @@ public class CaveGenerating : MonoBehaviour
 
     public void GenerateMain()
     {
-        int rand = Random.Range(0, _rooms.Count);
+        int rand = GetRandomUnblockedRoomIndex();
+        if (rand == -1)
+        {
+            Debug.LogError("Ќет доступных комнат дл€ генерации основной линии!");
+            return;
+        }
+
         GameObject newRoom = RoomSelect(rand, RoomTag.main);
+        if (newRoom == null) return;
+
         Transform newStart = newRoom.transform.Find("StartPoint");
         List<Transform> ends = EndPointsFind(newRoom);
 
@@ -117,44 +166,47 @@ public class CaveGenerating : MonoBehaviour
         Transform selectedEnd = ends[mainExitIndex];
 
         GenerateLogic(newRoom, newStart, selectedEnd);
-        Visuals(newRoom);
+        Visuals(newRoom, _rooms[rand]._propScale);
 
         _mainGeneratedCount++;
 
         if (ends.Count >= 2)
         {
-            Vector3 mainExitPosition = _lastExitPosition;
-            Quaternion mainExitRotation = _lastExitRotation;
-
-            List<int> branchExitIndices = new List<int>();
-            for (int i = 0; i < ends.Count; i++)
+            if (Random.Range(0, 2) == 1)
             {
-                if (i != mainExitIndex)
-                    branchExitIndices.Add(i);
+                Vector3 mainExitPosition = _lastExitPosition;
+                Quaternion mainExitRotation = _lastExitRotation;
+
+                List<int> branchExitIndices = new List<int>();
+                for (int i = 0; i < ends.Count; i++)
+                {
+                    if (i != mainExitIndex)
+                        branchExitIndices.Add(i);
+                }
+
+                for (int i = 0; i < branchExitIndices.Count; i++)
+                {
+                    int randomIndex = Random.Range(i, branchExitIndices.Count);
+                    int temp = branchExitIndices[i];
+                    branchExitIndices[i] = branchExitIndices[randomIndex];
+                    branchExitIndices[randomIndex] = temp;
+                }
+
+                int branchesToGenerate = Mathf.Min(branchExitIndices.Count, _branchGenerations);
+                for (int i = 0; i < branchesToGenerate; i++)
+                {
+                    int branchIndex = branchExitIndices[i];
+                    Transform branchEnd = ends[branchIndex];
+
+                    _lastExitPosition = selectedEnd.position;
+                    _lastExitRotation = selectedEnd.rotation;
+
+                    GenerateBranchFromExit(branchEnd);
+                }
+
+                _lastExitPosition = mainExitPosition;
+                _lastExitRotation = mainExitRotation;
             }
-
-            for (int i = 0; i < branchExitIndices.Count; i++)
-            {
-                int randomIndex = Random.Range(i, branchExitIndices.Count);
-                int temp = branchExitIndices[i];
-                branchExitIndices[i] = branchExitIndices[randomIndex];
-                branchExitIndices[randomIndex] = temp;
-            }
-
-            int branchesToGenerate = Mathf.Min(branchExitIndices.Count, _branchGenerations);
-            for (int i = 0; i < branchesToGenerate; i++)
-            {
-                int branchIndex = branchExitIndices[i];
-                Transform branchEnd = ends[branchIndex];
-
-                _lastExitPosition = selectedEnd.position;
-                _lastExitRotation = selectedEnd.rotation;
-
-                GenerateBranchFromExit(branchEnd);
-            }
-
-            _lastExitPosition = mainExitPosition;
-            _lastExitRotation = mainExitRotation;
         }
     }
 
@@ -183,7 +235,13 @@ public class CaveGenerating : MonoBehaviour
 
     public void GenerateBranch()
     {
-        int rand = Random.Range(0, _rooms.Count);
+        int rand = GetRandomUnblockedRoomIndex();
+        if (rand == -1)
+        {
+            Debug.LogWarning("Ќет доступных комнат дл€ генерации ветки!");
+            return;
+        }
+
         GameObject newRoom = RoomSelect(rand, RoomTag.branch);
         if (newRoom == null) return;
         Transform newStart = newRoom.transform.Find("StartPoint");
@@ -200,7 +258,7 @@ public class CaveGenerating : MonoBehaviour
         Transform newEnd = ends[branchExitIndex];
 
         GenerateLogic(newRoom, newStart, newEnd);
-        Visuals(newRoom);
+        Visuals(newRoom, _rooms[rand]._propScale);
         if (ends.Count >= 2 && _randomizeExitChoice)
         {
             float subBranchChance = 0.3f;
@@ -235,81 +293,115 @@ public class CaveGenerating : MonoBehaviour
             }
         }
     }
-    private void Visuals(GameObject room)
+
+    private void Visuals(GameObject room, float currentPropScaleMultiply)
     {
         foreach (Transform prop in room.transform)
         {
             if (prop.name.Contains("Stone"))
             {
                 BiomeName biome = BiomeName.UpperShafts;
-                Vector3 pos = room.transform.position + prop.position;
-
-                if (pos.y <= _generationConfig._biomes[1]._startDepth + Random.Range(-100, 100)) biome = BiomeName.MiddleShafts;
-                if (pos.y <= _generationConfig._biomes[2]._startDepth + Random.Range(-100, 100)) biome = BiomeName.DeepMines;
-                if (pos.y <= _generationConfig._biomes[3]._startDepth + Random.Range(-100, 100)) biome = BiomeName.MagmaDepths;
-
-                Debug.Log(pos);
                 MeshRenderer renderer = prop.GetComponent<MeshRenderer>();
-                if (biome == BiomeName.MiddleShafts) 
+                Vector3 pos = room.transform.position + prop.position;
+                Vector2 scale = renderer.material.mainTextureScale;
+
+                renderer.material.mainTextureScale = ScaleFormula(prop.transform.localScale, renderer.material.mainTextureScale, 0.3f);
+                renderer.material = MaterialSelect(pos, biome);
+                return;
+            }
+            prop.GetComponent<MeshRenderer>().enabled = false;
+            if (prop.name.Contains("Stalagmite"))
+            {
+                if (Random.Range(0, 2) == 1)
                 {
-                    foreach (Material m in _generationConfig._biomes[1]._stoneMaterials)
-                    {
-                        renderer.material = m;
-                    }
-                }
-                else if (biome == BiomeName.DeepMines)
-                {
-                    foreach (Material m in _generationConfig._biomes[2]._stoneMaterials)
-                    {
-                        renderer.material = m;
-                    }
-                }
-                else if (biome == BiomeName.MagmaDepths)
-                {
-                    foreach (Material m in _generationConfig._biomes[3]._stoneMaterials)
-                    {
-                        renderer.material = m;
-                    }
+                    prop.GetComponent<MeshRenderer>().enabled = true;
+                    GameObject newProp = Instantiate(_stalagmitePrefab);
+                    newProp.transform.position = prop.transform.position;
+                    newProp.transform.SetParent(prop.transform.parent);
+
+                    BiomeName biome = BiomeName.UpperShafts;
+                    MeshRenderer renderer = newProp.GetComponent<MeshRenderer>();
+                    Vector3 pos = room.transform.position + prop.position;
+                    Vector2 scale = renderer.material.mainTextureScale;
+                    float roomMultiply = currentPropScaleMultiply;
+
+                    newProp.transform.localScale = PropScaler(newProp.transform, roomMultiply, 1, 3);
+                    renderer.material.mainTextureScale = ScaleFormula(newProp.transform.localScale, renderer.material.mainTextureScale, 0.1f);
+                    renderer.material = MaterialSelect(pos, biome);
                 }
             }
-            if (prop.name.Contains("Stalagmite") && Random.Range(0,1) == 0)
+            if (prop.name.Contains("Stalactite"))
             {
-                GameObject newProp = Instantiate(_stalagmitePrefab);
-                newProp.transform.position = prop.transform.position;
-                newProp.transform.SetParent(prop.transform);
-
-                BiomeName biome = BiomeName.UpperShafts;
-                Vector3 pos = room.transform.position + prop.position;
-
-                if (pos.y <= _generationConfig._biomes[1]._startDepth + Random.Range(-100, 100)) biome = BiomeName.MiddleShafts;
-                if (pos.y <= _generationConfig._biomes[2]._startDepth + Random.Range(-100, 100)) biome = BiomeName.DeepMines;
-                if (pos.y <= _generationConfig._biomes[3]._startDepth + Random.Range(-100, 100)) biome = BiomeName.MagmaDepths;
-
-                Debug.Log(pos);
-                MeshRenderer renderer = newProp.GetComponent<MeshRenderer>();
-                if (biome == BiomeName.MiddleShafts)
+                if (Random.Range(0, 2) == 1)
                 {
-                    foreach (Material m in _generationConfig._biomes[1]._stoneMaterials)
-                    {
-                        renderer.material = m;
-                    }
-                }
-                else if (biome == BiomeName.DeepMines)
-                {
-                    foreach (Material m in _generationConfig._biomes[2]._stoneMaterials)
-                    {
-                        renderer.material = m;
-                    }
-                }
-                else if (biome == BiomeName.MagmaDepths)
-                {
-                    foreach (Material m in _generationConfig._biomes[3]._stoneMaterials)
-                    {
-                        renderer.material = m;
-                    }
+                    prop.GetComponent<MeshRenderer>().enabled = true;
+                    GameObject newProp = Instantiate(_stalactitePrefab);
+                    newProp.transform.position = prop.transform.position;
+                    newProp.transform.SetParent(prop.transform.parent);
+
+                    BiomeName biome = BiomeName.UpperShafts;
+                    MeshRenderer renderer = newProp.GetComponent<MeshRenderer>();
+                    Vector3 pos = room.transform.position + prop.position;
+                    Vector2 scale = renderer.material.mainTextureScale;
+                    float roomMultiply = currentPropScaleMultiply;
+
+                    newProp.transform.localScale = PropScaler(newProp.transform, roomMultiply, 1, 3);
+                    renderer.material.mainTextureScale = ScaleFormula(newProp.transform.localScale, renderer.material.mainTextureScale, 0.1f);
+                    renderer.material = MaterialSelect(pos, biome);
                 }
             }
         }
+    }
+
+    private Material MaterialSelect(Vector3 pos, BiomeName biome)
+    {
+        if (pos.y <= _generationConfig._biomes[0]._startDepth + Random.Range(-100, 0)) biome = BiomeName.UpperShafts;
+        if (pos.y <= _generationConfig._biomes[1]._startDepth + Random.Range(-100, 100)) biome = BiomeName.MiddleShafts;
+        if (pos.y <= _generationConfig._biomes[2]._startDepth + Random.Range(-100, 100)) biome = BiomeName.DeepMines;
+        if (pos.y <= _generationConfig._biomes[3]._startDepth + Random.Range(-100, 100)) biome = BiomeName.MagmaDepths;
+
+        if (biome == BiomeName.UpperShafts)
+        {
+            foreach (Material m in _generationConfig._biomes[0]._stoneMaterials)
+            {
+                return m;
+            }
+        }
+        else if (biome == BiomeName.MiddleShafts)
+        {
+            foreach (Material m in _generationConfig._biomes[1]._stoneMaterials)
+            {
+                return m;
+            }
+        }
+        else if (biome == BiomeName.DeepMines)
+        {
+            foreach (Material m in _generationConfig._biomes[2]._stoneMaterials)
+            {
+                return m;
+            }
+        }
+        else if (biome == BiomeName.MagmaDepths)
+        {
+            foreach (Material m in _generationConfig._biomes[3]._stoneMaterials)
+            {
+                return m;
+            }
+        }
+        return null;
+    }
+
+    private Vector2 ScaleFormula(Vector2 startScale, Vector2 materialScale, float scaleMultiply)
+    {
+        Vector2 scale = new Vector2(startScale.x / scaleMultiply,
+                       startScale.y / scaleMultiply);
+        return scale;
+    }
+
+    private Vector3 PropScaler(Transform prop, float roomMultiply, float min, float max)
+    {
+        Vector3 newScale = prop.localScale * Random.Range(roomMultiply - min * roomMultiply, max * roomMultiply);
+        return newScale;
     }
 }
 

@@ -2676,27 +2676,40 @@ MonoBehaviour:
   _rooms:
   - _room: {fileID: 8756114316899514766, guid: 22a65542837b3bd48aa883a2e7f62d57, type: 3}
     _start: {fileID: 0}
+    _propScale: 1
     _ends: []
+    isBlocked: 1
   - _room: {fileID: 8756114316899514766, guid: dd2ae77d12833c9469f0c794924cb96b, type: 3}
     _start: {fileID: 0}
+    _propScale: 1.3
     _ends: []
+    isBlocked: 1
   - _room: {fileID: 5596089311668991020, guid: 1ddabaf5dd99e2f42b221867550683f0, type: 3}
     _start: {fileID: 0}
+    _propScale: 0.8
     _ends: []
+    isBlocked: 1
   - _room: {fileID: 5248469591551647687}
     _start: {fileID: 0}
+    _propScale: 1.3
     _ends: []
+    isBlocked: 1
   - _room: {fileID: 2812474394406937950}
     _start: {fileID: 0}
+    _propScale: 1.4
     _ends: []
+    isBlocked: 0
   - _room: {fileID: 3609319643994218263, guid: b26ad714729f3614ab4a87168b4e872d, type: 3}
     _start: {fileID: 0}
+    _propScale: 1.2
     _ends: []
+    isBlocked: 1
   _generationConfig: {fileID: 11400000, guid: 4df3abacad3c55f4784ece04cb612576, type: 2}
   _folder: {fileID: 1629317006}
   _stonePrefab: {fileID: 3192750099790579971, guid: 2702a272347a8c142ba8c688cdbd7efa, type: 3}
   _stalagmitePrefab: {fileID: 3485483884815536812, guid: 985e9508951a69e4e8d5507729ee1f96, type: 3}
-  _maxRooms: 150
+  _stalactitePrefab: {fileID: 3485483884815536812, guid: e6cbf7f6dcdeff74a90054c925770e10, type: 3}
+  _maxRooms: 100
   _branchRoomID: 0
   _branchGenerations: 3
   _randomizeExitChoice: 1
@@ -7277,7 +7290,7 @@ Transform:
   m_GameObject: {fileID: 2057468062}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.6499996, y: 4.4700003, z: -2.5}
+  m_LocalPosition: {x: 5.6499996, y: 0, z: -2.5}
   m_LocalScale: {x: 0.25, y: 0.5, z: 0.25}
   m_ConstrainProportionsScale: 0
   m_Children:
