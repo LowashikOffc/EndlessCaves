@@ -28,6 +28,8 @@ public class MainMenuControl : MonoBehaviour
     [SerializeField] private GameObject _audio;
     [SerializeField] private GameObject _gui;
 
+    [SerializeField] private int _playScene;
+
     void Start()
     {
         CloseAll();
@@ -51,7 +53,7 @@ public class MainMenuControl : MonoBehaviour
     {
         SoundService.Instance.PlaySound(SoundID.uiPress);
         MouseController.Instance.UpdateState(true, false);
-        SceneLoader.Instance.LoadSceneByIndex(2);
+        SceneLoader.Instance.LoadSceneByIndex(_playScene);
     }
 
     private void Tutorial()

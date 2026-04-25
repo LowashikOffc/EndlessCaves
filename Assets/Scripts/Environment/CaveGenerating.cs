@@ -18,6 +18,7 @@ public class CaveGenerating : MonoBehaviour
     [SerializeField] private GenerationConfig _generationConfig;
     [SerializeField] private GameObject _folder;
     [SerializeField] private GameObject _stonePrefab;
+    [SerializeField] private GameObject _stalagmitePrefab;
     [SerializeField] private float _maxRooms;
     [SerializeField] private int _branchRoomID;
     [SerializeField] private int _branchGenerations = 3;
@@ -65,9 +66,9 @@ public class CaveGenerating : MonoBehaviour
 
     private void GenerateStone(Vector3 position)
     {
-        GameObject stone = Instantiate(_stonePrefab);
-        stone.transform.SetParent(_folder.transform);
-        stone.transform.position = _lastExitPosition;
+        //GameObject stone = Instantiate(_stonePrefab);
+        //stone.transform.SetParent(_folder.transform);
+        //stone.transform.position = _lastExitPosition;
     }
 
     private List<Transform> EndPointsFind(GameObject room)
@@ -236,20 +237,57 @@ public class CaveGenerating : MonoBehaviour
     }
     private void Visuals(GameObject room)
     {
-        foreach (Transform stone in room.transform)
+        foreach (Transform prop in room.transform)
         {
-            if (stone.name.Contains("Stone"))
+            if (prop.name.Contains("Stone"))
             {
                 BiomeName biome = BiomeName.UpperShafts;
-                Vector3 pos = room.transform.position + stone.position;
+                Vector3 pos = room.transform.position + prop.position;
 
                 if (pos.y <= _generationConfig._biomes[1]._startDepth + Random.Range(-100, 100)) biome = BiomeName.MiddleShafts;
                 if (pos.y <= _generationConfig._biomes[2]._startDepth + Random.Range(-100, 100)) biome = BiomeName.DeepMines;
                 if (pos.y <= _generationConfig._biomes[3]._startDepth + Random.Range(-100, 100)) biome = BiomeName.MagmaDepths;
 
                 Debug.Log(pos);
-                MeshRenderer renderer = stone.GetComponent<MeshRenderer>();
+                MeshRenderer renderer = prop.GetComponent<MeshRenderer>();
                 if (biome == BiomeName.MiddleShafts) 
+                {
+                    foreach (Material m in _generationConfig._biomes[1]._stoneMaterials)
+                    {
+                        renderer.material = m;
+                    }
+                }
+                else if (biome == BiomeName.DeepMines)
+                {
+                    foreach (Material m in _generationConfig._biomes[2]._stoneMaterials)
+                    {
+                        renderer.material = m;
+                    }
+                }
+                else if (biome == BiomeName.MagmaDepths)
+                {
+                    foreach (Material m in _generationConfig._biomes[3]._stoneMaterials)
+                    {
+                        renderer.material = m;
+                    }
+                }
+            }
+            if (prop.name.Contains("Stalagmite") && Random.Range(0,1) == 0)
+            {
+                GameObject newProp = Instantiate(_stalagmitePrefab);
+                newProp.transform.position = prop.transform.position;
+                newProp.transform.SetParent(prop.transform);
+
+                BiomeName biome = BiomeName.UpperShafts;
+                Vector3 pos = room.transform.position + prop.position;
+
+                if (pos.y <= _generationConfig._biomes[1]._startDepth + Random.Range(-100, 100)) biome = BiomeName.MiddleShafts;
+                if (pos.y <= _generationConfig._biomes[2]._startDepth + Random.Range(-100, 100)) biome = BiomeName.DeepMines;
+                if (pos.y <= _generationConfig._biomes[3]._startDepth + Random.Range(-100, 100)) biome = BiomeName.MagmaDepths;
+
+                Debug.Log(pos);
+                MeshRenderer renderer = newProp.GetComponent<MeshRenderer>();
+                if (biome == BiomeName.MiddleShafts)
                 {
                     foreach (Material m in _generationConfig._biomes[1]._stoneMaterials)
                     {
