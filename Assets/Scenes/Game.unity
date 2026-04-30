@@ -2692,6 +2692,9 @@ MonoBehaviour:
   - _room: {fileID: 3609319643994218263, guid: b26ad714729f3614ab4a87168b4e872d, type: 3}
     _start: {fileID: 0}
     _ends: []
+  - _room: {fileID: 3609319643994218263, guid: 643b810d9da50a74d90c74d1426902db, type: 3}
+    _start: {fileID: 0}
+    _ends: []
   _generationConfig: {fileID: 11400000, guid: 4df3abacad3c55f4784ece04cb612576, type: 2}
   _folder: {fileID: 1629317006}
   _stonePrefab: {fileID: 3192750099790579971, guid: 2702a272347a8c142ba8c688cdbd7efa, type: 3}
