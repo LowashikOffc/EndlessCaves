@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Graple : MonoBehaviour
+public class Graple : MonoBehaviour, IEquippable
 {
     [SerializeField] private GameObject _hook;
     [SerializeField] private Transform _ropeStartPosition;
@@ -37,6 +37,24 @@ public class Graple : MonoBehaviour
         InputReceiver.Instance.HookThrow += HookThrow;
         InputReceiver.Instance.HookReturn += HookReturn;
         InputReceiver.Instance.HooksScroll += Scroll;
+    }
+
+    public void ExecuteAction(string actionName)
+    {
+        switch (actionName)
+        {
+            case "Primary": HookThrow(); break;
+            case "Secondary": HookReturn(); break;
+        }
+    }
+
+    public void OnEquip()
+    {
+
+    }
+    public void OnUnequip()
+    {
+
     }
 
     private void OnDestroy()

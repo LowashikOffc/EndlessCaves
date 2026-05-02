@@ -14,40 +14,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _biomes:
   - _BiomeName: Upper shafts
-    _caveSize: 4
     _stalagmiteAndStalactiteFrequency: 0.6
     _startDepth: 0
     _stoneMaterials:
     - {fileID: 2100000, guid: b71d2d22399063e4bb62b45fa9b1fd16, type: 2}
     _materials: 03000000
   - _BiomeName: Middle shafts
-    _caveSize: 6
     _stalagmiteAndStalactiteFrequency: 0.4
     _startDepth: -200
     _stoneMaterials:
     - {fileID: 2100000, guid: bec0bb13dfbebb14893f3e915a9feef7, type: 2}
     _materials: 030000000000000004000000
   - _BiomeName: Deep mines
-    _caveSize: 9
     _stalagmiteAndStalactiteFrequency: 0.3
     _startDepth: -600
     _stoneMaterials:
     - {fileID: 2100000, guid: 67bca2857de4efb4bb6183828c0bc635, type: 2}
     _materials: 0000000001000000020000000500000006000000
   - _BiomeName: Magma depths
-    _caveSize: 9
     _stalagmiteAndStalactiteFrequency: 0.3
     _startDepth: -1000
     _stoneMaterials:
     - {fileID: 2100000, guid: 6fb4d63f210b777498b3cf2e14fa2c82, type: 2}
     _materials: 0000000001000000020000000500000006000000
-  - _BiomeName: Mushroom Caves
-    _caveSize: 9
+  _additionalBiomes:
+  - _BiomeName: Mushroom Forest
     _stalagmiteAndStalactiteFrequency: 0.3
-    _startDepth: -500
-    _stoneMaterials:
-    - {fileID: 2100000, guid: 67bca2857de4efb4bb6183828c0bc635, type: 2}
-    _materials: 0000000001000000020000000500000004000000
+    _stoneMaterials: []
+    _materials: 
   _props:
   - _props: {fileID: 0}
     _mineral: 0

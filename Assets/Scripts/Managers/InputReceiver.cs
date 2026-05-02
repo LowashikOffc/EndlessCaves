@@ -20,6 +20,7 @@ public class InputReceiver : MonoBehaviour
 
     public event Action<float> HorizontalAxis;
     public event Action<float> VerticalAxis;
+    public event Action<Ray> CameraLookAngle;
     public event Action Jump;
     public event Action Interact;
     public event Action Drop;
@@ -37,8 +38,11 @@ public class InputReceiver : MonoBehaviour
     public event Action<bool> MouseR;
     public event Action<bool> MouseL;
 
+    private Camera _camera;
+
     private void Awake()
     {
+        _camera = Camera.main;
         if (Instance == null)
         {
             Instance = this;
@@ -129,6 +133,8 @@ public class InputReceiver : MonoBehaviour
         {
             HooksScroll?.Invoke(-1);
         }
+
+        CameraLookAngle?.Invoke(_camera.ViewportPointToRay(_camera.transform.position));
     }
 
     public void Rebind(settingsEnum keyEnum, KeyCode keycode)

@@ -5,9 +5,17 @@ using UnityEngine;
 public class BiomeData
 {
     public string _BiomeName;
-    public float _caveSize;
     public float _stalagmiteAndStalactiteFrequency;
     public float _startDepth;
+    public List<Material> _stoneMaterials;
+    public List<Minerals> _materials;
+}
+
+[System.Serializable]
+public class AdditionalBiomes
+{
+    public string _BiomeName;
+    public float _stalagmiteAndStalactiteFrequency;
     public List<Material> _stoneMaterials;
     public List<Minerals> _materials;
 }
@@ -27,6 +35,7 @@ public class GenerationConfig : ScriptableObject
     private float _currentStalactiteFrequency;
 
     public BiomeData[] _biomes;
+    public AdditionalBiomes[] _additionalBiomes;
     public PropData[] _props;
 
 }

@@ -22,7 +22,7 @@ public class RoomMetadata : MonoBehaviour
     public BoxCollider Bounds;
 
     private Transform _cachedStart;
-    private List<Transform> _cachedEnds;
+    [SerializeField] private List<Transform> _cachedEnds;
 
     public Transform GetStart()
     {
