@@ -7,6 +7,7 @@ public class ItemData : ScriptableObject
     public Sprite _icon;
     public int _maxStackSize = 99;
     public float weight = 1f;
+    public GameObject _equipmentPrefab;
 
     public virtual void Use()
     {

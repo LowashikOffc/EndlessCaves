@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 7001733528408529628}
   - component: {fileID: 8519772834732765381}
   - component: {fileID: 6731681489685491885}
-  - component: {fileID: 679019923295192629}
   - component: {fileID: 5432006846431481707}
+  - component: {fileID: 6161468933089481714}
   m_Layer: 3
   m_Name: RadioactiveCrystal
   m_TagString: nonHookable
@@ -106,7 +106,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5495902117074765545, guid: a89387e2d20ddef40a0bea4a8ef448dc, type: 3}
 --- !u!108 &6731681489685491885
@@ -171,33 +171,6 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!54 &679019923295192629
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4089609933445897990}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!82 &5432006846431481707
 AudioSource:
   m_ObjectHideFlags: 0
@@ -294,3 +267,16 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6161468933089481714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4089609933445897990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aca8f1e3a2d925a4fb5dc124ff8b46d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _radiationAmount: 5

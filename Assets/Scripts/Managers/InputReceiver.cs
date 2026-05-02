@@ -1,5 +1,4 @@
 using System;
-using TMPro;
 using UnityEngine;
 
 public class InputReceiver : MonoBehaviour
@@ -42,7 +41,6 @@ public class InputReceiver : MonoBehaviour
 
     private void Awake()
     {
-        _camera = Camera.main;
         if (Instance == null)
         {
             Instance = this;
@@ -58,6 +56,7 @@ public class InputReceiver : MonoBehaviour
 
     private void Update()
     {
+        if (_camera == null) _camera = Camera.main;
         float horizontal = 0f;
         float vertical = 0f;
 
@@ -134,7 +133,7 @@ public class InputReceiver : MonoBehaviour
             HooksScroll?.Invoke(-1);
         }
 
-        CameraLookAngle?.Invoke(_camera.ViewportPointToRay(_camera.transform.position));
+        CameraLookAngle?.Invoke(_camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)));
     }
 
     public void Rebind(settingsEnum keyEnum, KeyCode keycode)

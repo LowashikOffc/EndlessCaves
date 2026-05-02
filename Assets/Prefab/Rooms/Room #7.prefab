@@ -211,6 +211,8 @@ MonoBehaviour:
   MaxDepth: Infinity
   Weight: 1
   Bounds: {fileID: 6146832472774725331}
+  _cachedEnds:
+  - {fileID: 5952917715494123699}
 --- !u!1 &7360849330341722083
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,9 +3,44 @@ using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
+    public static InventoryManager Instance { get; private set; }
+
     [SerializeField] private List<InventorySlot> _slots = new List<InventorySlot>();
     [SerializeField] private float _maxWeight = 50f;
     [SerializeField] float _currentWeight;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public InventorySlot GetSlot(int index)
+    {
+        if (index >= 0 && index < _slots.Count)
+        {
+            return _slots[index];
+        }
+        return null;
+    }
+
+    public ItemData RemoveItem(int index, out int amount)
+    {
+        amount = 0;
+        if (index < 0 || index >= _slots.Count) return null;
+        ItemData data = _slots[index]._item;
+        amount = _slots[index]._count;
+        _slots.RemoveAt(index);
+        UpdateTotalWeight();
+        return data;
+    }
 
     public bool TryAddItem(ItemData newItem, int amount)
     {

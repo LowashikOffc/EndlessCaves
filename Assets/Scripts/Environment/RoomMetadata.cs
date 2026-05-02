@@ -40,7 +40,7 @@ public class RoomMetadata : MonoBehaviour
 
     public List<Transform> GetEnds()
     {
-        if (_cachedEnds != null) return _cachedEnds;
+        if (_cachedEnds.Count != 0) return _cachedEnds;
         _cachedEnds = new List<Transform>();
         foreach (Transform child in transform)
         {

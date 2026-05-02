@@ -105,6 +105,8 @@ MonoBehaviour:
   MaxDepth: Infinity
   Weight: 1
   Bounds: {fileID: 6146832472774725331}
+  _cachedEnds:
+  - {fileID: 5952917715494123699}
 --- !u!1 &6995140366818726185
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,7 +228,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6626421764044748313
 Transform:
   m_ObjectHideFlags: 0

@@ -7740,8 +7740,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2120549957}
+  - component: {fileID: 2120549958}
   m_Layer: 6
-  m_Name: CarryPart
+  m_Name: Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7762,6 +7763,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 963194228}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2120549958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2120549956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e53a70da39aac3489ec9bce895f6731, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2121145528
 GameObject:
   m_ObjectHideFlags: 0
@@ -8017,19 +8030,7 @@ PrefabInstance:
     - {fileID: 0}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 359537700010729153, guid: 88c17133b07b0fe45b1b0ec8331d4120, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 2347543202088739259, guid: 88c17133b07b0fe45b1b0ec8331d4120, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 4883704632535278493, guid: 88c17133b07b0fe45b1b0ec8331d4120, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 4395693061724342457, guid: 88c17133b07b0fe45b1b0ec8331d4120, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 88c17133b07b0fe45b1b0ec8331d4120, type: 3}
 --- !u!1001 &1739129733044087702
 PrefabInstance:
