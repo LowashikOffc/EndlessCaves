@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 635bc342542b9fd4ab1606a876f640ad, type: 3}
-  m_Name: Battery
+  m_Name: Hook
   m_EditorClassIdentifier: 
-  _itemName: Battery
+  _itemName: Hook
   _icon: {fileID: 0}
-  _maxStackSize: 8
-  weight: 0.5
-  _equipmentPrefab: {fileID: 3158042800879082383, guid: 1d9bf0abb309eca499e44cfd0fbd3c28, type: 3}
+  _maxStackSize: 1
+  weight: 7
+  _equipmentPrefab: {fileID: 7285524452055051085, guid: a9d8fffa48351304d932cd65ac8a2871, type: 3}

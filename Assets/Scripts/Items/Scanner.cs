@@ -1,19 +1,18 @@
 using UnityEngine;
 
-public class Dosimeter : MonoBehaviour, IEquippable
+public class Scanner : MonoBehaviour, IEquippable
 {
-    //private Animator _anim;
-    //private static readonly int EquipTrigger = Animator.StringToHash("Equip");
-    //private static readonly int UnequipTrigger = Animator.StringToHash("Unequip");
-
     private Rigidbody _rigidbody;
     private Collider _collision;
 
     private void Awake()
     {
-        //_anim = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody>();
         _collision = GetComponent<Collider>();
+    }
+
+    private void Start()
+    {
         InputReceiver.Instance.InputChange += Key;
     }
 
@@ -46,6 +45,9 @@ public class Dosimeter : MonoBehaviour, IEquippable
         {
             case KeyCode.Mouse0:
                 ExecuteAction(Actions.Primary);
+                break;
+            case KeyCode.Mouse1:
+                ExecuteAction(Actions.Secondary);
                 break;
         }
     }

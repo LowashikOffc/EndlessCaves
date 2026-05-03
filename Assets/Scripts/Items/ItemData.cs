@@ -4,7 +4,7 @@ using UnityEngine;
 public class ItemData : ScriptableObject
 {
     public string _itemName;
-    public Sprite _icon;
+    public Texture _icon;
     public int _maxStackSize = 99;
     public float weight = 1f;
     public GameObject _equipmentPrefab;

@@ -2368,19 +2368,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f66264b1a545fd34c93aec79e3c89d95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemPickUp: {fileID: 0}
-  _inventoryBar: {fileID: 701161258}
-  _selectFrame: {fileID: 0}
-  _mainText: {fileID: 977565202}
-  _subText: {fileID: 1455827655}
-  _slots:
-  - {fileID: 1644489328}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 1122359266}
-  - {fileID: 2068224797}
-  _items: []
-  _selectedSlot: {fileID: 1644489328}
 --- !u!1001 &711954667
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2922,7 +2909,7 @@ MonoBehaviour:
   _ropeStartPosition: {fileID: 677022121}
   _hookVisual: {fileID: 994365406}
   _player: {fileID: 2057468062}
-  _rigitbody: {fileID: 902824352}
+  _rigidbody: {fileID: 0}
   _playerRigitbody: {fileID: 0}
   _collision: {fileID: 902824353}
   _connect: {fileID: 403382084}
@@ -4327,11 +4314,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: deb41642eb555054dbbfdec761589b3b, type: 3}
---- !u!1 &1122359266 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1690205971958460773, guid: ac7f2acc6267a0b42ac67d41a9e46b28, type: 3}
-  m_PrefabInstance: {fileID: 272168283}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1165761613
 GameObject:
   m_ObjectHideFlags: 0
@@ -7154,7 +7136,6 @@ GameObject:
   - component: {fileID: 2057468072}
   - component: {fileID: 2057468073}
   - component: {fileID: 2057468079}
-  - component: {fileID: 2057468080}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -7330,21 +7311,6 @@ MonoBehaviour:
   _jumpForce: 150
   _velocity: {x: 0, y: 0, z: 0}
   _savedPosition: {x: 0, y: 0, z: 0}
---- !u!114 &2057468080
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2057468062}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c7db85e193ae3245b16f2f7118d57b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _health: 0
-  _healthRegen: 0
-  _healthRegentime: 0
 --- !u!1 &2066779084
 GameObject:
   m_ObjectHideFlags: 0
@@ -7447,11 +7413,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!1 &2068224797 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1690205971958460773, guid: ac7f2acc6267a0b42ac67d41a9e46b28, type: 3}
-  m_PrefabInstance: {fileID: 471179321}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &2089067398 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2122847316625997934, guid: ac7f2acc6267a0b42ac67d41a9e46b28, type: 3}
@@ -8481,7 +8442,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a684aba972b22734c802ebf536566373, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Item: {fileID: 11400000, guid: 98326f6f00550964aafee5b8584bbcdf, type: 2}
 --- !u!224 &8401390948067778183 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2122847316625997934, guid: ac7f2acc6267a0b42ac67d41a9e46b28, type: 3}

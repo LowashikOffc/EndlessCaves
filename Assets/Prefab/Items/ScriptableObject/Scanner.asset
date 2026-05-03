@@ -9,9 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 687207f63ee618348b3ea896e3fbf523, type: 3}
+  m_Script: {fileID: 11500000, guid: 635bc342542b9fd4ab1606a876f640ad, type: 3}
   m_Name: Scanner
   m_EditorClassIdentifier: 
   _itemName: Scanner
-  _model: {fileID: 488622817776889564, guid: deb41642eb555054dbbfdec761589b3b, type: 3}
-  _isStackable: 0
+  _icon: {fileID: 2800000, guid: 37d2457c5dc64374595a73170fda90eb, type: 3}
+  _maxStackSize: 1
+  weight: 10
+  _equipmentPrefab: {fileID: 8775395909546909703, guid: 6d2e95d93bec17740b57e89a66134eac, type: 3}

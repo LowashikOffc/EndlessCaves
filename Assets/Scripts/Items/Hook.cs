@@ -1,13 +1,13 @@
 using System.Collections;
 using UnityEngine;
 
-public class Graple : MonoBehaviour, IEquippable
+public class Hook : MonoBehaviour, IEquippable
 {
     [SerializeField] private GameObject _hook;
     [SerializeField] private Transform _ropeStartPosition;
     [SerializeField] private GameObject _hookVisual;
     [SerializeField] private GameObject _player;
-    [SerializeField] private Rigidbody _rigitbody;
+    [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private Rigidbody _playerRigitbody;
     [SerializeField] private SphereCollider _collision;
     [SerializeField] private AudioSource _connect;
@@ -34,27 +34,52 @@ public class Graple : MonoBehaviour, IEquippable
         _hookRenderer = _hookVisual.GetComponent<MeshRenderer>();
 
         if (InputReceiver.Instance == null) return;
-        InputReceiver.Instance.HookThrow += HookThrow;
-        InputReceiver.Instance.HookReturn += HookReturn;
+        //InputReceiver.Instance.HookThrow += HookThrow;
+        //InputReceiver.Instance.HookReturn += HookReturn;
         InputReceiver.Instance.HooksScroll += Scroll;
-    }
-
-    public void ExecuteAction(string actionName)
-    {
-        switch (actionName)
-        {
-            case "Primary": HookThrow(); break;
-            case "Secondary": HookReturn(); break;
-        }
+        InputReceiver.Instance.InputChange += Key;
     }
 
     public void OnEquip()
     {
+        Debug.Log($"{gameObject.name} экипирован");
+        if (_collision != null) _collision.enabled = false;
+        if (_rigidbody != null) _rigidbody.isKinematic = true; _rigidbody.useGravity = false;
+        transform.localPosition = Vector3.zero;
+        transform.localRotation = Quaternion.identity;
 
     }
     public void OnUnequip()
     {
+        Debug.Log($"{gameObject.name} убран в инвентарь");
 
+    }
+    public void ExecuteAction(Actions action)
+    {
+        switch (action)
+        {
+            case Actions.Primary: HookThrow(); break;
+            case Actions.Secondary: HookReturn(); break;
+        }
+    }
+    public void Key(KeyCode key)
+    {
+        var activeSlot = InventoryManager.Instance.GetSelectedSlot();
+
+        if (activeSlot == null || activeSlot._item == null)
+        {
+            Debug.LogWarning("В руках нет предмета");
+            return;
+        }
+        switch (key)
+        {
+            case KeyCode.Mouse0:
+                ExecuteAction(Actions.Primary);
+                break;
+            case KeyCode.Mouse1:
+                ExecuteAction(Actions.Secondary);
+                break;
+        }
     }
 
     private void OnDestroy()
@@ -90,8 +115,8 @@ public class Graple : MonoBehaviour, IEquippable
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
                 _hook.transform.position = _camera.transform.position + _camera.transform.forward * 1;
-                _rigitbody.isKinematic = false;
-                _rigitbody.velocity = _camera.transform.forward * _throwForce;
+                _rigidbody.isKinematic = false;
+                _rigidbody.velocity = _camera.transform.forward * _throwForce;
                 _collision.enabled = true;
                 _hooked = false;
                 _hookVisual.SetActive(true);
@@ -105,7 +130,7 @@ public class Graple : MonoBehaviour, IEquippable
     private void HookReturn()
     {
         if (_hooked == false) return;
-        _rigitbody.isKinematic = true;
+        _rigidbody.isKinematic = true;
         _hookVisual.SetActive(false);
         _rope.SetActive(false);
         _hooked = false;
@@ -147,7 +172,7 @@ public class Graple : MonoBehaviour, IEquippable
         SoundService.Instance.PlaySound3D(SoundID.hookCollide, transform.position, 0.3f);
         if (collision.gameObject.tag == "Hookable")
         {
-            _rigitbody.isKinematic = true;
+            _rigidbody.isKinematic = true;
             _collision.enabled = false;
             ContactPoint contact = collision.contacts[0];
             _hookLookPoint = contact.point;

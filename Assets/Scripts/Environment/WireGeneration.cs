@@ -40,7 +40,7 @@ public class WireGeneration : MonoBehaviour
 
     private void CreateConnector(WireProp prop, int current)
     {
-        Debug.Log(current);
+        //Debug.Log(current);
         GameObject connector = new GameObject();
 
         MeshFilter meshFilter = connector.AddComponent<MeshFilter>();

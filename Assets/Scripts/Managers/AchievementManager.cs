@@ -73,7 +73,7 @@ public class AchievementManager : MonoBehaviour
         if (_currentAchievements.Thrifty == true) LoadAchievement?.Invoke(AchievementsEnum.Thrifty);
         if (_currentAchievements.Rock_bottom == true) LoadAchievement?.Invoke(AchievementsEnum.Rock_bottom);
         if (_currentAchievements.Dust_collector == true) LoadAchievement?.Invoke(AchievementsEnum.Dust_collector);
-        Debug.Log(_currentAchievements.Welcome_to_depth);
+        //Debug.Log(_currentAchievements.Welcome_to_depth);
     }
 
     private void NewAchievement(AchievementsEnum achievement)

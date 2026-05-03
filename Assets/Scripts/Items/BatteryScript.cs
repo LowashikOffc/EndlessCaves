@@ -8,10 +8,17 @@ public class BatteryScript : MonoBehaviour, IEquippable
     private Rigidbody _rigidbody;
     private Collider _collision;
 
+    private void Start()
+    {
+        _batteryEnergy = 1000;
+        StartCoroutine(wait());
+    }
+
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _collision = GetComponent<Collider>();
+        InputReceiver.Instance.InputChange += Key;
     }
 
     public void OnEquip()
@@ -26,14 +33,25 @@ public class BatteryScript : MonoBehaviour, IEquippable
     {
         Debug.Log($"{gameObject.name} убран в инвентарь");
     }
-    public void ExecuteAction(string actionName)
+    public void Key(KeyCode key)
     {
-        Debug.Log($"Событие: {actionName}");
+        var activeSlot = InventoryManager.Instance.GetSelectedSlot();
+
+        if (activeSlot == null || activeSlot._item == null)
+        {
+            Debug.LogWarning("В руках нет предмета");
+            return;
+        }
+        switch (key)
+        {
+            case KeyCode.Mouse0:
+                ExecuteAction(Actions.Primary);
+                break;
+        }
     }
-    private void Start()
+    public void ExecuteAction(Actions action)
     {
-        _batteryEnergy = 1000;
-        StartCoroutine(wait());
+        Debug.Log($"Событие: {action}");
     }
 
     IEnumerator wait()
