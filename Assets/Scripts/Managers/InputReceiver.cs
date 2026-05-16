@@ -97,6 +97,7 @@ public class InputReceiver : MonoBehaviour
             {
                 if (Input.GetKeyDown(keyCode))
                 {
+                    //Debug.Log($"KeyDown detected: {keyCode}");
                     InputChange?.Invoke(keyCode);
                     break;
                 }

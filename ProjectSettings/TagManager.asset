@@ -9,6 +9,8 @@ TagManager:
   - Collectable
   - Water
   - Inventory
+  - Hand
+  - Item
   layers:
   - Default
   - TransparentFX

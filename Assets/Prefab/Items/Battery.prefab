@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 2304458304826627359}
   m_Layer: 15
   m_Name: Battery
-  m_TagString: Collectable
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -111,8 +111,8 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
@@ -133,7 +133,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
@@ -152,6 +152,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data: {fileID: 11400000, guid: c802f2b01adee3d4eaec7403586f8f3a, type: 2}
   _amount: 1
+  vector3: {x: 0, y: 0.04, z: 0}
+  quaternion: {x: -0.70710677, y: 0, z: 0, w: 0.70710677}
 --- !u!114 &2304458304826627359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,3 +168,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _batteryEnergy: 0
   _isUsing: 0
+  _rigidbody: {fileID: 3351023532730021781}
+  _collision: {fileID: 1688679132139666582}

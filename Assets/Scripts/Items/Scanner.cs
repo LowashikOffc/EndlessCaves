@@ -2,18 +2,14 @@ using UnityEngine;
 
 public class Scanner : MonoBehaviour, IEquippable
 {
-    private Rigidbody _rigidbody;
-    private Collider _collision;
+    [SerializeField] private Rigidbody _rigidbody;
+    [SerializeField] private Collider _collision;
+    private bool _isEquipped = false;
 
-    private void Awake()
-    {
-        _rigidbody = GetComponent<Rigidbody>();
-        _collision = GetComponent<Collider>();
-    }
 
-    private void Start()
+    private void OnDestroy()
     {
-        InputReceiver.Instance.InputChange += Key;
+        InputReceiver.Instance.InputChange -= Key;
     }
 
     public void OnEquip()
@@ -24,16 +20,32 @@ public class Scanner : MonoBehaviour, IEquippable
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
 
-        //if (_anim != null) _anim.SetTrigger(EquipTrigger);
+        if (InputReceiver.Instance != null)
+        {
+            InputReceiver.Instance.InputChange += Key;
+        }
+        InventoryManager.Instance.UpdateTransform(GetComponent<ItemObject>().vector3, GetComponent<ItemObject>().quaternion);
     }
     public void OnUnequip()
     {
-        Debug.Log($"{gameObject.name} убран в инвентарь");
-        //if (_anim != null) _anim.SetTrigger(UnequipTrigger);
+        if (InputReceiver.Instance != null)
+        {
+            InputReceiver.Instance.InputChange -= Key;
+        }
+        //Debug.Log($"{gameObject.name} убран в инвентарь");
 
     }
     public void Key(KeyCode key)
     {
+        if (!_isEquipped) return;
+
+        if (InventoryManager.Instance == null) return;
+
+        GameObject currentItem = InventoryManager.Instance.GetCurrentEquippedItem();
+        if (currentItem != this.gameObject)
+        {
+            return;
+        }
         var activeSlot = InventoryManager.Instance.GetSelectedSlot();
 
         if (activeSlot == null || activeSlot._item == null)

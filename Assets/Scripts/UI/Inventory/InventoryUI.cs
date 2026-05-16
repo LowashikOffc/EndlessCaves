@@ -24,7 +24,7 @@ public class InventoryUI : MonoBehaviour
 
         for (int i = 0; i < _uiSlots.Count; i++)
         {
-            Debug.Log($"SetSelect{_uiSlots[i]}: {i==selectedIndex}");
+            //Debug.Log($"SetSelect{_uiSlots[i]}: {i==selectedIndex}");
             _uiSlots[i].SetSelected(i == selectedIndex);
         }
     }

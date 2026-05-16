@@ -3,7 +3,7 @@ using UnityEngine;
 [System.Serializable]
 public class WireProp
 {
-    public Material _material;
+    //public Material _material;
     public GameObject _wire;
     public float _width;
 }
@@ -14,6 +14,8 @@ public class WireGeneration : MonoBehaviour
     [SerializeField] private float _connectorWidth;
     [SerializeField] private float _wireWidth;
     [SerializeField] private bool _debugLine;
+    [SerializeField] private Material _wireMaterial;
+    [SerializeField] private Material _ConnectorMaterial;
     [SerializeField] private WireProp[] _wires;
     void Start()
     {
@@ -47,7 +49,7 @@ public class WireGeneration : MonoBehaviour
         meshFilter.mesh = _connectorMesh;
 
         MeshRenderer meshRenderer = connector.AddComponent<MeshRenderer>();
-        meshRenderer.material = prop._material;
+        meshRenderer.material = _ConnectorMaterial;
 
         connector.transform.position = prop._wire.transform.position;
 
@@ -103,7 +105,7 @@ public class WireGeneration : MonoBehaviour
         meshFilter.mesh = _wireMesh;
 
         MeshRenderer meshRenderer = wire.AddComponent<MeshRenderer>();
-        meshRenderer.material = prop._material;
+        meshRenderer.material = _wireMaterial;
 
         wire.transform.SetParent(transform);
         wire.name = "wire";

@@ -1,6 +1,5 @@
 using System.Collections;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Flashlight : MonoBehaviour
@@ -11,6 +10,7 @@ public class Flashlight : MonoBehaviour
     private Camera _camera;
     private float _energy = 10000;
     private bool _canEnable = true;
+    private Vector3 _lookPoint;
 
     void Start()
     {
@@ -19,6 +19,7 @@ public class Flashlight : MonoBehaviour
 
         if (InputReceiver.Instance == null) return;
         InputReceiver.Instance.Flashlight += StateChange;
+        InputReceiver.Instance.CameraLookAngle += LookPoint;
     }
 
     private void OnDestroy()
@@ -26,6 +27,14 @@ public class Flashlight : MonoBehaviour
         if (InputReceiver.Instance == null) return;
         InputReceiver.Instance.Flashlight -= StateChange;
     }
+
+    private void LookPoint(Ray ray)
+    {
+        RaycastHit hit;
+        Physics.Raycast(ray, out hit);
+        _lookPoint = hit.point;
+    }
+
     private void StateChange()
     {
         if (!_lightSource.enabled && _energy > 0)
@@ -45,13 +54,16 @@ public class Flashlight : MonoBehaviour
 
     private void LateUpdate()
     {
-        transform.position = Vector3.Lerp(transform.position, _camera.transform.position
+        Vector3 targetPosition = _camera.transform.position
             + _camera.transform.right * _offset.x
             + _camera.transform.up * _offset.y
-            + _camera.transform.forward * _offset.z,
-            Time.deltaTime * 10);
+            + _camera.transform.forward * _offset.z;
+        transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * 10);
 
-        transform.rotation = Quaternion.Lerp(transform.rotation, _camera.transform.rotation, Time.deltaTime * 10);
+        Vector3 directionToTarget = _lookPoint - transform.position;
+        Quaternion newRot = Quaternion.LookRotation(directionToTarget);
+
+        transform.rotation = Quaternion.Lerp(transform.rotation, newRot, Time.deltaTime * 10);
 
         _text.text = "Fl: " + _energy / 10;
     }
