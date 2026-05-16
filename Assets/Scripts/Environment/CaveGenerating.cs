@@ -14,6 +14,7 @@ public class CaveGenerating : MonoBehaviour
     [SerializeField] private float _subBranchChance = 0.3f;
     [SerializeField] private float _stalagmiteSpawnChance = 0.5f;
     [SerializeField] private float _biomeBoundaryJitter = 100f;
+    [SerializeField] private float _cullDistanceMultiplier = 2f;
 
     private Quaternion _lastExitRotation;
     private Vector3 _lastExitPosition;
@@ -22,6 +23,7 @@ public class CaveGenerating : MonoBehaviour
 
     private RoomSelector _selector;
     private RoomPlacer _placer;
+    private readonly Queue<RoomMetadata> _spawnedRooms = new Queue<RoomMetadata>();
 
     private void Start()
     {
@@ -46,9 +48,32 @@ public class CaveGenerating : MonoBehaviour
     private void Update()
     {
         if (_player == null || _generationRules == null) return;
+        CullOldRooms();
         if (Vector3.Distance(_player.position, _lastExitPosition) >= _generationRules.StreamTriggerDistance) return;
         if (_streamingStalled && _lastExitPosition == _lastFailedFrontier) return;
         GenerateMain();
+    }
+
+    private void CullOldRooms()
+    {
+        if (_player == null) return;
+        float cullDistance = _generationRules.StreamTriggerDistance * Mathf.Max(1f, _cullDistanceMultiplier);
+        // Удаляем самые старые комнаты, пока они дальше cullDistance от игрока.
+        // Стартовая зона помещается в очередь первой — её тоже допускается удалить, если игрок ушёл.
+        while (_spawnedRooms.Count > 0)
+        {
+            RoomMetadata oldest = _spawnedRooms.Peek();
+            if (oldest == null)
+            {
+                _spawnedRooms.Dequeue();
+                continue;
+            }
+            float dist = Vector3.Distance(_player.position, oldest.transform.position);
+            if (dist <= cullDistance) break;
+            _spawnedRooms.Dequeue();
+            _placer.UnregisterBounds(oldest.Bounds);
+            Destroy(oldest.gameObject);
+        }
     }
 
     private bool SpawnStartZone()
@@ -78,6 +103,7 @@ public class CaveGenerating : MonoBehaviour
 
         _placer.RegisterPlaced(meta.Bounds);
         _selector.OnRoomPlaced(ResolveBiome(_lastExitPosition.y), RoomType.StartZone);
+        _spawnedRooms.Enqueue(meta);
         Visuals(startZone);
         return true;
     }
@@ -101,6 +127,7 @@ public class CaveGenerating : MonoBehaviour
 
         _streamingStalled = false;
         _selector.OnRoomPlaced(biome, prefab.Type);
+        _spawnedRooms.Enqueue(result.Metadata);
         Visuals(result.Instance);
 
         Vector3 mainExitPos = result.PickedExit.position;
@@ -147,6 +174,7 @@ public class CaveGenerating : MonoBehaviour
         if (!result.Success) return;
 
         _selector.OnRoomPlaced(biome, prefab.Type);
+        _spawnedRooms.Enqueue(result.Metadata);
         Visuals(result.Instance);
 
         _lastExitPosition = result.PickedExit.position;
@@ -230,6 +258,8 @@ public class CaveGenerating : MonoBehaviour
         if (idx <= 0 || idx >= biomes.Length) return;
         var mats = biomes[idx]._stoneMaterials;
         if (mats == null || mats.Count == 0) return;
-        renderer.material = mats[mats.Count - 1];
+        Material picked = mats[Random.Range(0, mats.Count)];
+        // sharedMaterial — общий ассет, не плодит per-renderer инстансы при бесконечной генерации.
+        renderer.sharedMaterial = picked;
     }
 }

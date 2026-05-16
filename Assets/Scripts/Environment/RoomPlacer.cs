@@ -80,10 +80,18 @@ public class RoomPlacer
         if (bounds != null) _placedBounds.Add(bounds);
     }
 
+    public void UnregisterBounds(BoxCollider bounds)
+    {
+        if (bounds != null) _placedBounds.Remove(bounds);
+    }
+
     private static void Snap(Transform room, Transform start, Vector3 anchorPos, Quaternion anchorRot)
     {
         Quaternion rotationOffset = room.rotation * Quaternion.Inverse(start.rotation);
         room.rotation = anchorRot * rotationOffset;
+        // После смены rotation дочерний start ещё не отражает новую матрицу — синхронизируем,
+        // иначе positionOffset считается по устаревшим world-координатам и комнаты не стыкуются.
+        Physics.SyncTransforms();
         Vector3 positionOffset = room.position - start.position;
         room.position = anchorPos + positionOffset;
     }
