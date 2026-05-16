@@ -7,6 +7,13 @@ public class Flashlight : MonoBehaviour
     [SerializeField] private Light _lightSource;
     [SerializeField] private TMP_Text _text;
     [SerializeField] private Vector3 _offset;
+    [Tooltip("Жёсткость 'руки' для позиции фонаря. " +
+             "5–8 — приятный sway, 15+ — почти моментально.")]
+    [SerializeField] private float _followSmoothing = 8f;
+
+    [Tooltip("Жёсткость поворота фонаря в сторону прицела. " +
+             "Можно сделать выше positional, чтобы луч точнее целился, при этом рука всё ещё качается.")]
+    [SerializeField] private float _rotationSmoothing = 8f;
     private Camera _camera;
     private float _energy = 10000;
     private bool _canEnable = true;
@@ -30,9 +37,10 @@ public class Flashlight : MonoBehaviour
 
     private void LookPoint(Ray ray)
     {
-        RaycastHit hit;
-        Physics.Raycast(ray, out hit);
-        _lookPoint = hit.point;
+        if (Physics.Raycast(ray, out RaycastHit hit, 100f))
+            _lookPoint = hit.point;
+        else
+            _lookPoint = ray.origin + ray.direction * 100f;
     }
 
     private void StateChange()
@@ -58,12 +66,21 @@ public class Flashlight : MonoBehaviour
             + _camera.transform.right * _offset.x
             + _camera.transform.up * _offset.y
             + _camera.transform.forward * _offset.z;
-        transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * 10);
 
-        Vector3 directionToTarget = _lookPoint - transform.position;
-        Quaternion newRot = Quaternion.LookRotation(directionToTarget);
+        float positionT = 1f - Mathf.Exp(-_followSmoothing * Time.deltaTime);
+        float rotationT = 1f - Mathf.Exp(-_rotationSmoothing * Time.deltaTime);
 
-        transform.rotation = Quaternion.Lerp(transform.rotation, newRot, Time.deltaTime * 10);
+        transform.position = Vector3.Lerp(transform.position, targetPosition, positionT);
+
+        Vector3 aimAt = _lookPoint != Vector3.zero
+            ? _lookPoint
+            : _camera.transform.position + _camera.transform.forward * 100f;
+        Vector3 direction = aimAt - targetPosition;
+        if (direction.sqrMagnitude > 0.0001f)
+        {
+            Quaternion desired = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, desired, rotationT);
+        }
 
         _text.text = "Fl: " + _energy / 10;
     }
