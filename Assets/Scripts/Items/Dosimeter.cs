@@ -1,3 +1,6 @@
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Dosimeter : MonoBehaviour, IEquippable
@@ -5,11 +8,17 @@ public class Dosimeter : MonoBehaviour, IEquippable
     private Rigidbody _rigidbody;
     private Collider _collision;
     private bool _isEquipped = false;
+    private float _currentZivert;
+    private string text;
+
+    [SerializeField] private TMP_Text _gammaText;
+    [SerializeField] private TMP_Text _mcZValue;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _collision = GetComponent<Collider>();
+        StartCoroutine(UpdateScreen());
     }
 
     private void OnDestroy()
@@ -82,4 +91,37 @@ public class Dosimeter : MonoBehaviour, IEquippable
     {
         Debug.Log($"Событие: {action} от {gameObject.name}");
     }
+
+    public void AddRadiation(float rad)
+    {
+        //Debug.Log(rad);
+        _currentZivert += rad;
+    }
+
+    private void FixedUpdate()
+    {
+        UpdateZivert();
+    }
+
+    IEnumerator UpdateScreen()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(0.25f);
+            _mcZValue.text = text;
+        }
+    }
+
+    private float Noise()
+    {
+        return Random.Range(0.04f,0.11f);
+    }
+
+    private void UpdateZivert()
+    {
+        text = (Mathf.Floor((_currentZivert + Noise())*100)/100).ToString();
+        if (text == "0") text = "0,00";
+        _currentZivert = 0;
+    }
+
 }

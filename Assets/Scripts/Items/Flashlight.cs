@@ -70,17 +70,20 @@ public class Flashlight : MonoBehaviour
         float positionT = 1f - Mathf.Exp(-_followSmoothing * Time.deltaTime);
         float rotationT = 1f - Mathf.Exp(-_rotationSmoothing * Time.deltaTime);
 
-        transform.position = Vector3.Lerp(transform.position, targetPosition, positionT);
+        //transform.position = Vector3.Lerp(transform.position, targetPosition, positionT);
 
-        Vector3 aimAt = _lookPoint != Vector3.zero
-            ? _lookPoint
-            : _camera.transform.position + _camera.transform.forward * 100f;
-        Vector3 direction = aimAt - targetPosition;
-        if (direction.sqrMagnitude > 0.0001f)
-        {
-            Quaternion desired = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, desired, rotationT);
-        }
+        //Vector3 aimAt = _lookPoint != Vector3.zero
+        //    ? _lookPoint
+        //    : _camera.transform.position + _camera.transform.forward * 100f;
+        //Vector3 direction = aimAt - targetPosition;
+        //if (direction.sqrMagnitude > 0.0001f)
+        //{
+        //    Quaternion desired = Quaternion.LookRotation(direction);
+        //    transform.rotation = Quaternion.Slerp(transform.rotation, desired, rotationT);
+        //}
+
+        transform.rotation = Quaternion.Slerp(transform.rotation, _camera.transform.rotation, rotationT);
+        transform.position = Vector3.Slerp(transform.position, _camera.transform.position, positionT);
 
         _text.text = "Fl: " + _energy / 10;
     }
