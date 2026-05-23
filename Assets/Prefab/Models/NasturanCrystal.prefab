@@ -216,7 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aca8f1e3a2d925a4fb5dc124ff8b46d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _radiationAmount: 2000
+  _radiationAmount: 500
   _radius: 50
   _crystalRandom: {fileID: 7515609209270191725}
   _crystals: 1

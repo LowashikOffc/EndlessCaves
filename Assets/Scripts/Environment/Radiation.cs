@@ -16,16 +16,16 @@ public class Radiation : MonoBehaviour
     private void Awake()
     {
         GameManager.Instance.GetRadiation(this);
-        _crystalRandom._setCount += SetCount;
+        if (_crystalRandom) _crystalRandom._setCount += SetCount;
     }
     private void OnDestroy()
     {
-        _crystalRandom._setCount -= SetCount;
+        if (_crystalRandom) _crystalRandom._setCount -= SetCount;
     }
 
     private void SetCount(int count)
     {
-        Debug.Log(count);
+        //Debug.Log(count);
         _crystals = count;
     }
 
