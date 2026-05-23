@@ -219,6 +219,8 @@ MonoBehaviour:
   _radiationAmount: 2000
   _radius: 50
   _crystalRandom: {fileID: 7515609209270191725}
+  _crystals: 1
+  _currentRad: 0
 --- !u!114 &7515609209270191725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,8 +233,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f19f098909297b4aaf9beffe6ffea59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _crystals: []
-  _activeCrystals: 0
+  _crystals:
+  - {fileID: 902924175652219175}
+  - {fileID: 3868346781261720965}
+  - {fileID: 1606477997747208523}
+  - {fileID: 6290830500451450541}
+  _activeCrystals: 1
 --- !u!1 &3868346781261720965
 GameObject:
   m_ObjectHideFlags: 0

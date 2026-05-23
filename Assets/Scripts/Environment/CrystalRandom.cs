@@ -8,23 +8,36 @@ public class CrystalRandom : MonoBehaviour
     [SerializeField] private int _activeCrystals;
     public event Action<int> _setCount;
 
-    void Awake()
+    void Start()
     {
         if (_crystals.Count <= 0) return;
+        Randomize();
+    }
+
+    private void ActivateAll()
+    {
+        _activeCrystals = _crystals.Count;
         foreach (var cryst in _crystals)
         {
-            if (UnityEngine.Random.Range(0, 2) == 0) cryst.gameObject.SetActive(false);
-            else _activeCrystals++;
+            cryst.gameObject.SetActive(true);
         }
-        int a = 0;
+    }
+    private void Randomize()
+    {
+        ActivateAll();
         foreach (var cryst in _crystals)
         {
-            if (!cryst.activeSelf)
+            if (UnityEngine.Random.Range(0, 2) == 0)
             {
-                a++;
+                cryst.gameObject.SetActive(false);
+                _activeCrystals--; 
             }
         }
-        if (a == _crystals.Count) _crystals[UnityEngine.Random.Range(0,_crystals.Count)].SetActive(true);
-        _setCount?.Invoke(a);
+        if (_activeCrystals <= 0) Randomize();
+        else
+        {
+            _setCount?.Invoke(_activeCrystals);
+        }
     }
+
 }

@@ -11,6 +11,7 @@ TagManager:
   - Inventory
   - Hand
   - Item
+  - UIZone
   layers:
   - Default
   - TransparentFX

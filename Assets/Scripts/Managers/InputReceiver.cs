@@ -17,6 +17,8 @@ public class InputReceiver : MonoBehaviour
     [SerializeField] KeyCode _actionButton = KeyCode.E;
     [SerializeField] KeyCode _dropButton = KeyCode.Q;
 
+    private InputConfig _config;
+
     public event Action<float> HorizontalAxis;
     public event Action<float> VerticalAxis;
     public event Action<Ray> CameraLookAngle;

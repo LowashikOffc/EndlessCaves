@@ -49,7 +49,7 @@ public class Hook : MonoBehaviour
     }
     private void HookThrow()
     {
-        Debug.Log("throw");
+        //Debug.Log("throw");
         if (!_canThrow) return;
         _hooked = false;
         _hookRigidbody.isKinematic = false;
@@ -62,7 +62,7 @@ public class Hook : MonoBehaviour
 
     private void HookReturn()
     {
-        Debug.Log("return");
+        //Debug.Log("return");
         PrepareHookState();
         _rope.SetActive(false);
         SoundService.Instance.PlaySound3D(SoundID.hookReturn, transform.position, 0.5f);
@@ -70,7 +70,7 @@ public class Hook : MonoBehaviour
 
     public void ExecuteAction(Actions action)
     {
-        Debug.Log("action");
+        //Debug.Log("action");
         switch (action)
         {
             case Actions.Primary: HookThrow(); break;
@@ -79,7 +79,7 @@ public class Hook : MonoBehaviour
     }
     public void Key(KeyCode key)
     {
-        Debug.Log("Key");
+        //Debug.Log("Key");
 
         switch (key)
         {

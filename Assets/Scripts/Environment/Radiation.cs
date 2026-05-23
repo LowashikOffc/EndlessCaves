@@ -7,20 +7,25 @@ public class Radiation : MonoBehaviour
     [SerializeField] private float _radius = 5f;     // радиус поражения в метрах
     [SerializeField] private CrystalRandom _crystalRandom;
 
-    private int _crystals;
-    private float _currentRad = 0f;
+    [SerializeField] private int _crystals;
+    [SerializeField] private float _currentRad = 0f;
     private GameObject _dosimeter;
     private Dosimeter _dosimeterScript;
 
 
-    private void Start()
+    private void Awake()
     {
         GameManager.Instance.GetRadiation(this);
         _crystalRandom._setCount += SetCount;
     }
+    private void OnDestroy()
+    {
+        _crystalRandom._setCount -= SetCount;
+    }
 
     private void SetCount(int count)
     {
+        Debug.Log(count);
         _crystals = count;
     }
 
@@ -43,33 +48,21 @@ public class Radiation : MonoBehaviour
             return;
         }
 
-        // Проверяем, находится ли дозиметр внутри сферы радиации
         float dist = Vector3.Distance(transform.position, _dosimeter.transform.position);
         if (dist <= _radius)
         {
 
-            // Линейное падение радиации с расстоянием
-            // На границе _radius -> 0, в центре -> _radiationAmount
             float t = 1f - Mathf.Clamp01(dist / _radius);
             _currentRad = _radiationAmount * t * _crystals;
 
-            //Debug.Log($"t: {t:F4}");
-            //Debug.Log($"_radiationAmount: {_radiationAmount}");
-            //Debug.Log($"_currentRad (power): {_currentRad:F2} μSv/h");
-            //Debug.Log($"Time.fixedDeltaTime: {Time.fixedDeltaTime}");
-            //Debug.Log($"Value sent to dosimeter: {_currentRad * Time.fixedDeltaTime}");
-
-            // Передаём радиацию в дозиметр (мкЗв/ч)
-            _dosimeterScript.AddRadiation(_currentRad * Time.fixedDeltaTime); // умножаем на время, если AddRadiation ожидает дозу, а не мощность
+            _dosimeterScript.AddRadiation(_currentRad * Time.fixedDeltaTime);
         }
         else
         {
             _currentRad = 0f;
         }
-        //Debug.Log($"Base power: {_currentRad}");
     }
 
-    // Опционально: визуализация в редакторе
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = new Color(1f, 0f, 0f, 0.1f);
