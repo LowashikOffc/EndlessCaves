@@ -84,7 +84,7 @@ public class InputReceiver : MonoBehaviour
                     {
                         if (s == i.ToString())
                         {
-                            InventoryManager.Instance.SetSelectedSlot(i);
+                            //InventoryManager.Instance.SetSelectedSlot(i);
                             SlotSelect?.Invoke(i);
                         }
                     }

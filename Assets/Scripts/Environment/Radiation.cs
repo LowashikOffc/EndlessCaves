@@ -1,19 +1,33 @@
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class Radiation : MonoBehaviour
 {
-    [SerializeField] private int _radiationAmount;
-    float _currentRad = 0;
-    private GameObject _player;
-    private Collider _collider;
-    private float _maxDist;
+    [SerializeField] private float _radiationAmount; // мкЗв/ч на максимальной дистанции
+    [SerializeField] private float _radius = 5f;     // радиус поражения в метрах
+    [SerializeField] private CrystalRandom _crystalRandom;
+
+    private int _crystals;
+    private float _currentRad = 0f;
     private GameObject _dosimeter;
     private Dosimeter _dosimeterScript;
+
+
     private void Start()
     {
-        _player = GameObject.FindGameObjectWithTag("Player");
+        GameManager.Instance.GetRadiation(this);
+        _crystalRandom._setCount += SetCount;
+    }
+
+    private void SetCount(int count)
+    {
+        _crystals = count;
+    }
+
+    public void SetDosimeter(GameObject item)
+    {
+        _dosimeter = item;
+        _dosimeterScript = _dosimeter.GetComponent<Dosimeter>();
     }
 
     public float GetRadiation()
@@ -23,38 +37,42 @@ public class Radiation : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!_dosimeter)
+        if (_dosimeter == null || _dosimeterScript == null)
         {
-            Debug.Log("dosimeter not found");
-            GameObject[] items = GameObject.FindGameObjectsWithTag("Item");
-            foreach (GameObject item in items)
-            {
-                if (item.GetComponent<Dosimeter>())
-                {
-                    _dosimeter = item;
-                    _dosimeterScript = item.GetComponent<Dosimeter>();
-                }
-            }
+            _currentRad = 0f;
+            return;
+        }
+
+        // Проверяем, находится ли дозиметр внутри сферы радиации
+        float dist = Vector3.Distance(transform.position, _dosimeter.transform.position);
+        if (dist <= _radius)
+        {
+
+            // Линейное падение радиации с расстоянием
+            // На границе _radius -> 0, в центре -> _radiationAmount
+            float t = 1f - Mathf.Clamp01(dist / _radius);
+            _currentRad = _radiationAmount * t * _crystals;
+
+            //Debug.Log($"t: {t:F4}");
+            //Debug.Log($"_radiationAmount: {_radiationAmount}");
+            //Debug.Log($"_currentRad (power): {_currentRad:F2} μSv/h");
+            //Debug.Log($"Time.fixedDeltaTime: {Time.fixedDeltaTime}");
+            //Debug.Log($"Value sent to dosimeter: {_currentRad * Time.fixedDeltaTime}");
+
+            // Передаём радиацию в дозиметр (мкЗв/ч)
+            _dosimeterScript.AddRadiation(_currentRad * Time.fixedDeltaTime); // умножаем на время, если AddRadiation ожидает дозу, а не мощность
         }
         else
         {
-            float dist = Vector3.Distance(_dosimeter.transform.position.normalized, transform.position.normalized);
-            float t = 1f - Mathf.Clamp01(dist / _maxDist);
-            _currentRad = _radiationAmount * t;
-            _dosimeterScript.AddRadiation(_currentRad);
+            _currentRad = 0f;
         }
-        //Debug.Log(_currentRad);
+        //Debug.Log($"Base power: {_currentRad}");
     }
 
-    private void OnTriggerEnter(Collider other)
+    // Опционально: визуализация в редакторе
+    private void OnDrawGizmosSelected()
     {
-        if (_dosimeter) _maxDist = 0.5f;
-        Debug.Log(_maxDist);
+        Gizmos.color = new Color(1f, 0f, 0f, 0.1f);
+        Gizmos.DrawSphere(transform.position, _radius);
     }
-
-    private void OnTriggerExit(Collider other)
-    {
-        _currentRad = 0;
-    }
-
 }

@@ -15,5 +15,6 @@ MonoBehaviour:
   _itemName: Hook
   _icon: {fileID: 0}
   _maxStackSize: 1
-  weight: 7
+  itemID: 3
+  weight: 1.5
   _equipmentPrefab: {fileID: 7285524452055051085, guid: a9d8fffa48351304d932cd65ac8a2871, type: 3}

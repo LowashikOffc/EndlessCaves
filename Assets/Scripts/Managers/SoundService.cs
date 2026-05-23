@@ -122,6 +122,8 @@ public enum SoundID
     grounded = 11,
     jump = 12,
     horrosSteps = 13,
+    DosienerClick = 14,
+    DosienerAlarm = 15,
     #endregion
 
     #region UI Sounds 101-200

@@ -175,6 +175,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5810847118954319396}
+  - component: {fileID: 1644112810671081798}
+  - component: {fileID: 1069434732714872670}
   m_Layer: 0
   m_Name: AmethystCrystal
   m_TagString: Untagged
@@ -202,6 +204,35 @@ Transform:
   - {fileID: 6676535346456153365}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1644112810671081798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2246825060240230256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aca8f1e3a2d925a4fb5dc124ff8b46d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _radiationAmount: 0.15
+  _radius: 20
+  _crystalRandom: {fileID: 1069434732714872670}
+--- !u!114 &1069434732714872670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2246825060240230256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f19f098909297b4aaf9beffe6ffea59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _crystals: []
+  _activeCrystals: 0
 --- !u!1 &3868346781261720965
 GameObject:
   m_ObjectHideFlags: 0
@@ -329,7 +360,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 0.8593525, g: 0.36320752, b: 1, a: 1}
-  m_Intensity: 0.1
+  m_Intensity: 0.03
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208

@@ -29,7 +29,7 @@ public class BatteryScript : MonoBehaviour, IEquippable
 
     public void OnEquip()
     {
-        Debug.Log($"{gameObject.name} экипирован");
+        //Debug.Log($"{gameObject.name} экипирован");
         if (_collision != null) _collision.enabled = false;
         if (_rigidbody != null) _rigidbody.isKinematic = true; _rigidbody.useGravity = false;
         transform.localPosition = Vector3.zero;
@@ -43,7 +43,7 @@ public class BatteryScript : MonoBehaviour, IEquippable
     }
     public void OnUnequip()
     {
-        Debug.Log($"{gameObject.name} убран в инвентарь");
+        //Debug.Log($"{gameObject.name} убран в инвентарь");
     }
     public void Key(KeyCode key)
     {

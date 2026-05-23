@@ -1,17 +1,16 @@
 using System.Collections;
 using UnityEngine;
 
-public class Hook : MonoBehaviour, IEquippable
+public class Hook : MonoBehaviour
 {
     private GameObject _player;
     private Rigidbody _playerRigitbody;
     private Camera _camera;
-    private bool _isEquipped = false;
 
     [Header("Commponents")]
     [SerializeField] private GameObject _hook;
     [SerializeField] private Rigidbody _hookRigidbody;
-    [SerializeField] private SphereCollider _collider;
+    [SerializeField] private MeshCollider _collider;
     [SerializeField] private Transform _hand;
 
     [Header("Rope Settings")]
@@ -21,6 +20,9 @@ public class Hook : MonoBehaviour, IEquippable
 
     private byte _throwForce = 12;
     private bool _hooked = false;
+    private float _scrollSpeed = 1;
+    private float _pullForce = 1000;
+    private float _maxPullSpeed = 2000;
     private bool _canThrow = true;
     
     private void Start()
@@ -30,25 +32,16 @@ public class Hook : MonoBehaviour, IEquippable
             _player = GameObject.FindGameObjectWithTag("Player");
             _playerRigitbody = _player.GetComponent<Rigidbody>();
             _camera = Camera.main;
-        _ropeStartSize = _rope.transform.localScale;
-        _hand = GameObject.FindGameObjectWithTag("Hand").transform;
+            _ropeStartSize = _rope.transform.localScale;
+            _hand = GameObject.FindGameObjectWithTag("Hand").transform;
         }
-    }
-
-    public void OnEquip()
-    {
-        PrepareHookState();
-        // Подписываемся на ввод только когда предмет экипирован
-        if (InputReceiver.Instance != null)
-        {
-            InputReceiver.Instance.HooksScroll += Scroll;
-            InputReceiver.Instance.InputChange += Key;
-        }
-        InventoryManager.Instance.UpdateTransform(GetComponent<ItemObject>().vector3, GetComponent<ItemObject>().quaternion);
+        InputReceiver.Instance.HooksScroll += Scroll;
+        InputReceiver.Instance.InputChange += Key;
     }
 
     private void PrepareHookState()
     {
+        _hooked = false;
         _collider.enabled = false;
         _hookRigidbody.isKinematic = true;
         _hook.transform.localPosition = Vector3.zero;
@@ -56,9 +49,11 @@ public class Hook : MonoBehaviour, IEquippable
     }
     private void HookThrow()
     {
+        Debug.Log("throw");
         if (!_canThrow) return;
-        _hook.transform.SetParent(null);
+        _hooked = false;
         _hookRigidbody.isKinematic = false;
+        _hook.transform.localPosition = _hand.transform.position;
         _hookRigidbody.velocity = _camera.transform.forward * _throwForce;
         _collider.enabled = true;
         _rope.SetActive(true);
@@ -67,29 +62,15 @@ public class Hook : MonoBehaviour, IEquippable
 
     private void HookReturn()
     {
-        _hooked = false;
-        _hook.transform.SetParent(transform);
+        Debug.Log("return");
         PrepareHookState();
         _rope.SetActive(false);
         SoundService.Instance.PlaySound3D(SoundID.hookReturn, transform.position, 0.5f);
     }
-    public void OnUnequip()
-    {
-        if (InputReceiver.Instance != null)
-        {
-            InputReceiver.Instance.InputChange -= Key;
-            InputReceiver.Instance.HooksScroll -= Scroll;
-        }
-        //Debug.Log($"{gameObject.name} убран в инвентарь");
-        if (_hook != null)
-        {
-            _hook.transform.SetParent(null);
-        }
-        _hook.transform.SetParent(this.transform);
-        PrepareHookState();
-    }
+
     public void ExecuteAction(Actions action)
     {
+        Debug.Log("action");
         switch (action)
         {
             case Actions.Primary: HookThrow(); break;
@@ -98,22 +79,8 @@ public class Hook : MonoBehaviour, IEquippable
     }
     public void Key(KeyCode key)
     {
-        if (!_isEquipped) return;
+        Debug.Log("Key");
 
-        if (InventoryManager.Instance == null) return;
-
-        GameObject currentItem = InventoryManager.Instance.GetCurrentEquippedItem();
-        if (currentItem != this.gameObject)
-        {
-            return;
-        }
-        var activeSlot = InventoryManager.Instance.GetSelectedSlot();
-
-        if (activeSlot == null || activeSlot._item == null)
-        {
-            //Debug.LogWarning("В руках нет предмета");
-            return;
-        }
         switch (key)
         {
             case KeyCode.Mouse0:
@@ -139,9 +106,28 @@ public class Hook : MonoBehaviour, IEquippable
         RopeVisuals();
     }
 
+    private void FixedUpdate()
+    {
+        if (_hooked) PullPlayer();
+    }
+    private void PullPlayer()
+    {
+        Vector3 direction = (_hook.transform.position - _player.transform.position).normalized;
+        float distance = Vector3.Distance(_player.transform.position, _hook.transform.position);
 
+        // Уменьшаем силу при приближении
+        float forceMultiplier = Mathf.Clamp(distance / 5f, 0.5f, 2f);
+        Vector3 force = direction * _pullForce * forceMultiplier;
+
+        // Ограничиваем максимальную скорость
+        if (_playerRigitbody.velocity.magnitude < _maxPullSpeed)
+        {
+            _playerRigitbody.AddForce(force, ForceMode.Force);
+        }
+    }
     private void Scroll(int direction)
     {
+
     }
 
     IEnumerator ScrollWait()
@@ -150,10 +136,17 @@ public class Hook : MonoBehaviour, IEquippable
     }
     private void RopeVisuals()
     {
+        float distance = Vector3.Distance(_ropeStartPosition.position, _hand.position);
+
         _rope.transform.localScale = new Vector3(
             _ropeStartSize.x,
-            Vector3.Distance(_ropeStartPosition.position, _hand.position),
+            distance/2,
             _ropeStartSize.z);
+
+        _rope.transform.position = (_ropeStartPosition.position + _hand.position) / 2f;
+
+        Vector3 direction = (_hand.position - _ropeStartPosition.position).normalized;
+        _rope.transform.rotation = Quaternion.LookRotation(direction) * Quaternion.Euler(90f, 0f, 0f);
     }
 
 
@@ -162,7 +155,8 @@ public class Hook : MonoBehaviour, IEquippable
         SoundService.Instance.PlaySound3D(SoundID.hookCollide, transform.position, 0.3f);
         if (collision.gameObject.tag == "Hookable")
         {
-
+            _hooked = true;
+            _hookRigidbody.isKinematic = true;  
         }
     }
 }

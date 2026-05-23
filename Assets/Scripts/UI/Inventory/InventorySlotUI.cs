@@ -17,7 +17,7 @@ public class InventorySlotUI : MonoBehaviour
         //Debug.Log($"Обновление ячейки номер: {slotIndex}");
         if (slot != null && slot._item != null && slot._item._icon != null)
         {
-            Debug.Log(slot._item._icon);
+            //Debug.Log(slot._item._icon);
             _iconDisplay.texture = slot._item._icon;
             _iconDisplay.enabled = true;
             _countText.text = slot._count.ToString();

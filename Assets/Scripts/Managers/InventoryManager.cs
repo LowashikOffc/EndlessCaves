@@ -40,14 +40,20 @@ public class InventoryManager : MonoBehaviour
 
     public void SetSelectedSlot(int index)
     {
-        int previousIndex = SelectedSlotindex;
-        SelectedSlotindex = Mathf.Clamp(index, 0, _slots.Count - 1);
+        // Приводим индекс в допустимые пределы
+        int newIndex = Mathf.Clamp(index, 0, _slots.Count - 1);
 
-        // Если слот изменился, обновляем экипированный предмет
-        if (previousIndex != SelectedSlotindex)
+        // ЕСЛИ ИНДЕКС НЕ ИЗМЕНИЛСЯ - НИЧЕГО НЕ ДЕЛАЕМ
+        if (newIndex == SelectedSlotindex)
         {
-            EquipItemInSlot(SelectedSlotindex);
+            //Debug.Log("Слот уже выбран, повторная экипировка не требуется");
+            return;
         }
+
+        SelectedSlotindex = newIndex;
+
+        // Экипируем предмет из нового слота
+        EquipItemInSlot(SelectedSlotindex);
     }
 
     public InventorySlot GetSelectedSlot()
@@ -170,47 +176,31 @@ public class InventoryManager : MonoBehaviour
     }
 
     // Экипировать предмет из указанного слота
+    // Экипировать предмет из указанного слота
     private void EquipItemInSlot(int slotIndex)
     {
         InventorySlot slot = GetSlot(slotIndex);
+
+        // Если слот пустой — даем команду снять всё
         if (slot == null || slot._item == null)
         {
             UnequipCurrentItem();
             return;
         }
 
-        // Получаем компонент предмета в слоте
-        // Предполагается, что у вас есть способ получить GameObject предмета из ItemData
-        GameObject newItem = GetItemGameObject(slot._item);
+        // Запоминаем ПРЕФАБ предмета как текущий экипированный
+        _currentEquippedItem = slot._item._equipmentPrefab;
 
-        if (newItem == null) return;
-
-        // Снимаем старый предмет
         if (_currentEquippedItem != null)
         {
-            IEquippable oldEquippable = _currentEquippedItem.GetComponent<IEquippable>();
-            if (oldEquippable != null)
-            {
-                oldEquippable.OnUnequip();
-                Debug.Log($"Снят предмет: {_currentEquippedItem.name}");
-            }
-            OnItemUnequipped?.Invoke(_currentEquippedItem);
+            // Передаем ПРЕФАБ в событие. PlayerEquipmentManager поймает его и заспавнит
+            OnItemEquipped?.Invoke(_currentEquippedItem);
+            //Debug.Log($"InventoryManager: Запрос на экипировку префаба: {_currentEquippedItem.name}");
         }
-
-        // Экипируем новый предмет
-        _currentEquippedItem = newItem;
-        IEquippable newEquippable = _currentEquippedItem.GetComponent<IEquippable>();
-        if (newEquippable != null)
+        else
         {
-            newEquippable.OnEquip();
-            Debug.Log($"Экипирован предмет: {_currentEquippedItem.name}");
+            UnequipCurrentItem();
         }
-        OnItemEquipped?.Invoke(_currentEquippedItem);
-    }
-
-    public void UpdateTransform(Vector3 pos, Quaternion rot)
-    {
-        ChangeV3AndRot?.Invoke(pos, rot, _currentEquippedItem);
     }
 
     // Снять текущий экипированный предмет
@@ -218,15 +208,29 @@ public class InventoryManager : MonoBehaviour
     {
         if (_currentEquippedItem != null)
         {
-            IEquippable equippable = _currentEquippedItem.GetComponent<IEquippable>();
-            if (equippable != null)
-            {
-                equippable.OnUnequip();
-                Debug.Log($"Снят предмет: {_currentEquippedItem.name}");
-            }
             OnItemUnequipped?.Invoke(_currentEquippedItem);
             _currentEquippedItem = null;
         }
+    }
+
+    // Метод SwitchToItem тоже упрощаем — работаем только с ItemData префаба
+    public void SwitchToItem(GameObject itemPrefab)
+    {
+        if (itemPrefab == null) return;
+
+        for (int i = 0; i < _slots.Count; i++)
+        {
+            if (_slots[i]._item != null && _slots[i]._item._equipmentPrefab == itemPrefab)
+            {
+                SetSelectedSlot(i);
+                return;
+            }
+        }
+    }
+
+    public void UpdateTransform(Vector3 pos, Quaternion rot)
+    {
+        ChangeV3AndRot?.Invoke(pos, rot, _currentEquippedItem);
     }
 
     // Вспомогательный метод для получения GameObject предмета из ItemData
@@ -254,22 +258,6 @@ public class InventoryManager : MonoBehaviour
 
         Debug.LogWarning($"Не найден GameObject для предмета: {itemData.name}");
         return null;
-    }
-
-    // Публичный метод для ручного переключения предмета
-    public void SwitchToItem(GameObject newItem)
-    {
-        if (_currentEquippedItem == newItem) return;
-
-        // Находим слот с этим предметом
-        for (int i = 0; i < _slots.Count; i++)
-        {
-            if (_slots[i]._item == GetItemDataFromGameObject(newItem))
-            {
-                SetSelectedSlot(i);
-                return;
-            }
-        }
     }
 
     // Вспомогательный метод для получения ItemData из GameObject
