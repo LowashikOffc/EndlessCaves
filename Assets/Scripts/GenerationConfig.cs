@@ -49,6 +49,7 @@ public enum BiomeName
 
 public enum Minerals
 {
+    Stone,
     Silver,
     Gold,
     Lead,

@@ -16,12 +16,36 @@ MonoBehaviour:
   - Biome: 0
     Quotas:
     - Type: 0
-      MinCount: 100
+      MinCount: 40
       Weight: 1
     - Type: 3
-      MinCount: 0
+      MinCount: 10
+      Weight: 0.3
+  - Biome: 2
+    Quotas:
+    - Type: 0
+      MinCount: 40
+      Weight: 1
+    - Type: 3
+      MinCount: 10
+      Weight: 0.3
+  - Biome: 2
+    Quotas:
+    - Type: 0
+      MinCount: 40
+      Weight: 1
+    - Type: 3
+      MinCount: 10
+      Weight: 0.3
+  - Biome: 3
+    Quotas:
+    - Type: 0
+      MinCount: 40
+      Weight: 1
+    - Type: 3
+      MinCount: 10
       Weight: 0.3
   StartZonePrefab: {fileID: 3609319643994218263, guid: 482bf2b943fc07d4fa7e09e51b994ba6, type: 3}
-  StreamAheadCount: 10
-  MaxOverlapRetries: 3
-  StreamTriggerDistance: 40
+  StreamAheadCount: 1
+  MaxOverlapRetries: 6
+  StreamTriggerDistance: 500

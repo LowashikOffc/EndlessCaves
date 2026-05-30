@@ -1,9 +1,17 @@
 using UnityEngine;
 
+public class Prams
+{
+    public Minerals Minerals;
+    public float Weight;
+    public int Rarity;
+}
+
 public class Scanner : MonoBehaviour, IEquippable
 {
     [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private Collider _collision;
+    [SerializeField] private Transform _scanPoint;
     private bool _isEquipped = false;
 
 
@@ -66,5 +74,17 @@ public class Scanner : MonoBehaviour, IEquippable
     public void ExecuteAction(Actions action)
     {
         Debug.Log($"Событие: {action}");
+        if (action == Actions.Primary) StartScan();
+    }
+
+    private void StartScan()
+    {
+
+    }
+
+    private Prams GetParameters()
+    {
+        var parameters = new Prams();
+        return parameters;
     }
 }

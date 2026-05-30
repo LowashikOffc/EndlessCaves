@@ -110,6 +110,8 @@ public class CaveGenerating : MonoBehaviour
 
     private void GenerateMain()
     {
+        Debug.Log($"=== GenerateMain called, total rooms: {_spawnedRooms.Count} ===");
+        Debug.Log($"Current exit: {_lastExitPosition}, rotation: {_lastExitRotation}");
         BiomeName biome = ResolveBiome(_lastExitPosition.y);
         RoomMetadata prefab = _selector.Pick(_lastExitPosition.y, biome);
         if (prefab == null)
@@ -145,6 +147,11 @@ public class CaveGenerating : MonoBehaviour
 
         _lastExitPosition = mainExitPos;
         _lastExitRotation = mainExitRot;
+        if (!result.Success)
+        {
+            Debug.LogError($"FAILED to place room! Biome: {biome}, Prefab: {prefab?.name}");
+            Debug.LogError($"Position: {_lastExitPosition}, Rotation: {_lastExitRotation}");
+        }
     }
 
     private void GenerateBranchFromExit(Transform exitPoint)
@@ -213,8 +220,27 @@ public class CaveGenerating : MonoBehaviour
     {
         if (!_streamingStalled || _lastExitPosition != _lastFailedFrontier)
             Debug.LogWarning($"CaveGenerating: {reason}");
-        _streamingStalled = true;
-        _lastFailedFrontier = _lastExitPosition;
+        //_streamingStalled = true;
+        //_lastFailedFrontier = _lastExitPosition;
+        TryAlternativeExit();
+    }
+
+    private void TryAlternativeExit()
+    {
+        if (_spawnedRooms.Count == 0) return;
+        RoomMetadata lastRoom = _spawnedRooms.Peek();
+        var exits = lastRoom.GetEnds();
+
+        foreach (var exit in exits)
+        {
+            if (exit.position != _lastExitPosition) // Другой выход
+            {
+                _lastExitPosition = exit.position;
+                _lastExitRotation = exit.rotation;
+                _streamingStalled = false;
+                return;
+            }
+        }
     }
 
     private BiomeName ResolveBiome(float y, float jitter = 0f)
