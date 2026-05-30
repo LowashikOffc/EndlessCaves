@@ -23,7 +23,7 @@ public class SelectKeyCode : MonoBehaviour
 
     void Start()
     {
-        InputReceiver.Instance.InputChange += RepaintButton;
+        InputReceiver.Instance.OnRebindKeyDetected += RepaintButton;
 
         foreach (ButtonLibrary lib in _buttons)
         {
@@ -35,7 +35,28 @@ public class SelectKeyCode : MonoBehaviour
     }
     private void OnDestroy()
     {
-        InputReceiver.Instance.InputChange -= RepaintButton;
+        if (InputReceiver.Instance != null)
+            InputReceiver.Instance.OnRebindKeyDetected -= RepaintButton;
+    }
+
+    private void OnDisable()
+    {
+        CancelPendingRebind();
+    }
+
+    private void Update()
+    {
+        if (_isSelected && Input.GetKeyDown(KeyCode.Escape))
+            CancelPendingRebind();
+    }
+
+    private void CancelPendingRebind()
+    {
+        if (!_isSelected) return;
+        _isSelected = false;
+        if (_screenBlock != null) _screenBlock.SetActive(false);
+        if (InputReceiver.Instance != null)
+            InputReceiver.Instance.CancelRebindListening();
     }
 
     private void RepaintButton(KeyCode keycode)
@@ -76,8 +97,8 @@ public class SelectKeyCode : MonoBehaviour
         _selectedSettingsEnum = lib._settingsEnum;
         _selectedText = lib._keyCodeText;
         _selectedkeyCode = lib._keyCode;
-        Debug.Log(lib._keyCode);
 
         _isSelected = true;
+        InputReceiver.Instance.StartRebindListening();
     }
 }

@@ -36,7 +36,8 @@ public class Hook : MonoBehaviour
             _hand = GameObject.FindGameObjectWithTag("Hand").transform;
         }
         InputReceiver.Instance.HooksScroll += Scroll;
-        InputReceiver.Instance.InputChange += Key;
+        InputReceiver.Instance.MouseL += OnMouseLeft;
+        InputReceiver.Instance.MouseR += OnMouseRight;
     }
 
     private void PrepareHookState()
@@ -77,26 +78,20 @@ public class Hook : MonoBehaviour
             case Actions.Secondary: HookReturn(); break;
         }
     }
-    public void Key(KeyCode key)
+    private void OnMouseLeft(bool down)
     {
-        //Debug.Log("Key");
-
-        switch (key)
-        {
-            case KeyCode.Mouse0:
-                ExecuteAction(Actions.Primary);
-                break;
-            case KeyCode.Mouse1:
-                ExecuteAction(Actions.Secondary);
-                break;
-        }
+        if (down) ExecuteAction(Actions.Primary);
+    }
+    private void OnMouseRight(bool down)
+    {
+        if (down) ExecuteAction(Actions.Secondary);
     }
 
     private void OnDestroy()
     {
         if (InputReceiver.Instance == null) return;
-        InputReceiver.Instance.HookThrow -= HookThrow;
-        InputReceiver.Instance.HookReturn -= HookReturn;
+        InputReceiver.Instance.MouseL -= OnMouseLeft;
+        InputReceiver.Instance.MouseR -= OnMouseRight;
         InputReceiver.Instance.HooksScroll -= Scroll;
     }
 
@@ -115,11 +110,11 @@ public class Hook : MonoBehaviour
         Vector3 direction = (_hook.transform.position - _player.transform.position).normalized;
         float distance = Vector3.Distance(_player.transform.position, _hook.transform.position);
 
-        // Уменьшаем силу при приближении
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         float forceMultiplier = Mathf.Clamp(distance / 5f, 0.5f, 2f);
         Vector3 force = direction * _pullForce * forceMultiplier;
 
-        // Ограничиваем максимальную скорость
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         if (_playerRigitbody.velocity.magnitude < _maxPullSpeed)
         {
             _playerRigitbody.AddForce(force, ForceMode.Force);
