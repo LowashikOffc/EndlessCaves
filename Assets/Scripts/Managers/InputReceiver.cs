@@ -5,19 +5,19 @@ public class InputReceiver : MonoBehaviour
 {
     public static InputReceiver Instance { get; private set; }
 
-    [SerializeField] KeyCode _upButton = KeyCode.W;
-    [SerializeField] KeyCode _leftButton = KeyCode.A;
-    [SerializeField] KeyCode _downButton = KeyCode.S;
-    [SerializeField] KeyCode _rightButton = KeyCode.D;
-    [SerializeField] KeyCode _jumpButton = KeyCode.Space;
-    [SerializeField] KeyCode _sprintButton = KeyCode.LeftShift;
-    [SerializeField] KeyCode _crouchButton = KeyCode.LeftControl;
-    [SerializeField] KeyCode _flashlightButton = KeyCode.F;
-    [SerializeField] KeyCode _zoomButton = KeyCode.Z;
-    [SerializeField] KeyCode _actionButton = KeyCode.E;
-    [SerializeField] KeyCode _dropButton = KeyCode.Q;
+    private KeyCode _upButton;
+    private KeyCode _leftButton;
+    private KeyCode _downButton;
+    private KeyCode _rightButton;
+    private KeyCode _jumpButton;
+    private KeyCode _sprintButton;
+    private KeyCode _crouchButton;
+    private KeyCode _flashlightButton;
+    private KeyCode _zoomButton;
+    private KeyCode _actionButton;
+    private KeyCode _dropButton;
 
-    private InputConfig _config;
+    private bool _listeningForKey;
 
     public event Action<float> HorizontalAxis;
     public event Action<float> VerticalAxis;
@@ -34,7 +34,8 @@ public class InputReceiver : MonoBehaviour
     public event Action<bool> Sprint;
     public event Action<int> SlotSelect;
 
-    public event Action<KeyCode> InputChange;
+    public event Action<KeyCode> OnRebindKeyDetected;
+    public event Action OnRebind;
 
     public event Action<bool> MouseR;
     public event Action<bool> MouseL;
@@ -93,15 +94,22 @@ public class InputReceiver : MonoBehaviour
                 }
             }
         }
-        if (Input.anyKeyDown)
+        if (_listeningForKey && Input.anyKeyDown)
         {
-            foreach (KeyCode keyCode in Enum.GetValues(typeof(KeyCode)))
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
-                if (Input.GetKeyDown(keyCode))
+                _listeningForKey = false;
+            }
+            else
+            {
+                foreach (KeyCode keyCode in Enum.GetValues(typeof(KeyCode)))
                 {
-                    //Debug.Log($"KeyDown detected: {keyCode}");
-                    InputChange?.Invoke(keyCode);
-                    break;
+                    if (Input.GetKeyDown(keyCode))
+                    {
+                        _listeningForKey = false;
+                        OnRebindKeyDetected?.Invoke(keyCode);
+                        break;
+                    }
                 }
             }
         }
@@ -189,6 +197,17 @@ public class InputReceiver : MonoBehaviour
                 break;
         }
         Save();
+        OnRebind?.Invoke();
+    }
+
+    public void StartRebindListening()
+    {
+        _listeningForKey = true;
+    }
+
+    public void CancelRebindListening()
+    {
+        _listeningForKey = false;
     }
 
     private void Save()

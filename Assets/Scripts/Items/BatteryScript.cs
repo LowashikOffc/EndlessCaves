@@ -19,60 +19,47 @@ public class BatteryScript : MonoBehaviour, IEquippable
     {
         if (InputReceiver.Instance != null)
         {
-            InputReceiver.Instance.InputChange -= Key;
+            InputReceiver.Instance.MouseL -= OnMouseLeft;
         }
     }
     private void Awake()
     {
-        InputReceiver.Instance.InputChange += Key;
+        InputReceiver.Instance.MouseL += OnMouseLeft;
     }
 
     public void OnEquip()
     {
-        //Debug.Log($"{gameObject.name} экипирован");
+        _isEquipped = true;
+
         if (_collision != null) _collision.enabled = false;
         if (_rigidbody != null) _rigidbody.isKinematic = true; _rigidbody.useGravity = false;
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
 
-        if (InputReceiver.Instance != null)
-        {
-            InputReceiver.Instance.InputChange += Key;
-        }
         InventoryManager.Instance.UpdateTransform(GetComponent<ItemObject>().vector3, GetComponent<ItemObject>().quaternion);
     }
     public void OnUnequip()
     {
-        //Debug.Log($"{gameObject.name} убран в инвентарь");
+        _isEquipped = false;
     }
-    public void Key(KeyCode key)
+    private void OnMouseLeft(bool down)
     {
+        if (!down) return;
         if (!_isEquipped) return;
 
         if (InventoryManager.Instance == null) return;
 
         GameObject currentItem = InventoryManager.Instance.GetCurrentEquippedItem();
-        if (currentItem != this.gameObject)
-        {
-            return;
-        }
-        var activeSlot = InventoryManager.Instance.GetSelectedSlot();
+        if (currentItem != this.gameObject) return;
 
-        if (activeSlot == null || activeSlot._item == null)
-        {
-            Debug.LogWarning("В руках нет предмета");
-            return;
-        }
-        switch (key)
-        {
-            case KeyCode.Mouse0:
-                ExecuteAction(Actions.Primary);
-                break;
-        }
+        var activeSlot = InventoryManager.Instance.GetSelectedSlot();
+        if (activeSlot == null || activeSlot._item == null) return;
+
+        ExecuteAction(Actions.Primary);
     }
     public void ExecuteAction(Actions action)
     {
-        Debug.Log($"Событие: {action}");
+        Debug.Log($"пїЅпїЅпїЅпїЅпїЅпїЅпїЅ: {action}");
     }
 
     IEnumerator wait()

@@ -9,12 +9,15 @@ public class Scanner : MonoBehaviour, IEquippable
 
     private void OnDestroy()
     {
-        InputReceiver.Instance.InputChange -= Key;
+        if (InputReceiver.Instance != null)
+        {
+            InputReceiver.Instance.MouseL -= OnMouseLeft;
+            InputReceiver.Instance.MouseR -= OnMouseRight;
+        }
     }
 
     public void OnEquip()
     {
-        Debug.Log($"{gameObject.name} экипирован");
         if (_collision != null) _collision.enabled = false;
         if (_rigidbody != null) _rigidbody.isKinematic = true; _rigidbody.useGravity = false;
         transform.localPosition = Vector3.zero;
@@ -22,7 +25,8 @@ public class Scanner : MonoBehaviour, IEquippable
 
         if (InputReceiver.Instance != null)
         {
-            InputReceiver.Instance.InputChange += Key;
+            InputReceiver.Instance.MouseL += OnMouseLeft;
+            InputReceiver.Instance.MouseR += OnMouseRight;
         }
         InventoryManager.Instance.UpdateTransform(GetComponent<ItemObject>().vector3, GetComponent<ItemObject>().quaternion);
     }
@@ -30,41 +34,33 @@ public class Scanner : MonoBehaviour, IEquippable
     {
         if (InputReceiver.Instance != null)
         {
-            InputReceiver.Instance.InputChange -= Key;
+            InputReceiver.Instance.MouseL -= OnMouseLeft;
+            InputReceiver.Instance.MouseR -= OnMouseRight;
         }
-        //Debug.Log($"{gameObject.name} убран в инвентарь");
-
     }
-    public void Key(KeyCode key)
+    private void OnMouseLeft(bool down)
+    {
+        if (down) HandleItemAction(Actions.Primary);
+    }
+    private void OnMouseRight(bool down)
+    {
+        if (down) HandleItemAction(Actions.Secondary);
+    }
+    private void HandleItemAction(Actions action)
     {
         if (!_isEquipped) return;
-
         if (InventoryManager.Instance == null) return;
 
         GameObject currentItem = InventoryManager.Instance.GetCurrentEquippedItem();
-        if (currentItem != this.gameObject)
-        {
-            return;
-        }
-        var activeSlot = InventoryManager.Instance.GetSelectedSlot();
+        if (currentItem != this.gameObject) return;
 
-        if (activeSlot == null || activeSlot._item == null)
-        {
-            Debug.LogWarning("В руках нет предмета");
-            return;
-        }
-        switch (key)
-        {
-            case KeyCode.Mouse0:
-                ExecuteAction(Actions.Primary);
-                break;
-            case KeyCode.Mouse1:
-                ExecuteAction(Actions.Secondary);
-                break;
-        }
+        var activeSlot = InventoryManager.Instance.GetSelectedSlot();
+        if (activeSlot == null || activeSlot._item == null) return;
+
+        ExecuteAction(action);
     }
     public void ExecuteAction(Actions action)
     {
-        Debug.Log($"Событие: {action}");
+        Debug.Log($"пїЅпїЅпїЅпїЅпїЅпїЅпїЅ: {action}");
     }
 }

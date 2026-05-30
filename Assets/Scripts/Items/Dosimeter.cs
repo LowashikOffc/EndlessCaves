@@ -34,7 +34,7 @@ public class Dosimeter : MonoBehaviour, IEquippable
     {
         if (InputReceiver.Instance != null)
         {
-            InputReceiver.Instance.InputChange -= Key;
+            InputReceiver.Instance.MouseL -= OnMouseLeft;
         }
     }
 
@@ -43,7 +43,6 @@ public class Dosimeter : MonoBehaviour, IEquippable
         if (_isEquipped) return;
 
         _isEquipped = true;
-        //Debug.Log($"{gameObject.name} экипирован");
 
         if (_collision != null) _collision.enabled = false;
         if (_rigidbody != null)
@@ -57,7 +56,7 @@ public class Dosimeter : MonoBehaviour, IEquippable
 
         if (InputReceiver.Instance != null)
         {
-            InputReceiver.Instance.InputChange += Key;
+            InputReceiver.Instance.MouseL += OnMouseLeft;
         }
 
         InventoryManager.Instance.UpdateTransform(GetComponent<ItemObject>().vector3, GetComponent<ItemObject>().quaternion);
@@ -68,37 +67,29 @@ public class Dosimeter : MonoBehaviour, IEquippable
         if (!_isEquipped) return;
 
         _isEquipped = false;
-        //Debug.Log($"{gameObject.name} убран в инвентарь");
 
         if (InputReceiver.Instance != null)
         {
-            InputReceiver.Instance.InputChange -= Key;
+            InputReceiver.Instance.MouseL -= OnMouseLeft;
         }
     }
 
-    public void Key(KeyCode key)
+    private void OnMouseLeft(bool down)
     {
+        if (!down) return;
         if (!_isEquipped) return;
 
         if (InventoryManager.Instance == null) return;
 
         GameObject currentItem = InventoryManager.Instance.GetCurrentEquippedItem();
-        if (currentItem != this.gameObject)
-        {
-            return;
-        }
+        if (currentItem != this.gameObject) return;
 
-        switch (key)
-        {
-            case KeyCode.Mouse0:
-                ExecuteAction(Actions.Primary);
-                break;
-        }
+        ExecuteAction(Actions.Primary);
     }
 
     public void ExecuteAction(Actions action)
     {
-        Debug.Log($"Событие: {action} от {gameObject.name}");
+        Debug.Log($"пїЅпїЅпїЅпїЅпїЅпїЅпїЅ: {action} пїЅпїЅ {gameObject.name}");
     }
 
     public void AddRadiation(float rad)
