@@ -47,5 +47,5 @@ MonoBehaviour:
       Weight: 0.3
   StartZonePrefab: {fileID: 3609319643994218263, guid: 482bf2b943fc07d4fa7e09e51b994ba6, type: 3}
   StreamAheadCount: 1
-  MaxOverlapRetries: 6
-  StreamTriggerDistance: 500
+  MaxOverlapRetries: 200
+  StreamTriggerDistance: 100

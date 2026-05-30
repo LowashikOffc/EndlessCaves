@@ -276,8 +276,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 13.179001, y: 8.7791, z: 18.40043}
-  m_Center: {x: 8.528718, y: 2.2880957, z: 0.2474451}
+  m_Size: {x: 4.0070624, y: 7.240649, z: 5.7226334}
+  m_Center: {x: 8.584774, y: 2.1844106, z: -1.8882424}
 --- !u!114 &1727340013822709936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,6 +295,7 @@ MonoBehaviour:
   MaxDepth: Infinity
   Weight: 1
   Bounds: {fileID: 6146832472774725331}
+  _cachedStart: {fileID: 0}
   _cachedEnds:
   - {fileID: 5952917715494123699}
 --- !u!1 &4742126180386675481

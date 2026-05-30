@@ -41,7 +41,7 @@ public class RoomMetadata : MonoBehaviour
              "чтобы он не мешал физике игрока. Если оставить пустым — компонент возьмёт BoxCollider с этого же объекта (Reset).")]
     public BoxCollider Bounds;
 
-    private Transform _cachedStart;
+    [SerializeField] private Transform _cachedStart;
 
     [Tooltip("Кэш дочерних EndPoint-ов. Заполняется автоматически при первом GetEnds(). " +
              "В инспекторе лучше оставить пустым.")]

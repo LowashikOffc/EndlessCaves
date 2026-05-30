@@ -220,28 +220,8 @@ public class CaveGenerating : MonoBehaviour
     {
         if (!_streamingStalled || _lastExitPosition != _lastFailedFrontier)
             Debug.LogWarning($"CaveGenerating: {reason}");
-        //_streamingStalled = true;
-        //_lastFailedFrontier = _lastExitPosition;
-        TryAlternativeExit();
     }
 
-    private void TryAlternativeExit()
-    {
-        if (_spawnedRooms.Count == 0) return;
-        RoomMetadata lastRoom = _spawnedRooms.Peek();
-        var exits = lastRoom.GetEnds();
-
-        foreach (var exit in exits)
-        {
-            if (exit.position != _lastExitPosition) // Другой выход
-            {
-                _lastExitPosition = exit.position;
-                _lastExitRotation = exit.rotation;
-                _streamingStalled = false;
-                return;
-            }
-        }
-    }
 
     private BiomeName ResolveBiome(float y, float jitter = 0f)
     {

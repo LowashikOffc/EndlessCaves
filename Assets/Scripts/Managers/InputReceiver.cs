@@ -35,6 +35,7 @@ public class InputReceiver : MonoBehaviour
     public event Action<int> SlotSelect;
 
     public event Action<KeyCode> OnRebindKeyDetected;
+    public event Action<KeyCode> AnyKeyPressed;
     public event Action OnRebind;
 
     public event Action<bool> MouseR;
@@ -78,6 +79,10 @@ public class InputReceiver : MonoBehaviour
 
         if (Input.anyKey)
         {
+            foreach (KeyCode keyCode in Enum.GetValues(typeof(KeyCode)))
+            {
+                AnyKeyPressed?.Invoke(keyCode);
+            }
             foreach (char c in Input.inputString)
             {
                 if (char.IsLetterOrDigit(c))
@@ -98,7 +103,7 @@ public class InputReceiver : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                _listeningForKey = false;
+                CancelRebindListening();
             }
             else
             {
@@ -106,7 +111,7 @@ public class InputReceiver : MonoBehaviour
                 {
                     if (Input.GetKeyDown(keyCode))
                     {
-                        _listeningForKey = false;
+                        CancelRebindListening();
                         OnRebindKeyDetected?.Invoke(keyCode);
                         break;
                     }

@@ -17,7 +17,7 @@ public class Scanner : MonoBehaviour, IEquippable
 
     private void OnDestroy()
     {
-        InputReceiver.Instance.InputChange -= Key;
+        InputReceiver.Instance.OnRebindKeyDetected -= Key;
     }
 
     public void OnEquip()
@@ -30,17 +30,18 @@ public class Scanner : MonoBehaviour, IEquippable
 
         if (InputReceiver.Instance != null)
         {
-            InputReceiver.Instance.InputChange += Key;
+            InputReceiver.Instance.OnRebindKeyDetected += Key;
         }
         InventoryManager.Instance.UpdateTransform(GetComponent<ItemObject>().vector3, GetComponent<ItemObject>().quaternion);
+        
     }
     public void OnUnequip()
     {
         if (InputReceiver.Instance != null)
         {
-            InputReceiver.Instance.InputChange -= Key;
+            InputReceiver.Instance.OnRebindKeyDetected -= Key;
         }
-        //Debug.Log($"{gameObject.name} убран в инвентарь");
+        Debug.Log($"{gameObject.name} убран в инвентарь");
 
     }
     public void Key(KeyCode key)

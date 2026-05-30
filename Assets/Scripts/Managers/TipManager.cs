@@ -18,24 +18,17 @@ public class TipManager : MonoBehaviour
         }
     }
 
-    private List<Tips> _currentTips;
-    public event Action<Tips[]> _update;
+    public event Action<Tips, settingsEnum> Add;
+    public event Action<Tips> Delete;
 
-    public void AddTip(Tips tip)
+    public void AddTip(Tips tip, settingsEnum Enum)
     {
-        _currentTips.Add(tip);
+        Add?.Invoke(tip, Enum);
     }
     public void DeleteTip(Tips tip)
     {
-        foreach (var t in _currentTips)
-        {
-            if (t == tip)
-            {
-                _currentTips.Remove(t);
-            }
-        }
+        Delete?.Invoke(tip);
     }
-
 }
 
 public enum Tips

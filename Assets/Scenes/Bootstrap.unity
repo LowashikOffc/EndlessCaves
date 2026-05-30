@@ -1362,17 +1362,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d7ad232ed2ef8348be1bfafb1cd379f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _upButton: 119
-  _leftButton: 97
-  _downButton: 115
-  _rightButton: 100
-  _jumpButton: 32
-  _sprintButton: 304
-  _crouchButton: 306
-  _flashlightButton: 102
-  _zoomButton: 122
-  _actionButton: 101
-  _dropButton: 113
 --- !u!4 &1740318855
 Transform:
   m_ObjectHideFlags: 0
@@ -1549,6 +1538,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1771152975}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1967992184
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1967992186}
+  - component: {fileID: 1967992185}
+  m_Layer: 0
+  m_Name: TipManager
+  m_TagString: Inventory
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1967992185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1967992184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ef456e005a0a754d946c0fc8a676183, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1967992186
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1967992184}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.0884838, y: 1.7167974, z: -3.2970698}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1568,3 +1601,4 @@ SceneRoots:
   - {fileID: 1428560331}
   - {fileID: 659422019}
   - {fileID: 1581061427}
+  - {fileID: 1967992186}

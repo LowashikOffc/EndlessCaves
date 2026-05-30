@@ -19,6 +19,8 @@ public class TipsVisuals : MonoBehaviour
 
     private void Start()
     {
+        TipManager.Instance.Add += AddTip;
+        TipManager.Instance.Delete += DeleteTip;
         SpawnTips();
         Refresh();
         InputReceiver.Instance.OnRebind += Refresh;
@@ -28,6 +30,48 @@ public class TipsVisuals : MonoBehaviour
     {
         if (InputReceiver.Instance != null)
             InputReceiver.Instance.OnRebind -= Refresh;
+    }
+
+    private void AddTip(Tips tip, settingsEnum settingsEnum)
+    {
+        Debug.Log($"Add {tip}");
+
+        // Пытаемся найти существующую
+        TipDef def = _tips.Find(t => t.tip == tip);
+
+        // Если не нашли - создаем новую
+        if (def == null)
+        {
+            def = new TipDef();
+            def.tip = tip;
+            def.actions = new List<settingsEnum>(); // Создаем список
+            def.actions.Add(settingsEnum);
+            _tips.Add(def); // Добавляем в общий список
+        }
+
+        // Создаем визуальную подсказку
+        TipView newTip = Instantiate(_tipView, _parent);
+        newTip.gameObject.SetActive(true);
+
+        List<KeyCode> keys = ResolveKeys(def.actions);
+        newTip.SetKeys(keys, def.tip);
+
+        _spawnedTips.Add(newTip);
+    }
+
+    private void DeleteTip(Tips tip)
+    {
+        Debug.Log($"Delete {tip}");
+
+        // Находим и удаляем подсказку для этого tip
+        TipView tipToRemove = _spawnedTips.Find(t =>
+            t != null && t.GetTip() == tip); // предпологая, что у TipView есть метод GetTip()
+
+        if (tipToRemove != null)
+        {
+            _spawnedTips.Remove(tipToRemove);
+            Destroy(tipToRemove.gameObject);
+        }
     }
 
     private void SpawnTips()

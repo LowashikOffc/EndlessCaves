@@ -3012,6 +3012,7 @@ MonoBehaviour:
   _roomPrefabs:
   - {fileID: 1727340013822709936, guid: 643b810d9da50a74d90c74d1426902db, type: 3}
   - {fileID: 1727340013822709936, guid: 722ff5d311dd2f14c83be97a13d8712f, type: 3}
+  - {fileID: 1727340013822709936, guid: dbf2d4debd44304439b38d05c6e6b5d5, type: 3}
   _generationConfig: {fileID: 11400000, guid: 4df3abacad3c55f4784ece04cb612576, type: 2}
   _generationRules: {fileID: 11400000, guid: 220b24651631d3a4c981083d2a671b7f, type: 2}
   _folder: {fileID: 1629317006}

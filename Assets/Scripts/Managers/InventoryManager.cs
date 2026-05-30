@@ -176,7 +176,6 @@ public class InventoryManager : MonoBehaviour
     }
 
     // Ёкипировать предмет из указанного слота
-    // Ёкипировать предмет из указанного слота
     private void EquipItemInSlot(int slotIndex)
     {
         InventorySlot slot = GetSlot(slotIndex);
