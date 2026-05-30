@@ -1577,7 +1577,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 2
   m_Range: 30
   m_SpotAngle: 60
   m_InnerSpotAngle: 1
@@ -2131,7 +2131,7 @@ MonoBehaviour:
   _isCrouch: 0
   _canUp: 0
   _groundChecker: {fileID: 377019300}
-  _collider: {fileID: 0}
+  _collider: {fileID: 583434698}
   _distanceToStep: 0.8
   _distanceToLanding: 0.9
   _walkSpeed: 40
@@ -2627,7 +2627,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4126043296210820275, guid: 22a65542837b3bd48aa883a2e7f62d57, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -41
+      value: -80.25
       objectReference: {fileID: 0}
     - target: {fileID: 4126043296210820275, guid: 22a65542837b3bd48aa883a2e7f62d57, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2715,7 +2715,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lightSource: {fileID: 446762001}
-  _text: {fileID: 0}
+  _text: {fileID: 241208135}
   _offset: {x: 0, y: 0, z: 0}
   _followSmoothing: 15
   _rotationSmoothing: 15
@@ -3016,7 +3016,7 @@ MonoBehaviour:
   _generationRules: {fileID: 11400000, guid: 220b24651631d3a4c981083d2a671b7f, type: 2}
   _folder: {fileID: 1629317006}
   _stalagmitePrefab: {fileID: 3485483884815536812, guid: 985e9508951a69e4e8d5507729ee1f96, type: 3}
-  _player: {fileID: 0}
+  _player: {fileID: 583434693}
   _branchGenerations: 3
   _randomizeExitChoice: 1
   _subBranchChance: 0.3
@@ -6000,7 +6000,7 @@ GameObject:
   - component: {fileID: 1774620883}
   - component: {fileID: 1774620882}
   m_Layer: 15
-  m_Name: Mesh
+  m_Name: Hook
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7335,6 +7335,13 @@ MonoBehaviour:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1312926722}
+  - {fileID: 583434693}
+  - {fileID: 349805731}
+  - {fileID: 1554858143}
+  - {fileID: 773334894}
+  - {fileID: 1774620887}
+  - {fileID: 2065023538}
   - {fileID: 556094862}
   - {fileID: 1399342758}
   - {fileID: 1854797}
@@ -7347,10 +7354,3 @@ SceneRoots:
   - {fileID: 2223082646475483789}
   - {fileID: 4987318785910372108}
   - {fileID: 711954667}
-  - {fileID: 1774620887}
-  - {fileID: 2065023538}
-  - {fileID: 349805731}
-  - {fileID: 583434693}
-  - {fileID: 773334894}
-  - {fileID: 1554858143}
-  - {fileID: 1312926722}

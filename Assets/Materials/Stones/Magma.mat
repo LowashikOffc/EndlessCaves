@@ -25,6 +25,7 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
+  - _NORMALMAP
   - _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
   - _SPECULARHIGHLIGHTS_OFF
   m_InvalidKeywords: []
@@ -47,7 +48,7 @@ Material:
         m_Scale: {x: 30, y: 30}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 9f3a03e86ded88246b09d870991729c9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Cube:
@@ -130,7 +131,7 @@ Material:
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BlendOp: 0
-    - _BumpScale: 0
+    - _BumpScale: 0.3
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cul: 2
@@ -145,11 +146,11 @@ Material:
     - _DstBlendAlpha: 0
     - _EnableExternalAlpha: 0
     - _EnvironmentReflections: 1
-    - _GlossMapScale: 0.447
+    - _GlossMapScale: 0.213
     - _Glossiness: 0.286
     - _GlossyReflections: 1
     - _LODAmt: 0
-    - _Metallic: 0.25
+    - _Metallic: 0.402
     - _Mode: 0
     - _NormalMapDepth: 1
     - _OcclusionStrength: 1
