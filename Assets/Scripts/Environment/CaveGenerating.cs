@@ -29,7 +29,7 @@ public class CaveGenerating : MonoBehaviour
     {
         if (_generationRules == null)
         {
-            Debug.LogError("CaveGenerating: GenerationRules not assigned");
+            //Debug.LogError("CaveGenerating: GenerationRules not assigned");
             return;
         }
         if (_folder == null) _folder = gameObject;
@@ -80,21 +80,21 @@ public class CaveGenerating : MonoBehaviour
     {
         if (_generationRules.StartZonePrefab == null)
         {
-            Debug.LogError("CaveGenerating: StartZonePrefab not set in GenerationRules");
+            //Debug.LogError("CaveGenerating: StartZonePrefab not set in GenerationRules");
             return false;
         }
         GameObject startZone = Instantiate(_generationRules.StartZonePrefab, _folder.transform);
         RoomMetadata meta = startZone.GetComponent<RoomMetadata>();
         if (meta == null)
         {
-            Debug.LogError("CaveGenerating: StartZonePrefab missing RoomMetadata component");
+            //Debug.LogError("CaveGenerating: StartZonePrefab missing RoomMetadata component");
             Destroy(startZone);
             return false;
         }
         List<Transform> ends = meta.GetEnds();
         if (ends.Count == 0)
         {
-            Debug.LogError("CaveGenerating: StartZone has no EndPoints");
+            //Debug.LogError("CaveGenerating: StartZone has no EndPoints");
             return false;
         }
         Transform exit = ends[0];
@@ -110,8 +110,8 @@ public class CaveGenerating : MonoBehaviour
 
     private void GenerateMain()
     {
-        Debug.Log($"=== GenerateMain called, total rooms: {_spawnedRooms.Count} ===");
-        Debug.Log($"Current exit: {_lastExitPosition}, rotation: {_lastExitRotation}");
+        //Debug.Log($"=== GenerateMain called, total rooms: {_spawnedRooms.Count} ===");
+        //Debug.Log($"Current exit: {_lastExitPosition}, rotation: {_lastExitRotation}");
         BiomeName biome = ResolveBiome(_lastExitPosition.y);
         RoomMetadata prefab = _selector.Pick(_lastExitPosition.y, biome);
         if (prefab == null)
@@ -149,8 +149,8 @@ public class CaveGenerating : MonoBehaviour
         _lastExitRotation = mainExitRot;
         if (!result.Success)
         {
-            Debug.LogError($"FAILED to place room! Biome: {biome}, Prefab: {prefab?.name}");
-            Debug.LogError($"Position: {_lastExitPosition}, Rotation: {_lastExitRotation}");
+            //Debug.LogError($"FAILED to place room! Biome: {biome}, Prefab: {prefab?.name}");
+            //Debug.LogError($"Position: {_lastExitPosition}, Rotation: {_lastExitRotation}");
         }
     }
 
@@ -218,8 +218,8 @@ public class CaveGenerating : MonoBehaviour
 
     private void StallStreaming(string reason)
     {
-        if (!_streamingStalled || _lastExitPosition != _lastFailedFrontier)
-            Debug.LogWarning($"CaveGenerating: {reason}");
+        //if (!_streamingStalled || _lastExitPosition != _lastFailedFrontier)
+            //Debug.LogWarning($"CaveGenerating: {reason}");
     }
 
 

@@ -13,6 +13,11 @@ public class Hook : MonoBehaviour
     [SerializeField] private MeshCollider _collider;
     [SerializeField] private Transform _hand;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource _scanSound;
+    [SerializeField] private AudioSource _scanStart;
+    [SerializeField] private AudioSource _scanChangePart;
+
     [Header("Rope Settings")]
     [SerializeField] private GameObject _rope;
     [SerializeField] private Transform _ropeStartPosition;
@@ -42,11 +47,7 @@ public class Hook : MonoBehaviour
 
     private void PrepareHookState()
     {
-        _hooked = false;
-        _collider.enabled = false;
-        _hookRigidbody.isKinematic = true;
         _hook.transform.localPosition = Vector3.zero;
-        _hook.SetActive(true);
     }
     private void HookThrow()
     {
@@ -54,7 +55,7 @@ public class Hook : MonoBehaviour
         if (!_canThrow) return;
         _hooked = false;
         _hookRigidbody.isKinematic = false;
-        _hook.transform.localPosition = _hand.transform.position;
+        _hook.transform.position = _hand.transform.position;
         _hookRigidbody.velocity = _camera.transform.forward * _throwForce;
         _collider.enabled = true;
         _rope.SetActive(true);
@@ -63,8 +64,9 @@ public class Hook : MonoBehaviour
 
     private void HookReturn()
     {
-        //Debug.Log("return");
-        PrepareHookState();
+        _hooked = false;
+        _collider.enabled = false;
+        _hookRigidbody.isKinematic = true;
         _rope.SetActive(false);
         SoundService.Instance.PlaySound3D(SoundID.hookReturn, transform.position, 0.5f);
     }
@@ -110,11 +112,9 @@ public class Hook : MonoBehaviour
         Vector3 direction = (_hook.transform.position - _player.transform.position).normalized;
         float distance = Vector3.Distance(_player.transform.position, _hook.transform.position);
 
-        // ��������� ���� ��� �����������
         float forceMultiplier = Mathf.Clamp(distance / 5f, 0.5f, 2f);
         Vector3 force = direction * _pullForce * forceMultiplier;
 
-        // ������������ ������������ ��������
         if (_playerRigitbody.velocity.magnitude < _maxPullSpeed)
         {
             _playerRigitbody.AddForce(force, ForceMode.Force);

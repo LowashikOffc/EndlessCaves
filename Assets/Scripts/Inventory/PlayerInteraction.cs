@@ -6,6 +6,7 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private float _interactDistance;
     private Ray _ray;
     private RaycastHit _hit;
+    private bool _entered;
 
     public event Action<ImageEnum> InteractionImage;
     public event Action<string> InteractionText;
@@ -32,7 +33,11 @@ public class PlayerInteraction : MonoBehaviour
 
     private void HoverEnter()
     {
-        //Debug.Log("Enter");
+        if (_entered == false)
+        {
+            TipManager.Instance.AddTip(Tips.Pickup);
+            _entered = true;
+        }
         InteractionImage?.Invoke(ImageEnum.Interact);
         string cleanedName = System.Text.RegularExpressions.Regex.Replace(_hit.collider.name, @"[\(\[\{][^\(\)\[\]\{\}]*[\)\]\}]", "");
         InteractionText?.Invoke(cleanedName.Trim());
@@ -40,7 +45,11 @@ public class PlayerInteraction : MonoBehaviour
 
     private void HoverExit()
     {
-        //Debug.Log("Exit");
+        if (_entered == true)
+        {
+            TipManager.Instance.DeleteTip(Tips.Pickup);
+            _entered = false;
+        }
         InteractionImage?.Invoke(ImageEnum.Default);
         InteractionText?.Invoke("");
     }

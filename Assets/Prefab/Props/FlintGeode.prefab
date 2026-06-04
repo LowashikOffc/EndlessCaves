@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1287490329996726522}
   - component: {fileID: 2510127992875292712}
   - component: {fileID: 1174422430893828400}
+  - component: {fileID: 373396134397947137}
   m_Layer: 0
   m_Name: FlintGeode
   m_TagString: Untagged
@@ -106,3 +107,16 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 289301614986012343, guid: 4fbdff6b59408b94c930003ef72a1c5e, type: 3}
+--- !u!114 &373396134397947137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9121646660974114740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaed922ed09b419489f5a69bf708403c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Data: {fileID: 11400000, guid: aa931f426eae4e242bf04379a04faa0c, type: 2}

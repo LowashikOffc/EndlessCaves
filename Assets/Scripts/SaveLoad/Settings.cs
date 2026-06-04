@@ -19,7 +19,9 @@ public class Settings
     public KeyCode _flashlight = KeyCode.F;
     public KeyCode _zoom = KeyCode.Z;
     public KeyCode _action = KeyCode.E;
+    public KeyCode _equip = KeyCode.Tab;
     public KeyCode _drop = KeyCode.Q;
+    public KeyCode _scan = KeyCode.R;
     #endregion
 
     #region Graphics

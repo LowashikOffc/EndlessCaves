@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 878968037835586685}
   - component: {fileID: 2297973796659555097}
   - component: {fileID: -7020353283474091}
+  - component: {fileID: 1046770339519527404}
   m_Layer: 0
   m_Name: SilverGeode
   m_TagString: Untagged
@@ -106,3 +107,16 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 289301614986012343, guid: 4fbdff6b59408b94c930003ef72a1c5e, type: 3}
+--- !u!114 &1046770339519527404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8833572287591409546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaed922ed09b419489f5a69bf708403c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Data: {fileID: 11400000, guid: 0094ee8894d49e644b3a9cda5b4992a9, type: 2}

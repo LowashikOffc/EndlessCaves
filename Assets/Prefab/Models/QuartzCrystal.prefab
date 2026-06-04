@@ -177,6 +177,8 @@ GameObject:
   - component: {fileID: 5810847118954319396}
   - component: {fileID: 789991445946606}
   - component: {fileID: 582113937808164829}
+  - component: {fileID: 8103951052245304328}
+  - component: {fileID: 7163736580666926435}
   m_Layer: 0
   m_Name: QuartzCrystal
   m_TagString: Untagged
@@ -239,6 +241,42 @@ MonoBehaviour:
   - {fileID: 1606477997747208523}
   - {fileID: 6290830500451450541}
   _activeCrystals: 1
+--- !u!114 &8103951052245304328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2246825060240230256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaed922ed09b419489f5a69bf708403c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Data: {fileID: 11400000, guid: b89b808bd9fd7094f913c7ea5fd7d815, type: 2}
+  Weight: 0
+  isScanned: 0
+--- !u!65 &7163736580666926435
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2246825060240230256}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.38326186, y: 0.96206385, z: 0.60033095}
+  m_Center: {x: -0.04874572, y: 0.4623811, z: 0.011602879}
 --- !u!1 &3868346781261720965
 GameObject:
   m_ObjectHideFlags: 0

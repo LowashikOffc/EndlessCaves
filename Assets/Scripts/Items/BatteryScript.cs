@@ -37,7 +37,7 @@ public class BatteryScript : MonoBehaviour, IEquippable
         transform.localRotation = Quaternion.identity;
 
         InventoryManager.Instance.UpdateTransform(GetComponent<ItemObject>().vector3, GetComponent<ItemObject>().quaternion);
-        TipManager.Instance.AddTip(Tips.Flashlight, settingsEnum.actionKey);
+        TipManager.Instance.AddTip(Tips.Flashlight);
     }
     public void OnUnequip()
     {

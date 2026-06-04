@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TipManager : MonoBehaviour
@@ -18,12 +17,12 @@ public class TipManager : MonoBehaviour
         }
     }
 
-    public event Action<Tips, settingsEnum> Add;
+    public event Action<Tips> Add;
     public event Action<Tips> Delete;
 
-    public void AddTip(Tips tip, settingsEnum Enum)
+    public void AddTip(Tips tip)
     {
-        Add?.Invoke(tip, Enum);
+        Add?.Invoke(tip);
     }
     public void DeleteTip(Tips tip)
     {

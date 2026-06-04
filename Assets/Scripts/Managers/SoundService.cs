@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -14,7 +15,7 @@ public class SoundService : MonoBehaviour
     public static SoundService Instance { get; private set; }
 
     [SerializeField] private SoundsLibrary[] _sounds;
-    private int _destroyTimme = 5;
+    private int _destroyTimme = 1;
 
 
     private GameObject[] _soundPool;
@@ -32,6 +33,7 @@ public class SoundService : MonoBehaviour
 
         _soundPool = new GameObject[20];
     }
+
 
     public void PlaySound(SoundID id)
     {
@@ -102,7 +104,29 @@ public class SoundService : MonoBehaviour
                 Destroy(newSoundObj, newSound.clip.length + _destroyTimme);
             }
         }
-
+    }
+    public void PlayCustomSound(AudioSource sound, float volume)
+    {
+        GameObject newSoundObj = new GameObject($"Sound_{sound.clip.name}");
+        AudioSource newSound = newSoundObj.AddComponent<AudioSource>();
+        newSound.clip = sound.clip;
+        newSound.pitch = sound.pitch;
+        newSound.spatialBlend = 1;
+        newSound.volume = volume;
+        newSound.Play();
+        Destroy(newSoundObj, newSound.clip.length + _destroyTimme);
+    }
+    public void PlayCustomSound3D(AudioSource sound, Vector3 position, float volume)
+    {
+        GameObject newSoundObj = new GameObject($"Sound_{sound.clip.name}");
+        newSoundObj.transform.position = position;
+        AudioSource newSound = newSoundObj.AddComponent<AudioSource>();
+        newSound.clip = sound.clip;
+        newSound.pitch = sound.pitch;
+        newSound.spatialBlend = 1;
+        newSound.volume = volume;
+        newSound.Play();
+        Destroy(newSoundObj, newSound.clip.length + _destroyTimme);
     }
 }
 
@@ -130,5 +154,6 @@ public enum SoundID
     uiPress = 101,
     uiHover = 102,
     uiHoverExit = 103,
+    tip = 104,
     #endregion
 }

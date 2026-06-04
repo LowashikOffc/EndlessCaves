@@ -106,7 +106,9 @@ public enum settingsEnum
     flashlightKey,
     zoomKey,
     actionKey,
+    equipkey,
     dropKey,
+    scanKey,
 
     vignette,
     grain,

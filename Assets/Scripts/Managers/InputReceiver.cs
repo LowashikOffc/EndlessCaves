@@ -15,7 +15,9 @@ public class InputReceiver : MonoBehaviour
     private KeyCode _flashlightButton;
     private KeyCode _zoomButton;
     private KeyCode _actionButton;
+    private KeyCode _equipButton;
     private KeyCode _dropButton;
+    private KeyCode _scanButton;
 
     private bool _listeningForKey;
 
@@ -23,8 +25,10 @@ public class InputReceiver : MonoBehaviour
     public event Action<float> VerticalAxis;
     public event Action<Ray> CameraLookAngle;
     public event Action Jump;
+    public event Action _Action;
     public event Action Interact;
     public event Action Drop;
+    public event Action Scan;
     public event Action Flashlight;
     public event Action HookThrow;
     public event Action HookReturn;
@@ -120,8 +124,10 @@ public class InputReceiver : MonoBehaviour
         }
         if (Input.GetKeyDown(_jumpButton))Jump?.Invoke();
         if (Input.GetKeyDown(_flashlightButton)) Flashlight?.Invoke();
-        if (Input.GetKeyDown(_actionButton)) Interact?.Invoke();
+        if (Input.GetKeyDown(_actionButton)) _Action?.Invoke();
+        if (Input.GetKeyDown(_equipButton)) Interact?.Invoke();
         if (Input.GetKeyDown(_dropButton)) Drop?.Invoke();
+        if (Input.GetKeyDown(_scanButton)) Scan?.Invoke();
 
         if (Input.GetKeyDown(KeyCode.Mouse0)) HookThrow?.Invoke();
         if (Input.GetKeyDown(KeyCode.Mouse1)) HookReturn?.Invoke();
@@ -197,8 +203,16 @@ public class InputReceiver : MonoBehaviour
                 _actionButton = keycode;
                 break;
 
+            case settingsEnum.equipkey:
+                _equipButton = keycode;
+                break;
+
             case settingsEnum.dropKey:
                 _dropButton = keycode;
+                break;
+
+            case settingsEnum.scanKey:
+                _scanButton = keycode;
                 break;
         }
         Save();
@@ -228,7 +242,9 @@ public class InputReceiver : MonoBehaviour
         Settings.Instance._flashlight = _flashlightButton;
         Settings.Instance._zoom = _zoomButton;
         Settings.Instance._action = _actionButton;
+        Settings.Instance._equip = _equipButton;
         Settings.Instance._drop = _dropButton;
+        Settings.Instance._scan = _scanButton;
         SettingsManager.instance.SaveSettings();
     }
 
@@ -243,8 +259,10 @@ public class InputReceiver : MonoBehaviour
         _crouchButton = Settings.Instance._crouch;
         _flashlightButton = Settings.Instance._flashlight;
         _zoomButton = Settings.Instance._zoom;
+        _equipButton = Settings.Instance._equip;
         _actionButton = Settings.Instance._action;
         _dropButton = Settings.Instance._drop;
+        _scanButton = Settings.Instance._scan;
     }
 
     public KeyCode GetKey(settingsEnum keyEnum)
@@ -281,8 +299,14 @@ public class InputReceiver : MonoBehaviour
             case settingsEnum.actionKey:
                 return _actionButton;
 
+            case settingsEnum.equipkey:
+                return _equipButton;
+
             case settingsEnum.dropKey:
                 return _dropButton;
+
+            case settingsEnum.scanKey:
+                return _scanButton;
         }
         return KeyCode.None;
     }

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5199713687837516774}
   - component: {fileID: 8703759894164817164}
   - component: {fileID: 4873532086497453802}
+  - component: {fileID: 7457541463522392265}
   m_Layer: 0
   m_Name: CopperGeode
   m_TagString: Untagged
@@ -106,3 +107,16 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 289301614986012343, guid: 4fbdff6b59408b94c930003ef72a1c5e, type: 3}
+--- !u!114 &7457541463522392265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3441091960196030647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaed922ed09b419489f5a69bf708403c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Data: {fileID: 11400000, guid: b36dba032fae0804fb9f2c590cad12a3, type: 2}
